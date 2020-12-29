@@ -1,24 +1,21 @@
-import express from 'express'
-import cors from 'cors'
+const { GraphQLServer, PubSub } = require('graphql-yoga')
+const resolvers = require('./resolvers/index.js')
 
-const app = express()
-
+require('dotenv-defaults').config()
 
 // init middleware
-app.use(cors())
-app.use(express.json())
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
-  res.header('Access-Control-Allow-Credentials', 'true')
-  next()
+const pubsub = new PubSub()
+const server = new GraphQLServer({
+    typeDefs: './server/schema.graphql',
+    resolvers: resolvers,
+    context: {
+        pubsub
+    }
 })
 
-const port = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000
 
-app.listen(port, () => {
-  console.log(`Server is up on port ${port}.`)
+server.start({ port: PORT }, () => {
+    console.log(`The server is up on port ${PORT}!`)
 })
 
- 
