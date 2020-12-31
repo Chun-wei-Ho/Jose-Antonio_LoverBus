@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import TourMap from './containers/TourMap';
+
+// import reportWebVitals from './reportWebVitals';
 
 import { ApolloClient, InMemoryCache } from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
@@ -25,8 +25,8 @@ const wsLink = new WebSocketLink({
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
 const link = split(
-  // split based on operation type
-  ({ query }) => {
+// split based on operation type
+({ query }) => {
     const definition = getMainDefinition(query)
     return (
         definition.kind === 'OperationDefinition' &&
@@ -41,13 +41,13 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-  document.getElementById('root')
+    <ApolloProvider client={client}>
+        <TourMap />
+    </ApolloProvider>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// reportWebVitals();
