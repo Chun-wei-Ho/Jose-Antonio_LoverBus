@@ -1,10 +1,11 @@
 import React from "react"
-import Map from "../components/Map"
+import TW from "../components/TW"
+// import MyComponent from "../components/GoogleMap"
 import "./TourMap.css"
 import 'antd/dist/antd.css'
 
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { UserOutlined, PictureOutlined, EnvironmentOutlined} from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -29,19 +30,19 @@ const TourMap = () => {
                 defaultOpenKeys={['sub1']}
                 style={{ height: '100%', borderRight: 0 }}
                 >
-                <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
+                <SubMenu key="sub1" icon={<EnvironmentOutlined />} title="地點">
                     <Menu.Item key="1">option1</Menu.Item>
                     <Menu.Item key="2">option2</Menu.Item>
                     <Menu.Item key="3">option3</Menu.Item>
                     <Menu.Item key="4">option4</Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
+                <SubMenu key="sub2" icon={<PictureOutlined />} title="相片">
                     <Menu.Item key="5">option5</Menu.Item>
                     <Menu.Item key="6">option6</Menu.Item>
                     <Menu.Item key="7">option7</Menu.Item>
                     <Menu.Item key="8">option8</Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
+                <SubMenu key="sub3" icon={<UserOutlined />} title="揪團成員">
                     <Menu.Item key="9">option9</Menu.Item>
                     <Menu.Item key="10">option10</Menu.Item>
                     <Menu.Item key="11">option11</Menu.Item>
@@ -61,9 +62,10 @@ const TourMap = () => {
                     padding: 24,
                     margin: 0,
                     minHeight: 280,
+                    
                 }}
                 >
-                <Map></Map>
+                <TW></TW>
                 </Content>
             </Layout>
             </Layout>
