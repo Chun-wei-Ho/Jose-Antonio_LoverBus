@@ -1,5 +1,6 @@
 const { GraphQLServer, PubSub } = require('graphql-yoga')
-const resolvers = require('./resolvers/index.js')
+const resolvers = require('./resolvers')
+const models = require('./db.js')
 
 require('dotenv-defaults').config()
 

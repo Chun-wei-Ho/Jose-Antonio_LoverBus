@@ -1,3 +1,19 @@
 type Query{
-    tmp: String
+    Feature(username: String!): [Feature!]! 
+}
+
+type Feature{
+    type: String!
+    properties: Properties!
+    geometry: Geometry!
+}
+
+type Properties{
+    title: String!
+    description: String!
+}
+
+type Geometry{
+    coordinates: [Float!]!
+    type: String!
 }
