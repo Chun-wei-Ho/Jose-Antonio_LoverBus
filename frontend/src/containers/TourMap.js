@@ -65,7 +65,6 @@ const TourMap = () => {
                     padding: 24,
                     margin: 0,
                     minHeight: 280,
-                    
                 }}
                 >
                 <MapBox></MapBox>
