@@ -36,7 +36,10 @@ const TourMap = () => {
                         <Input className="input"></Input>
                     </Menu.Item>
                     <Menu.Item key="2" style={{left: '0px'}}>
-                        nav 3
+                        nav 1
+                    </Menu.Item>
+                    <Menu.Item key="3" style={{left: '0px'}}>
+                        nav 2
                     </Menu.Item>
                 </Menu>
             </Header>
