@@ -1,9 +1,10 @@
 import React from "react"
-import TW from "../components/TW"
+// import TW from "../components/TW"
 // import MyComponent from "../components/GoogleMap"
+import MapBox from "../components/Mapbox_TW"
+
 import "./TourMap.css"
 import 'antd/dist/antd.css'
-import MapBox from "../components/Mapbox_TW"
 import { Button} from 'react-bootstrap';
 
 import { Layout, Menu, Breadcrumb } from 'antd';
@@ -64,7 +65,6 @@ const TourMap = () => {
                     padding: 24,
                     margin: 0,
                     minHeight: 280,
-                    
                 }}
                 >
                 <MapBox></MapBox>

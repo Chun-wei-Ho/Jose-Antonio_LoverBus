@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import "./TW.css"
+// import "./TW.css"
 
 import mapboxgl from 'mapbox-gl';
 import "./site.css"
