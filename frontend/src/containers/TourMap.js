@@ -1,17 +1,28 @@
 import React from "react"
-// import TW from "../components/TW"
-// import MyComponent from "../components/GoogleMap"
 import MapBox from "../components/Mapbox_TW"
 
 import "./TourMap.css"
 import 'antd/dist/antd.css'
-import { Button} from 'react-bootstrap';
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Input, Layout, Menu, Breadcrumb, Button } from 'antd';
 import { UserOutlined, PictureOutlined, EnvironmentOutlined} from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
+// const [place_display, setPlaceDisplay] = 
+
+
+{/* <Input
+placeholder="Who do you want to talk to?"
+value={targetname}
+onChange={(e) => setTargetname(e.target.value)}
+style={{ marginBottom: 10 }}
+onKeyDown={(e) => {
+  if (e.key === 'Enter') {
+    bodyRef.current.focus() // 使用 Ref 每次 enter 都 focus 這
+  }
+}}
+></Input> */}
 
 const TourMap = () => {
     return (
@@ -19,19 +30,23 @@ const TourMap = () => {
         <Layout>
             <Header className="header">
                 <div className="logo" />
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="1">nav 1</Menu.Item>
-                    <Menu.Item key="2">nav 2</Menu.Item>
-                    <Menu.Item key="3">nav 3</Menu.Item>
+                {/* <Input></Input> */}
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
+                    <Menu.Item key="1">
+                        <Input className="input"></Input>
+                    </Menu.Item>
+                    <Menu.Item key="2" style={{left: '0px'}}>
+                        nav 3
+                    </Menu.Item>
                 </Menu>
             </Header>
             <Layout>
-            <Sider width={200} className="site-layout-background">
+            <Sider height={500} width={200} className="site-layout-background">
                 <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
+                style={{ height: '100%', borderRight: 0}}
                 >
                 <SubMenu key="sub1" icon={<EnvironmentOutlined />} title="地點">
                     <Menu.Item key="1">option1</Menu.Item>
@@ -68,6 +83,7 @@ const TourMap = () => {
                 }}
                 >
                 <MapBox></MapBox>
+                <Button>1</Button>
                 </Content>
             </Layout>
             </Layout>
