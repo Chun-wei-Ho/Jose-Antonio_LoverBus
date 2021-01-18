@@ -1,8 +1,18 @@
 type Query{
-    Feature(username: String!): [Feature!]! 
+    Marker(username: String!): [Marker!]! 
 }
 
-type Feature{
+type Mutation{
+    addMarker(marker:addMarkerInput!): String
+}
+
+input addMarkerInput{
+    title: String!
+    coordinates: [Float!]!
+    description: String
+}
+
+type Marker{
     type: String!
     properties: Properties!
     geometry: Geometry!

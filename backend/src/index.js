@@ -10,6 +10,7 @@ const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     resolvers: resolvers,
     context: {
+        models,
         pubsub
     }
 })
