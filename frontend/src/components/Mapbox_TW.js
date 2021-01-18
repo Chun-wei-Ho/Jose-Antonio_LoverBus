@@ -14,6 +14,8 @@ const MapBox = () => {
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
 
+  const [clicklngLat, setClicklngLat] = useState([]);
+
   useEffect(() => {
     const initializeMap = ({ setMap, mapContainer }) => {
       const map = new mapboxgl.Map({
@@ -27,8 +29,21 @@ const MapBox = () => {
         setMap(map);
         map.resize();
       });
-    };
 
+      map.on('click', clickPoint);
+      function clickPoint(e){
+        setClicklngLat([e.lngLat.lng, e.lngLat.lat])
+        console.log(e.lngLat)
+        console.log(clicklngLat)
+        var popup = new mapboxgl.Popup()
+        .setHTML('<h3>A point</h3>');
+        
+        var marker = new mapboxgl.Marker()
+        .setLngLat([e.lngLat.lng, e.lngLat.lat])
+        .setPopup(popup)
+        .addTo(map);  
+      };
+    }
     if (!map) initializeMap({ setMap, mapContainer });
   }, [map]);
   
