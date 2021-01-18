@@ -4,6 +4,7 @@ import TW from "../components/TW"
 import "./TourMap.css"
 import 'antd/dist/antd.css'
 import MapBox from "../components/Mapbox_TW"
+import { Button} from 'react-bootstrap';
 
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, PictureOutlined, EnvironmentOutlined} from '@ant-design/icons';
