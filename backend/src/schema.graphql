@@ -8,6 +8,20 @@ type Mutation{
     deleteMarker(username: String!, title: String!): String
 }
 
+type Subscription{
+    subscribeUser(username: String!): subscribeUserOutput!
+}
+
+type subscribeUserOutput{
+    mutation: MutationType!
+    data: Marker!
+}
+
+enum MutationType{
+    NEW
+    DELETE
+}
+
 input addMarkerInput{
     username: String!
     title: String!
@@ -17,7 +31,6 @@ input addMarkerInput{
 
 type Marker{
     username: String!
-    type: String!
     properties: Properties!
     geometry: Geometry!
 }
@@ -29,5 +42,4 @@ type Properties{
 
 type Geometry{
     coordinates: [Float!]!
-    type: String!
 }

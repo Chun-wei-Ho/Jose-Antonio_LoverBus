@@ -5,6 +5,7 @@ const models = require('./db.js')
 require('dotenv-defaults').config()
 
 // init middleware
+
 const pubsub = new PubSub()
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
