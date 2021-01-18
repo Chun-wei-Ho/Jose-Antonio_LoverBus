@@ -23,51 +23,54 @@ const MapBox = () => {
   const [test, setTest] = useState(0);
 
   useEffect(() => {
-    const initializeMap = ({ setMap, mapContainer }) => {
+    const initializeMap = ({ setMap, setClicklnglat, mapContainer }) => {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
         center: [View.lng, View.lat],
         zoom: View.zoom
       });
+
+      map.on("move", () => {
+        setLng(map.getCenter().lng.toFixed(4));
+        setLat(map.getCenter().lat.toFixed(4));
+        setZoom(map.getZoom().toFixed(2));
+        setTest(4)
+        //console.log(test)
+        //console.log(lat)
+      });
+
+      const clickPoint = (e) => {
+        setClicklnglat([e.lngLat.lng, e.lngLat.lat])
+        //console.log([e.lngLat.lng, e.lngLat.lat])
+        //console.log(clicklnglat)
+        var popup = new mapboxgl.Popup()
+          .setHTML('<h3>A point</h3>');
+
+        var marker = new mapboxgl.Marker()
+          .setLngLat([e.lngLat.lng, e.lngLat.lat])
+          .setPopup(popup)
+          .addTo(map);
+      };
+
+      map.on('click', clickPoint);
+
+      map.on("load", () => {
+        setMap(map);
+        map.resize();
+      });
+
     }
-    if (!map) initializeMap({ setMap, mapContainer });
+    if (!map) initializeMap({ setMap, setClicklnglat, mapContainer });
   }, [map]);
 
-  if(map){
-    map.on("load", () => {
-      setMap(map);
-      map.resize();
-    });
-
-    map.on("move", () => {
-      setLng(map.getCenter().lng.toFixed(4));
-      setLat(map.getCenter().lat.toFixed(4));
-      setZoom(map.getZoom().toFixed(2));
-    });  
-
-    const clickPoint = (e) => {
-      setClicklnglat([e.lngLat.lng, e.lngLat.lat])
-      console.log([e.lngLat.lng, e.lngLat.lat])
-      var popup = new mapboxgl.Popup()
-      .setHTML('<h3>A point</h3>');
-      
-      var marker = new mapboxgl.Marker()
-      .setLngLat([e.lngLat.lng, e.lngLat.lat])
-      .setPopup(popup)
-      .addTo(map);  
-    };
-
-    map.on('click', clickPoint);
-  }
-  
   return (
     <div>
       <div className='sidebarStyle'>
         {/* <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom}</div> */}
-        <div>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</div>
+        <div>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} </div>
       </div>
-      <div ref={el => (mapContainer.current = el)} className='mapContainer'/>
+      <div ref={el => (mapContainer.current = el)} className='mapContainer' />
     </div>
   )
 }
