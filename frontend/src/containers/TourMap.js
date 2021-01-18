@@ -67,7 +67,9 @@ const TourMap = () => {
                     
                 }}
                 >
+                <div style={{ width: '480px'}}>
                 <MapBox></MapBox>
+                </div>
                 </Content>
             </Layout>
             </Layout>
