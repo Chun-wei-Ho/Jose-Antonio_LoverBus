@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import "./TW.css"
 
+import mpaboxgl from 'mapbox-gl'
+
 const MapBox = () => {
     return ( 	
       <MapContainer center={[25.014947, 121.535549]} zoom={18} scrollWheelZoom={false} className="map"

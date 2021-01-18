@@ -3,6 +3,7 @@ import TW from "../components/TW"
 // import MyComponent from "../components/GoogleMap"
 import "./TourMap.css"
 import 'antd/dist/antd.css'
+import MapBox from "../components/Mapbox_TW"
 
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, PictureOutlined, EnvironmentOutlined} from '@ant-design/icons';
@@ -65,7 +66,7 @@ const TourMap = () => {
                     
                 }}
                 >
-                <TW></TW>
+                <MapBox></MapBox>
                 </Content>
             </Layout>
             </Layout>
