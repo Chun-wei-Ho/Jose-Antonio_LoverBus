@@ -1,5 +1,5 @@
-const UserMarker = require('./UserMarker')
+const Marker = require('./Marker')
 
-const models = {UserMarker}
+const models = {Marker}
 
 module.exports = models
