@@ -70,6 +70,11 @@ const TourMap = () => {
                 </Content>
             </Layout>
             </Layout>
+            <Footer className="Footer">
+                <Button className="FooterButton">去過</Button>
+                <Button className="FooterButton">想去</Button>
+                <Button className="FooterButton">全部</Button>
+            </Footer>
         </Layout>
     </React.Fragment>
     )
