@@ -4,6 +4,10 @@ type Query{
 
 type Mutation{
     addMarker(marker:addMarkerInput!): String
+    """
+    clearAllMarker is not supposed to be called by any user,
+    the function is only called for debugging
+    """
     clearAllMarker: String
     deleteMarker(username: String!, title: String!): String
 }
@@ -12,9 +16,16 @@ type Subscription{
     subscribeUser(username: String!): subscribeUserOutput!
 }
 
+input addMarkerInput{
+    username: String!
+    title: String!
+    coordinates: [Float!]!
+    description: String
+}
+
 type subscribeUserOutput{
     mutation: MutationType!
-    data: Marker!
+    data: SubscribedMarker!
 }
 
 enum MutationType{
@@ -22,11 +33,10 @@ enum MutationType{
     DELETE
 }
 
-input addMarkerInput{
-    username: String!
-    title: String!
-    coordinates: [Float!]!
-    description: String
+type SubscribedMarker{
+    username: String
+    properties: Properties!
+    geometry: Geometry
 }
 
 type Marker{
@@ -37,7 +47,7 @@ type Marker{
 
 type Properties{
     title: String!
-    description: String!
+    description: String
 }
 
 type Geometry{
