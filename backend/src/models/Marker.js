@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schemas = mongoose.Schema
 
-const UserMarkerSchema= new Schemas({
+const MarkerSchema= new Schemas({
     username: {
         type: String,
         required: (true, "Username is required")
@@ -27,6 +27,6 @@ const UserMarkerSchema= new Schemas({
     }
 })
 
-const UserMarker = mongoose.model('feature', UserMarkerSchema)
+const Marker = mongoose.model('feature', MarkerSchema)
 
-module.exports = UserMarker
+module.exports = Marker

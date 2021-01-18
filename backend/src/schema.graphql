@@ -1,18 +1,22 @@
 type Query{
-    Marker(username: String!): [Marker!]! 
+    Marker(username: String!): [Marker!]!
 }
 
 type Mutation{
     addMarker(marker:addMarkerInput!): String
+    clearAllMarker: String
+    deleteMarker(username: String!, title: String!): String
 }
 
 input addMarkerInput{
+    username: String!
     title: String!
     coordinates: [Float!]!
     description: String
 }
 
 type Marker{
+    username: String!
     type: String!
     properties: Properties!
     geometry: Geometry!
