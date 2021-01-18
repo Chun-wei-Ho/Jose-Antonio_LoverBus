@@ -1,10 +1,10 @@
 {
   "watch": [
-    "server"
+    "src"
   ],
   "ext": "js,json",
   "ignore": [
-    "server/**/*.spec.js"
+    "src/**/*.spec.js"
   ],
-  "exec": "babel-node server/index.js"
+  "exec": "babel-node src/index.js"
 }

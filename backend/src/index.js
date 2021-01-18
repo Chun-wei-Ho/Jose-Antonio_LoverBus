@@ -7,7 +7,7 @@ require('dotenv-defaults').config()
 // init middleware
 const pubsub = new PubSub()
 const server = new GraphQLServer({
-    typeDefs: './server/schema.graphql',
+    typeDefs: './src/schema.graphql',
     resolvers: resolvers,
     context: {
         pubsub
