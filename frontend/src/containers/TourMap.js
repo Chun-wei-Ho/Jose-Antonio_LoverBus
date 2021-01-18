@@ -1,5 +1,7 @@
 import React from "react"
 import MapBox from "../components/Mapbox_TW"
+import AddPlace from "../components/addPlace"
+import SearchInfo from "../components/SearchInfo"
 
 import "./TourMap.css"
 import 'antd/dist/antd.css'
@@ -31,9 +33,9 @@ const TourMap = () => {
             <Header className="header">
                 <div className="logo" />
                 {/* <Input></Input> */}
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
-                    <Menu.Item key="1">
-                        <Input className="input"></Input>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                    <Menu.Item key="1" style={{position: "relative", bottom: "100px"}}>
+                        <SearchInfo></SearchInfo>
                     </Menu.Item>
                     <Menu.Item key="2" style={{left: '0px'}}>
                         nav 3
@@ -42,7 +44,8 @@ const TourMap = () => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <Menu
+                <AddPlace></AddPlace>
+                {/* <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
@@ -66,7 +69,7 @@ const TourMap = () => {
                     <Menu.Item key="11">option11</Menu.Item>
                     <Menu.Item key="12">option12</Menu.Item>
                 </SubMenu>
-                </Menu>
+                </Menu> */}
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
                 <Breadcrumb style={{ margin: '16px 0' }}>
