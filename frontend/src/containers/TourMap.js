@@ -108,8 +108,7 @@ const TourMap = () => {
         </React.Fragment>
             
         ) : (
-            <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%",
-            backgroundImage: `url(${Background})`}}>
+            <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
                 <div style={{width: "100%", height: "100%"}}>
                     <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
                     <Form
