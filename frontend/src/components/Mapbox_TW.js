@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import { Input, Layout, Menu, Breadcrumb, Button } from 'antd';
 import "./site.css"
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
@@ -70,6 +71,7 @@ const MapBox = () => {
         {/* <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom}</div> */}
         <div>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} </div>
       </div>
+      <Button style={{position: "relative", right: "0px"}}>+</Button>
       <div ref={el => (mapContainer.current = el)} className='mapContainer' />
     </div>
   )
