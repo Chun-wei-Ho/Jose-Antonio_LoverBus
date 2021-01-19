@@ -69,6 +69,18 @@ const Mutation = {
         spot.save()
         models.Plan.findByIdAndUpdate({_id: planID}, {$push: {spotID: spot._id}}, () => {})
         return spot._id
+    },
+    async deleteSpot(parent, {_id}, {models, pubsub}, info){
+        const spot = await models.Spot.findByIdAndDelete(_id, () => {})
+        models.Plan.findByIdAndUpdate({_id: spot.planID}, {$pull: {"spotID": _id}}, () => {})
+    },
+    async updateSpotStartTime(parent, {_id, time}, {models, pubsub}, info){
+        const date = new Date(time)
+        models.Spot.findByIdAndUpdate({_id}, {startTime: date}, () => {})
+    },
+    async updateSpotEndTime(parent, {_id, time}, {models, pubsub}, info){
+        const date = new Date(time)
+        models.Spot.findByIdAndUpdate({_id}, {endTime: date}, () => {})
     }
 }
 

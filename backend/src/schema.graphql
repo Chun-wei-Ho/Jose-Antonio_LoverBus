@@ -1,6 +1,7 @@
 type Query{
     Marker(username: String!): [Marker!]!
-    Plan(username: String!): [Plan!]!
+    UserPlan(username: String!): [Plan!]!
+    Plan(_id: ID!): Plan!
     signIn(username: String!, password: String!): Boolean! # true if successful
 }
 
@@ -24,8 +25,8 @@ type Mutation{
     # For spot
     newSpot(planID: ID!, markerID: ID!): ID!
     deleteSpot(_id: ID!): String
-    updateSpotStartTime(_id: ID!, yy: Int, mm: Int, dd: Int, hr: Int, min: Int): String
-    updateSpotEndTime(_id: ID!, yy: Int, mm: Int, dd: Int, hr: Int, min: Int): String
+    updateSpotStartTime(_id: ID!, time: String!): String
+    updateSpotEndTime(_id: ID!, time: String!): String
 
     # For user
     signUp(username: String!, password: String!): String
@@ -48,8 +49,9 @@ type Plan{
 }
 
 type Spot{
-    startTime: String! # Use Date.parse(str) to decode
-    endTime: String! # Use Date.parse(str) to decode
+    _id: ID!
+    startTime: String! # Use new Date(Date.parse(str)) to decode
+    endTime: String! # Use new Date(Date.parse(str)) to decode
     location: Marker!
 }
 
