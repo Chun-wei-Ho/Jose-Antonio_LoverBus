@@ -1,19 +1,45 @@
 type Query{
     Marker(username: String!): [Marker!]!
+    Plan(username: String!, title: String!): Plan!
 }
 
 type Mutation{
-    addMarker(marker:addMarkerInput!): String
     """
-    clearAllMarker is not supposed to be called by any user,
+    clearAll is not supposed to be called by any user,
     the function is only called for debugging
     """
-    clearAllMarker: String
-    deleteMarker(username: String!, title: String!): String
+    clearAll: String
+    
+    # For marker
+    addMarker(marker:addMarkerInput!): String
+    deleteMarker(_id: ID!): String
+    updateMarker(_id: ID!, newTitle: String, newDescription: String): String
+    
+    # For plan
+    newPlan(username: String!, title: String!): String
+    updatePlan(username: String!, newtitle: String!): String
 }
 
 type Subscription{
     subscribeUser(username: String!): subscribeUserOutput!
+}
+
+type Plan{
+    title: String!
+    spots: [Spot!]!
+}
+
+type Spot{
+    time: Time!
+    location: Marker!
+}
+
+type Time{
+    year: Int # default 1900
+    month: Int # default 1
+    day: Int # default 1
+    hour: Int # default 0
+    minute: Int # default 0
 }
 
 input addMarkerInput{
@@ -25,24 +51,20 @@ input addMarkerInput{
 
 type subscribeUserOutput{
     mutation: MutationType!
-    data: SubscribedMarker!
+    data: Marker!
 }
 
 enum MutationType{
     NEW
     DELETE
-}
-
-type SubscribedMarker{
-    username: String
-    properties: Properties!
-    geometry: Geometry
+    UPDATE
 }
 
 type Marker{
     username: String!
     properties: Properties!
     geometry: Geometry!
+    _id: ID!
 }
 
 type Properties{

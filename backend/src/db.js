@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const models = require('./models')
 
+mongoose.set('useFindAndModify', false);
+
 require('dotenv').config()
 
 const dboptions = {
