@@ -27,6 +27,6 @@ const MarkerSchema= new Schemas({
     }
 })
 
-const Marker = mongoose.model('feature', MarkerSchema)
+const Marker = mongoose.model('marker', MarkerSchema)
 
 module.exports = Marker

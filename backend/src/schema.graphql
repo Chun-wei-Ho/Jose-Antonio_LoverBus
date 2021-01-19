@@ -1,6 +1,6 @@
 type Query{
     Marker(username: String!): [Marker!]!
-    Plan(username: String!, title: String!): Plan!
+    Plan(username: String!): [Plan!]!
 }
 
 type Mutation{
@@ -17,7 +17,8 @@ type Mutation{
     
     # For plan
     newPlan(username: String!, title: String!): String
-    updatePlan(username: String!, newtitle: String!): String
+    renamePlan(_id: ID!, newTitle: String!): String
+    deletePlan(_id: ID!): String
 }
 
 type Subscription{
@@ -25,8 +26,10 @@ type Subscription{
 }
 
 type Plan{
+    username: String!
     title: String!
     spots: [Spot!]!
+    _id: ID!
 }
 
 type Spot{
@@ -35,11 +38,7 @@ type Spot{
 }
 
 type Time{
-    year: Int # default 1900
-    month: Int # default 1
-    day: Int # default 1
-    hour: Int # default 0
-    minute: Int # default 0
+    time: [Int!]! # (yy, mm, dd, hr, min, sec)
 }
 
 input addMarkerInput{

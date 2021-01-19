@@ -18,6 +18,7 @@ const Mutation = {
     clearAll(parent, args, {models, pubsub}, info){
         // shouldn't be called, only for debugging
         models.Marker.deleteMany({}, () => {})
+        models.Plan.deleteMany({}, () => {})
     },
     async deleteMarker(parent, {_id}, {models, pubsub}, info){
         const marker = await models.Marker.findByIdAndDelete(_id, () => {})
@@ -35,6 +36,16 @@ const Mutation = {
         pubsub.publish(marker.username, {subscribeUser: {
             mutation: 'UPDATE', data: marker
         }})
+    },
+    newPlan(parent, args, {models, pubsub}, info){
+        const plans = new models.Plan({...args, spotID: []})
+        plans.save()
+    },
+    renamePlan(parent, {_id, newTitle}, {models, pubsub}, info){
+        models.Plan.findByIdAndUpdate({_id}, {title: newTitle}, () => {})
+    },
+    deletePlan(parent, {_id}, {models, pubsub}, info){
+        models.Plan.findByIdAndDelete({_id}, ()=>{})
     }
 }
 
