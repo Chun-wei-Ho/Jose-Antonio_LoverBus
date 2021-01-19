@@ -1,5 +1,5 @@
 const Mutation = {
-    addMarker(parent, {marker}, {models, pubsub}, info){
+    async addMarker(parent, {marker}, {models, pubsub}, info){
         const _marker = new models.Marker({
             username: marker.username,
             properties:{
@@ -11,19 +11,20 @@ const Mutation = {
             }
         })
         _marker.save()
-        pubsub.publish(_marker.username, {subscribeUser: {
+        pubsub.publish(`marker.${_marker.username}`, {subscribeUser: {
             mutation: 'NEW', data: _marker
         }})
+        return _marker._id
     },
     clearAll(parent, args, {models, pubsub}, info){
         // shouldn't be called, only for debugging
-        models.Marker.deleteMany({}, () => {})
-        models.Plan.deleteMany({}, () => {})
-        models.User.deleteMany({}, ()=> {})
+        Object.entries(models).map(([_,e]) => {
+            e.deleteMany({}, () => {})
+        })
     },
     async deleteMarker(parent, {_id}, {models, pubsub}, info){
         const marker = await models.Marker.findByIdAndDelete(_id, () => {})
-        pubsub.publish(marker.username, {subscribeUser: {
+        pubsub.publish(`marker.${marker.username}`, {subscribeUser: {
             mutation: 'DELETE', data: marker
         }})
     },
@@ -34,13 +35,14 @@ const Mutation = {
             .filter(([_, v]) => v != null));
         const marker = await models.Marker.findByIdAndUpdate({_id},
             option, () => {})
-        pubsub.publish(marker.username, {subscribeUser: {
+        pubsub.publish(`marker.${marker.username}`, {subscribeUser: {
             mutation: 'UPDATE', data: marker
         }})
     },
     newPlan(parent, args, {models, pubsub}, info){
         const plans = new models.Plan({...args, spotID: []})
         plans.save()
+        return plans._id
     },
     renamePlan(parent, {_id, newTitle}, {models, pubsub}, info){
         models.Plan.findByIdAndUpdate({_id}, {title: newTitle}, () => {})
@@ -51,8 +53,22 @@ const Mutation = {
     async signUp(parent, args, {models, pubsub}, info){
         const userquery = await models.User.find({username: args.username})
         if(userquery.length !== 0)
-            throw "Error create user! User exists!"
+            throw "Error on creating user! User exists!"
         new models.User(args).save()
+    },
+    async newSpot(parent, {planID, markerID}, {models, pubsub}, info){
+        const spot = new models.Spot({
+            planID,
+            markerID,
+            startTime: new Date(1900,1,1,0,0,0),
+            endTime: new Date(1900,1,1,0,0,0)
+        })
+        if( ! await models.Marker.findById(markerID)){
+            throw "Error: Marker doesn't exist!!"
+        }
+        spot.save()
+        models.Plan.findByIdAndUpdate({_id: planID}, {$push: {spotID: spot._id}}, () => {})
+        return spot._id
     }
 }
 

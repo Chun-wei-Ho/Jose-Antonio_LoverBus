@@ -12,24 +12,27 @@ type Mutation{
     clearAll: String
     
     # For marker
-    addMarker(marker:addMarkerInput!): String
+    addMarker(marker:addMarkerInput!): ID!
     deleteMarker(_id: ID!): String
     updateMarker(_id: ID!, newTitle: String, newDescription: String): String
     
     # For plan
-    newPlan(username: String!, title: String!): String
+    newPlan(username: String!, title: String!): ID!
     renamePlan(_id: ID!, newTitle: String!): String
     deletePlan(_id: ID!): String
 
     # For spot
-    newSpot(planID: ID!, marker: addMarkerInput!): String
+    newSpot(planID: ID!, markerID: ID!): ID!
+    deleteSpot(_id: ID!): String
+    updateSpotStartTime(_id: ID!, yy: Int, mm: Int, dd: Int, hr: Int, min: Int): String
+    updateSpotEndTime(_id: ID!, yy: Int, mm: Int, dd: Int, hr: Int, min: Int): String
 
     # For user
-    signUp(username: String!, password: String!): String 
+    signUp(username: String!, password: String!): String
 }
 
 type Subscription{
-    subscribeUser(username: String!): subscribeUserOutput!
+    subscribeMarker(username: String!): subscribeMarkerOutput!
 }
 
 type User{
@@ -45,8 +48,8 @@ type Plan{
 }
 
 type Spot{
-    startTime: [Int!]! # (yy, mm, dd, hr, min, sec) # default: (1900,1,1,0,0,0)
-    endTime: [Int!]! # (yy, mm, dd, hr, min, sec) # default: (1900,1,1,0,0,0)
+    startTime: String! # Use Date.parse(str) to decode
+    endTime: String! # Use Date.parse(str) to decode
     location: Marker!
 }
 
@@ -57,7 +60,7 @@ input addMarkerInput{
     description: String
 }
 
-type subscribeUserOutput{
+type subscribeMarkerOutput{
     mutation: MutationType!
     data: Marker!
 }
