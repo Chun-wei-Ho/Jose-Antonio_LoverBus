@@ -94,9 +94,9 @@ const TourMap = () => {
             </Layout>
             </Layout>
             <Footer className="Footer">
-                <Button className="FooterButton">去過</Button>
-                <Button className="FooterButton">想去</Button>
-                <Button className="FooterButton">全部</Button>
+                <Button className="FooterButton">Finish</Button>
+                <Button className="FooterButton">Wish</Button>
+                <Button className="FooterButton">All</Button>
             </Footer>
         </Layout>
     </React.Fragment>
