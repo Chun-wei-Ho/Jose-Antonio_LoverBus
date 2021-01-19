@@ -1,7 +1,7 @@
 const Subscription = {
-    subscribeUser: {
+    subscribeMarker: {
         subscribe(parent, {username}, {models, pubsub}, info){
-            const topics = [username]
+            const topics = [`marker.${username}`]
             return pubsub.asyncIterator(topics)
         }
     }

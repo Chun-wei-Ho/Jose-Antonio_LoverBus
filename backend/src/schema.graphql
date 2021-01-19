@@ -1,19 +1,56 @@
 type Query{
     Marker(username: String!): [Marker!]!
+    Plan(username: String!): [Plan!]!
+    signIn(username: String!, password: String!): Boolean! # true if successful
 }
 
 type Mutation{
-    addMarker(marker:addMarkerInput!): String
     """
-    clearAllMarker is not supposed to be called by any user,
+    clearAll is not supposed to be called by any user,
     the function is only called for debugging
     """
-    clearAllMarker: String
-    deleteMarker(username: String!, title: String!): String
+    clearAll: String
+    
+    # For marker
+    addMarker(marker:addMarkerInput!): ID!
+    deleteMarker(_id: ID!): String
+    updateMarker(_id: ID!, newTitle: String, newDescription: String): String
+    
+    # For plan
+    newPlan(username: String!, title: String!): ID!
+    renamePlan(_id: ID!, newTitle: String!): String
+    deletePlan(_id: ID!): String
+
+    # For spot
+    newSpot(planID: ID!, markerID: ID!): ID!
+    deleteSpot(_id: ID!): String
+    updateSpotStartTime(_id: ID!, yy: Int, mm: Int, dd: Int, hr: Int, min: Int): String
+    updateSpotEndTime(_id: ID!, yy: Int, mm: Int, dd: Int, hr: Int, min: Int): String
+
+    # For user
+    signUp(username: String!, password: String!): String
 }
 
 type Subscription{
-    subscribeUser(username: String!): subscribeUserOutput!
+    subscribeMarker(username: String!): subscribeMarkerOutput!
+}
+
+type User{
+    username: String!
+    password: String!
+}
+
+type Plan{
+    username: String!
+    title: String!
+    spots: [Spot!]!
+    _id: ID!
+}
+
+type Spot{
+    startTime: String! # Use Date.parse(str) to decode
+    endTime: String! # Use Date.parse(str) to decode
+    location: Marker!
 }
 
 input addMarkerInput{
@@ -23,26 +60,22 @@ input addMarkerInput{
     description: String
 }
 
-type subscribeUserOutput{
+type subscribeMarkerOutput{
     mutation: MutationType!
-    data: SubscribedMarker!
+    data: Marker!
 }
 
 enum MutationType{
     NEW
     DELETE
-}
-
-type SubscribedMarker{
-    username: String
-    properties: Properties!
-    geometry: Geometry
+    UPDATE
 }
 
 type Marker{
     username: String!
     properties: Properties!
     geometry: Geometry!
+    _id: ID!
 }
 
 type Properties{
