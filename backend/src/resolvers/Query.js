@@ -15,9 +15,7 @@ const Query = {
     },
     async Plan(parent, {_id}, {models, pubsub}, info){
         const plans = await models.Plan.findById(_id)
-        const parsedPlan = await parsePlan.bind({models})(plans)
-        console.log(parsedPlan)
-        return parsedPlan
+        return await parsePlan.bind({models})(plans)
     }
 }
 
