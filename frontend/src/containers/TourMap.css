@@ -21,3 +21,11 @@
 .FooterButton {
     margin:0 auto;
 }
+
+.login-form {
+    max-width: 300px;
+  }
+  
+.login-form-button {
+    width: 100%;
+  }
