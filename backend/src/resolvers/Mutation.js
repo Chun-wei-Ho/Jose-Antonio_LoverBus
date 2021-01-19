@@ -51,6 +51,10 @@ const Mutation = {
         models.Plan.findByIdAndDelete({_id}, ()=>{})
     },
     async signUp(parent, args, {models, pubsub}, info){
+        if(args.username === "")
+            throw "username cannot be empty"
+        if(args.password === "")
+            throw "password cannot be empty"
         const userquery = await models.User.find({username: args.username})
         if(userquery.length !== 0)
             throw "Error on creating user! User exists!"
