@@ -1,6 +1,7 @@
 type Query{
     Marker(username: String!): [Marker!]!
     Plan(username: String!): [Plan!]!
+    signIn(username: String!, password: String!): Boolean! # true if successful
 }
 
 type Mutation{
@@ -19,10 +20,21 @@ type Mutation{
     newPlan(username: String!, title: String!): String
     renamePlan(_id: ID!, newTitle: String!): String
     deletePlan(_id: ID!): String
+
+    # For spot
+    newSpot(planID: ID!, marker: addMarkerInput!): String
+
+    # For user
+    signUp(username: String!, password: String!): String 
 }
 
 type Subscription{
     subscribeUser(username: String!): subscribeUserOutput!
+}
+
+type User{
+    username: String!
+    password: String!
 }
 
 type Plan{
@@ -33,12 +45,9 @@ type Plan{
 }
 
 type Spot{
-    time: Time!
+    startTime: [Int!]! # (yy, mm, dd, hr, min, sec) # default: (1900,1,1,0,0,0)
+    endTime: [Int!]! # (yy, mm, dd, hr, min, sec) # default: (1900,1,1,0,0,0)
     location: Marker!
-}
-
-type Time{
-    time: [Int!]! # (yy, mm, dd, hr, min, sec)
 }
 
 input addMarkerInput{

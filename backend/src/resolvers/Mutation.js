@@ -19,6 +19,7 @@ const Mutation = {
         // shouldn't be called, only for debugging
         models.Marker.deleteMany({}, () => {})
         models.Plan.deleteMany({}, () => {})
+        models.User.deleteMany({}, ()=> {})
     },
     async deleteMarker(parent, {_id}, {models, pubsub}, info){
         const marker = await models.Marker.findByIdAndDelete(_id, () => {})
@@ -46,6 +47,12 @@ const Mutation = {
     },
     deletePlan(parent, {_id}, {models, pubsub}, info){
         models.Plan.findByIdAndDelete({_id}, ()=>{})
+    },
+    async signUp(parent, args, {models, pubsub}, info){
+        const userquery = await models.User.find({username: args.username})
+        if(userquery.length !== 0)
+            throw "Error create user! User exists!"
+        new models.User(args).save()
     }
 }
 
