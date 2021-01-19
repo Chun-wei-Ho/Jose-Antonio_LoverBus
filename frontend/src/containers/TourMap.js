@@ -50,6 +50,9 @@ const TourMap = () => {
                     <Menu.Item key="3" style={{left: '0px'}}>
                         nav 2
                     </Menu.Item>
+                    <Menu.Item key="4" style={{position:'absolute', left: '93%'}}>
+                        {username}
+                    </Menu.Item>
                 </Menu>
             </Header>
             <Layout>
