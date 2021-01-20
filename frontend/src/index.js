@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import TourMap from './containers/TourMap';
 import TourPlan from './containers/TourPlan';
 import PlanList from './containers/PlanList';
+import HomeRouter from './containers/HomeRouter';
 
 import {
     BrowserRouter as Router,
