@@ -45,7 +45,6 @@ export default function usePlan(_userId){
                         return {...prev, UserPlan:newArray}
                     break
                     case "UPDATE":
-                        console.log("hi")
                         newArray = prev.UserPlan.map(e=>{
                             if(e.title !== newData.data.title)
                                 return e

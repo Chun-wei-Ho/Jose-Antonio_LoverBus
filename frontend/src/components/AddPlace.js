@@ -28,11 +28,12 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
   const [addSpot] = useMutation(NEWSPOT_MUTATION)
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
   const onclick = async () => {
-    if(title === ""){
-      alert("Please input a title")
-    }
     if(!currentMarker) {
       alert("sellect a marker to add")
+      return
+    }
+    if(title === ""){
+      alert("Please input a title")
       return
     }
     const {lng, lat} = currentMarker._lngLat
@@ -52,6 +53,7 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
         markerID: marker_id
       }})
     }
+    alert("spot saved")
   }
   const { TextArea } = Input;
   return (
