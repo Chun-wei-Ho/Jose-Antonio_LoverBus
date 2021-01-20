@@ -48,6 +48,7 @@ const TourMap = (props) => {
 
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
+    const [insertionMode, setInsertionMode] = useState(false)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const history = useHistory();
 
@@ -71,7 +72,7 @@ const TourMap = (props) => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <AddPlace username={username} currentMarker={currentMarker} plan={plan}
+                <AddPlace username={username} currentMarker={currentMarker} plan={plan} insertionMode={insertionMode}
                         title={title} setTitle={setTitle} description={description}
                         setDescription={setDescription}></AddPlace>
             </Sider>
@@ -89,7 +90,7 @@ const TourMap = (props) => {
                     minHeight: 280,
                 }}
                 >
-                <MapBox username={username} markerCallback={markerCallback}
+                <MapBox username={username} markerCallback={markerCallback} insertionMode={insertionMode}
                     title={title} setTitle={setTitle} description={description}
                         setDescription={setDescription}></MapBox>
                 {showUsermMenu?( //show menu if click account button
