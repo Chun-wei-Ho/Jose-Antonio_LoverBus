@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
+import { useHistory } from 'react-router-dom';
+import { Tooltip, Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
     Drawer, Col, Row, Select} from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
@@ -39,7 +40,7 @@ export default function TourPlan(props){
     const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
     const username = usernameData? usernameData.Username : null
     const planState = planList? planList.UserPlan : []
-    console.log(planState)
+    // console.log(planState)
     // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const [re, setre] = useState(true)
@@ -49,6 +50,14 @@ export default function TourPlan(props){
     const [currentSpot, setCurrentSpot] = useState(0)
     const [newStartTime, setnewStartTime] = useState("")
     const [newEndTime, setnewEndTime] = useState("")
+
+    const history = useHistory();
+    const backToMap = () => {
+         history.push(`/${props.match.params.userId}`)
+    }
+    const logout = () => {
+         history.push("/")
+    }
     
     const handleStartChange = (ev) => {
         if (!ev.target['validity'].valid) return;
@@ -62,11 +71,6 @@ export default function TourPlan(props){
         setnewEndTime(dt);
         console.log(dt)
       }
-    // if(!planState || planState.length === 0){
-    //     return (<React.Fragment/>)
-    //     console.log(planState)
-    //     console.log(11)
-    // }
     return (
         <React.Fragment>
             <Layout>
@@ -90,8 +94,15 @@ export default function TourPlan(props){
                     {
                       planState.map(({ title }, i) => (
                         <Menu.Item key={i} onClick={() => {setCurrentPlan(i)
-                        }}>
+                        }} style={{display: "flex", alignItems: "center"}}>
                             {title}
+                            <Button 
+                            className="deletePlan"
+                            type="dashed"
+                            size="small"
+                            style={{position: "absolute", right: "10px", fontSize: "5px"}}
+                            onClick={() => {}}
+                            >x</Button>
                         </Menu.Item>
                       ))
                     }
@@ -102,7 +113,7 @@ export default function TourPlan(props){
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Plan List</Breadcrumb.Item>
-                {(!planState || planState.length === 0)?(<Breadcrumb.Item>No Plan Right Now</Breadcrumb.Item>)
+                {(!planState || planState.length === 0)?(<Breadcrumb.Item></Breadcrumb.Item>)
                 :(<Breadcrumb.Item>{planState[currentPlan].title}</Breadcrumb.Item>)}   
                 </Breadcrumb>
                 <Content
@@ -116,7 +127,7 @@ export default function TourPlan(props){
                     <div className="table-title">
                         {(!planState || planState.length === 0)?(<h3></h3>):(<h3> {planState[currentPlan].title} </h3>)}
                     </div>
-                    {((!planState || planState.length === 0)?(<div>No Plan Right Now</div>):
+                    {((!planState || planState.length === 0)?(<h3> No Plan Right Now </h3>):
                         (<React.Fragment>
                             {(planState[currentPlan].spots.length !== 0)?(
                                 <table className="table-fill">
@@ -218,10 +229,10 @@ export default function TourPlan(props){
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}}>
+                    <Menu.Item key="1" style={{margin: '0px'}} onClick={backToMap}>
                         Tour Map
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
+                    <Menu.Item key="2" style={{left: '0px'}} onClick={logout}>
                         logout
                     </Menu.Item>
                     </Menu>
