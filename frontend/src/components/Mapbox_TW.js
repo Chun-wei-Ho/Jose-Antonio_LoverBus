@@ -5,136 +5,100 @@ import { Button } from 'antd';
 import "./site.css"
 
 import {
-// for query
-MARKER_QUERY,
-// for mutation
-// ADD_MARKER_MUTATION,
-// DELETE_MARKER_MUTATION,
-// UPDATE_MARKER_MUTATION,
-// for subscription
-MARKERS_SUBSCRIPTION
-} from '../graphql'
+    // for query
+    MARKER_QUERY,
+    // for mutation
+    ADD_MARKER_MUTATION,
+    // DELETE_MARKER_MUTATION,
+    // UPDATE_MARKER_MUTATION,
+    // for subscription
+  } from '../graphql'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
 
-const MapBox = ({username, markerCallback, currentMarkerContent}) => {
-    
-    const [View, setView] = useState({
-        lng: 121.55,
-        lat: 25.05,
-        zoom: 12
-    })
-    const { subscribeMarker, ...markers } = useQuery(
-        MARKER_QUERY,
-        { variables: { username: username } }
-        )
-    const [insertionMode, setInsertionMode] = useState(false)
+const MapBox = ({username}) => {
 
+  const [View, setView] = useState({
+    lng: 121.55,
+    lat: 25.05,
+    zoom: 12
+  })
+  const { subscribeMarker, ...markers } = useQuery(
+    MARKER_QUERY,
+    { variables: { username: username } }
+    // Marker data in result.data
+  )
+  const [addMarker]= useMutation(ADD_MARKER_MUTATION)
 
-    const [map, setMap] = useState(null);
-    const mapContainer = useRef(null);
-    const {data, subscribeToMore} = useQuery(MARKER_QUERY, {variables:{username: username}})
+  const [map, setMap] = useState(null);
+  const mapContainer = useRef(null);
 
-    const [currentMarker, _setCurrentMarker] = useState(null);
-    const setCurrentMarker = e => {_setCurrentMarker(e); markerCallback(e);} 
-    const [test, setTest] = useState(0);
-    const [markerLoaded, setMarkerLoaded] = useState(false);
+  const [clicklnglat, setClicklnglat] = useState([0, 0]);
+  const [test, setTest] = useState(0);
 
-    useEffect(() => {
-        const initializeMap = ({ setMap, mapContainer}) => {
-            const map = new mapboxgl.Map({
-                container: mapContainer.current,
-                style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
-                center: [View.lng, View.lat],
-                zoom: View.zoom
-                });
+  useEffect(() => {
+    const initializeMap = ({ setMap, setClicklnglat, mapContainer }) => {
+      const map = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
+        center: [View.lng, View.lat],
+        zoom: View.zoom
+      });
 
-            map.on("move", () => {
-                setView(map.getCenter().lng.toFixed(4), map.getCenter().lat.toFixed(4), map.getCenter().lat.toFixed(4))
-                setTest(4)
-            });
+      map.on("move", () => {
+        setView(map.getCenter().lng.toFixed(4), map.getCenter().lat.toFixed(4), map.getCenter().lat.toFixed(4))
+        setTest(4)
+      });
 
-            map.on("load", () => {
-                setMap(map);
-                map.resize();
-            });
-        }
-        if (!map) initializeMap({ setMap, mapContainer});
-    }, [map]);
+      const clickPoint = (e) => {
+        setClicklnglat([e.lngLat.lng, e.lngLat.lat])
+        var popup = new mapboxgl.Popup()
+          .setHTML('<h3>A point</h3>');
 
-    useEffect(()=>{
-        if(map && insertionMode){
-            const clickPoint = (e) => {
-                if(currentMarker) currentMarker.remove()
+        var marker = new mapboxgl.Marker()
+          .setLngLat([e.lngLat.lng, e.lngLat.lat])
+          .setPopup(popup)
+          .addTo(map);
 
-                var marker = new mapboxgl.Marker()
-                .setLngLat([e.lngLat.lng, e.lngLat.lat])
-                .addTo(map)
-                
-                setCurrentMarker(marker)
-            };
-            map.once('click', clickPoint);
-            return ()=>{map.off('click', clickPoint);}
-        }
-        else if(map && !insertionMode && currentMarker){
-            currentMarker.remove()
-            setCurrentMarker(null)
-        }
-    }, [map, insertionMode, currentMarker]);
+        const newMarker = { username: username, title: "hi", coordinates: [120.1, 25.1], description: "fuck up"}
+        addMarker({ variables: newMarker })
+      };
+      map.on('click', clickPoint);
+      map.on("load", () => {
+        setMap(map);
+        map.resize();
+      });
+    }
+    if (!map) initializeMap({ setMap, setClicklnglat, mapContainer });
+  }, [map]);
 
-    if(map && data && !markerLoaded){
-        setMarkerLoaded(true)
-        data.Marker.map(e=>{
-            const linLat = e.geometry.coordinates
+  useEffect(()=>{
+      console.log(222)
+      if(map){
+        const markerRecord = markers.data.Marker
+        console.log(11)
+        if (markers !== "undefined"){
+          for (let index = 0; index < markerRecord.length; index++) {
             var popup = new mapboxgl.Popup()
-            .setHTML(`<h3>${e.properties.title}<h3><p>${e.properties.description}</p>`);
-
+            .setHTML('<h3>title</h3>');
             var marker = new mapboxgl.Marker()
-            .setLngLat(linLat)
-            .setPopup(popup)
-            .addTo(map)
-        })
-    }
+              .setLngLat([markerRecord[index].geometry.coordinates.lng, markerRecord[index].geometry.coordinates.lat])
+              .setPopup(popup)
+              .addTo(map);         
+          }
+        }
+      }
+  }, [username])
 
-    useEffect(()=>{
-        if(!subscribeToMore || !map) return;
-        subscribeToMore({
-            document: MARKERS_SUBSCRIPTION,
-            variables: {username: username},
-            updateQuery: (prev, { subscriptionData }) => {
-                const newData = subscriptionData.data.subscribeMarker
-                switch(newData.mutation){
-                    case "NEW":
-                        const linLat = newData.data.geometry.coordinates
-                        var popup = new mapboxgl.Popup()
-                        .setHTML(`<h3>${newData.data.properties.title}<h3><p>${newData.data.properties.description}</p>`);
-
-                        var marker = new mapboxgl.Marker()
-                        .setLngLat(linLat)
-                        .setPopup(popup)
-                        .addTo(map)
-                    break
-                    default:
-                        console.log(`Warning: unknown mutation ${newData.mutation}`)
-                    break
-                }
-            }
-        })
-    }, [map])
-
-    const buttonOnclick = () => {
-        setInsertionMode(!insertionMode)
-    }
-    const color = insertionMode? "green" : "white"
-    return (
-        <div>
-            <div className='sidebarStyle'>
-                <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom} </div>
-            </div>
-            <Button style={{position: "relative", right: "0px","background-color":color}}
-             onClick={buttonOnclick}>+</Button>
-            <div ref={el => (mapContainer.current = el)} className='mapContainer' />
-        </div>)
+  return (
+    <div>
+      <div className='sidebarStyle'>
+        <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom} </div>
+      </div>
+      <Button style={{position: "relative", right: "0px"}}>+</Button>
+      <div ref={el => (mapContainer.current = el)} className='mapContainer' />
+    </div>
+  )
 }
 
 export default MapBox
