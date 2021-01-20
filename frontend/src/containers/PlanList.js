@@ -116,7 +116,7 @@ export default function PlanList(args){
                                     <td className='spot-time'>
                                        {new Date(e.spots[0].startTime).toLocaleString()}
                                        <p className="timeto">to</p>
-                                        <p>{new Date(e.spots[e.spots.length].endTime).toLocaleString()}</p> 
+                                        <p>{new Date(e.spots[e.spots.length-1].endTime).toLocaleString()}</p> 
                                     </td>
                                     <td className='spot-button'>
                                         <button onClick={()=>{}}> Delete Plan</button> 

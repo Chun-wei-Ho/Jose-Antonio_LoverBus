@@ -4,6 +4,14 @@ import TourMap from './containers/TourMap';
 import TourPlan from './containers/TourPlan';
 import PlanList from './containers/PlanList';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+  
+
 // import reportWebVitals from './reportWebVitals';
 
 import { ApolloClient, InMemoryCache } from 'apollo-boost'
@@ -44,7 +52,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <PlanList />
+        <TourMap />
     </ApolloProvider>,
     document.getElementById('root')
 );
