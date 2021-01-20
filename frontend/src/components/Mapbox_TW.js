@@ -85,10 +85,10 @@ const MapBox = ({username, markerCallback, currentMarkerContent, title, setTitle
             map.once('click', clickPoint);
             return ()=>{map.off('click', clickPoint);}
         }
-        else if(map && !insertionMode && currentMarker){
-            currentMarker.remove()
-            setCurrentMarker(null)
-        }
+        // else if(map && !insertionMode && currentMarker){
+        //     currentMarker.remove()
+        //     setCurrentMarker(null)
+        // }
     }, [map, insertionMode, currentMarker]);
 
     if(map && data && !markerLoaded){
@@ -104,8 +104,9 @@ const MapBox = ({username, markerCallback, currentMarkerContent, title, setTitle
             .addTo(map)
 
             marker.getElement().addEventListener('click', () => {
-                  setTitle(e.properties.title)
-                  setDescription(e.properties.description)
+                    setCurrentMarker(marker)
+                    setTitle(e.properties.title)
+                    setDescription(e.properties.description)
                 });
         })
     }
@@ -129,8 +130,9 @@ const MapBox = ({username, markerCallback, currentMarkerContent, title, setTitle
                         .addTo(map)
 
                         marker.getElement().addEventListener('click', () => {
-                          setTitle(newData.data.properties.title)
-                          setDescription(newData.data.properties.description)
+                            setCurrentMarker(marker)
+                            setTitle(newData.data.properties.title)
+                            setDescription(newData.data.properties.description)
                         });
                     break
                     default:
@@ -142,6 +144,8 @@ const MapBox = ({username, markerCallback, currentMarkerContent, title, setTitle
     }, [map])
 
     const buttonOnclick = () => {
+        currentMarker.remove()
+        setCurrentMarker(null)
         setInsertionMode(!insertionMode)
     }
     const color = insertionMode? "green" : "white"
