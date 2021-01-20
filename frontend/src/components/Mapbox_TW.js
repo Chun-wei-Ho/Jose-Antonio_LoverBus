@@ -67,12 +67,8 @@ const MapBox = ({username, markerCallback}) => {
             const clickPoint = (e) => {
                 if(currentMarker) currentMarker.remove()
 
-                var popup = new mapboxgl.Popup()
-                .setHTML('<h3>A point</h3>');
-
                 var marker = new mapboxgl.Marker()
                 .setLngLat([e.lngLat.lng, e.lngLat.lat])
-                .setPopup(popup)
                 .addTo(map)
                 
                 setCurrentMarker(marker)
@@ -126,21 +122,6 @@ const MapBox = ({username, markerCallback}) => {
         })
     }, [map])
 
-    // useEffect(()=>{
-    //     if(map){
-    //         const markerRecord = markers.data.Marker
-    //         if (markers !== "undefined"){
-    //             for (let index = 0; index < markerRecord.length; index++) {
-    //                 var popup = new mapboxgl.Popup()
-    //                 .setHTML('<h3>title</h3>');
-    //                 var marker = new mapboxgl.Marker()
-    //                 .setLngLat([markerRecord[index].geometry.coordinates.lng, markerRecord[index].geometry.coordinates.lat])
-    //                 .setPopup(popup)
-    //                 .addTo(map);         
-    //             }
-    //         }
-    //     }
-    // }, [username])
     const buttonOnclick = () => {
         setInsertionMode(!insertionMode)
     }
