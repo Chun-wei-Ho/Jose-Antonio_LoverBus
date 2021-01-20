@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'
 import { Input, Layout, Menu, Breadcrumb, Button, Card, Select } from 'antd';
 import { TagOutlined, CheckOutlined} from '@ant-design/icons';
 import SweetAlert from "react-bootstrap-sweetalert";
+import usePlan from '../components/usePlan'
 
 import {
 // for query
@@ -45,6 +46,7 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
 
     setTitle("")
     setDescription("")
+    console.log(plan)
   }
   const { TextArea } = Input;
   return (

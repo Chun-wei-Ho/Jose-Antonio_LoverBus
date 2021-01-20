@@ -101,7 +101,9 @@ const TourMap = (props) => {
                         {/* <Link to="/">Tour Map</Link> */}
                         Tour Plan
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px', textAlign: 'center'}} onClick={Logout}>
+                    <Menu.Item key="2" style={{left: '0px', textAlign: 'center'}} onClick={
+                        Logout
+                        }>
                         Logout
                     </Menu.Item>
                     </Menu>

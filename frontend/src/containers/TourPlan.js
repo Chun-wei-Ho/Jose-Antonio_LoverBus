@@ -19,9 +19,8 @@ import {
     DELETE_PLAN_MUTATION,
 //     NEW_SPOT_MUTATION,
     DELETE_SPOT_MUTATION,
-//     UPDATE_SPOTSTARTTIME_MUTATION,
-//     UPDATE_SPOTENDTIME_MUTATION,
-    // SIGNUP_MUTATION
+    UPDATE_SPOTSTARTTIME_MUTATION,
+    UPDATE_SPOTENDTIME_MUTATION,
 //     // for subscription
   } from '../graphql'
 
@@ -36,6 +35,9 @@ export default function TourPlan(props){
 
     const [deletePlan] = useMutation(DELETE_PLAN_MUTATION)
     const [deleteSpot] = useMutation(DELETE_SPOT_MUTATION)
+    const [updateSpotStartTime] = useMutation(UPDATE_SPOTSTARTTIME_MUTATION)
+    const [updateSpotEndTime] = useMutation(UPDATE_SPOTENDTIME_MUTATION)
+
     // const username = usernameData? usernameData.Username : null
     // console.log(planState)
     // console.log(usrename)
@@ -128,6 +130,7 @@ export default function TourPlan(props){
                 }}
                 >
                     <div className="table-title">
+                        {console.log(planState)}
                         {(!planState || planState.length === 0)?(<h3></h3>):(<h3> {planState[currentPlan].title} </h3>)}
                     </div>
                     {((!planState || planState.length === 0)?(<h3> No Plan Right Now </h3>):
@@ -173,7 +176,16 @@ export default function TourPlan(props){
                                                                 Cancel
                                                             </Button>
                                                             {/* <Button onClick={registerAccount} */}
-                                                            <Button onClick={() => {}}
+                                                            <Button onClick={() => {
+                                                                updateSpotStartTime({variables:{
+                                                                    _id: planState[i].spots._id,
+                                                                    time: new Date(newStartTime).toLString()
+                                                                  }})
+                                                                updateSpotEndTime({variables:{
+                                                                    _id: planState[i].spots._id,
+                                                                    time: new Date(newEndTime).toLString()
+                                                                  }})
+                                                            }}
                                                                 type="primary">
                                                                 Change Time
                                                             </Button>
