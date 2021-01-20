@@ -84,6 +84,7 @@ type PlanSubscribeData{
 enum PlanMutationType{
     NEW
     DELETE
+    UPDATE
 }
 
 enum MarkerMutationType{

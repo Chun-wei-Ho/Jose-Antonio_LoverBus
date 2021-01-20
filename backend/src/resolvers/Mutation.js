@@ -1,3 +1,4 @@
+const parsePlan = require('./parsePlan')
 const Mutation = {
     addMarker(parent, {marker}, {models, pubsub}, info){
         const _marker = new models.Marker({
@@ -53,6 +54,9 @@ const Mutation = {
     },
     async deletePlan(parent, {_id}, {models, pubsub}, info){
         const plan = await models.Plan.findById(_id)
+        plan.spotID.map(e=>{
+            models.Spot.findByIdAndDelete(e, () => {})
+        })
         models.Plan.findByIdAndDelete(_id, ()=>{})
         pubsub.publish(`plan.${plan.username}`, {subscribePlan: {
             mutation: 'DELETE', data: {_id: plan._id} 
@@ -78,8 +82,16 @@ const Mutation = {
         if( ! await models.Marker.findById(markerID)){
             throw "Error: Marker doesn't exist!!"
         }
-        spot.save()
-        models.Plan.findByIdAndUpdate({_id: planID}, {$push: {spotID: spot._id}}, () => {})
+        const plan = await models.Plan.findByIdAndUpdate({_id: planID}, {$push: {spotID: spot._id}}, () => {})
+        if(plan){
+            await spot.save()
+            const parsedPlan = await parsePlan.bind({models})(plan)
+            console.log(plan)
+            console.log(parsedPlan)
+            // pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
+                // mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
+            // }})
+        }
         return spot._id
     },
     async deleteSpot(parent, {_id}, {models, pubsub}, info){

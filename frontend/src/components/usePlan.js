@@ -42,6 +42,11 @@ export default function usePlan(_userId){
                     case "DELETE":
                         const newArray = prev.UserPlan.filter(e=>e._id !== newData.data._id)
                         return {...prev, UserPlan:newArray}
+                    break
+                    case "UPDATE":
+                        console.log(prev)
+                        console.log(newData.data)
+                    break
                     default:
                         console.log(`Warning: unknown mutation ${newData.mutation}`)
                     break
