@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import mapboxgl, {MapboxGeocoder} from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
+import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { Button } from 'antd';
 import "./site.css"
 
