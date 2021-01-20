@@ -18,7 +18,7 @@ subscription subscribeMarker ($username: String!) {
 }
 `
 
-export const PLAN_SUBSECTION = gql`
+export const PLAN_SUBSCRIPTION = gql`
 subscription subscribePlan($username: String!)
 {
   subscribePlan(username:$username){

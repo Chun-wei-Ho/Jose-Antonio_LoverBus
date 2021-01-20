@@ -5,9 +5,9 @@ import {
 //     // for query
 //     MARKER_QUERY,
 //     PLAN_QUERY,
-    // USERNAME_QUERY,
+    USERNAME_QUERY,
     USERPLAN_QUERY,
-    PLAN_SUBSECTION
+    PLAN_SUBSCRIPTION
     // SIGNIN_QUERY,
 //     // for mutation
 //     ADD_MARKER_MUTATION,
@@ -25,7 +25,26 @@ import {
   } from '../graphql'
 
 export default function usePlan(_userId){
-    const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:_userId}})
+    const {data:planList, error, subscribeToMore} = useQuery(USERPLAN_QUERY, {variables:{_userId:_userId}})
+    const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:_userId}})
+    const username = usernameData? usernameData.Username : ""
     const plan = planList? planList.UserPlan : []
-    return {plan, error}
+    useEffect(()=>{
+        subscribeToMore({
+            document: PLAN_SUBSCRIPTION,
+            variables: {username: username},
+            updateQuery: (prev, { subscriptionData }) => {
+                const newData = subscriptionData.data.subscribePlan
+                switch(newData.mutation){
+                    case "NEW":
+                        console.log("new")
+                    break
+                    default:
+                        console.log(`Warning: unknown mutation ${newData.mutation}`)
+                    break
+                }
+            }
+        })
+    }, [_userId,subscribeToMore])
+    return {plan, error, username}
 }

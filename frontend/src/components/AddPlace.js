@@ -95,12 +95,10 @@ const AddtoPlan = ({username, plan, list1Value, setList1Value, showList1, setsho
   const onConfirm = (inputValue) => {
     inputValue = inputValue.trim();
     if (list1Options.includes(inputValue)) {
-      console.log("fdsafsfsd")
       setshowList1(false)
       setList1Value(inputValue)
     } else {
       setshowList1(false)
-      console.log(username,inputValue)
       newPlan({variables:{username:username,title:inputValue}})
       setList1Value(inputValue)
     }

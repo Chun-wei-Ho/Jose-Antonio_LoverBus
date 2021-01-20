@@ -42,11 +42,11 @@ const TourMap = (props) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-    const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
+    // const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
 
-    const {plan, error} = usePlan(props.match.params.userId)
+    const {plan, error, username} = usePlan(props.match.params.userId)
 
-    const username = usernameData? usernameData.Username : ""
+    // const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
     const [insertionMode, _setInsertionMode] = useState(false)
     const setInsertionMode = (mode) => {_setInsertionMode(mode)}
