@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useHistory } from 'react-router-dom';
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
     Drawer, Col, Row, Select} from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
@@ -39,7 +40,7 @@ export default function TourPlan(props){
     const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
     const username = usernameData? usernameData.Username : null
     const planState = planList? planList.UserPlan : []
-    console.log(planState)
+    // console.log(planState)
     // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const [re, setre] = useState(true)
@@ -49,6 +50,14 @@ export default function TourPlan(props){
     const [currentSpot, setCurrentSpot] = useState(0)
     const [newStartTime, setnewStartTime] = useState("")
     const [newEndTime, setnewEndTime] = useState("")
+
+    const history = useHistory();
+    const backToMap = () => {
+         history.push(`/${props.match.params.userId}`)
+    }
+    const logout = () => {
+         history.push("/")
+    }
     
     const handleStartChange = (ev) => {
         if (!ev.target['validity'].valid) return;
@@ -218,10 +227,10 @@ export default function TourPlan(props){
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}}>
+                    <Menu.Item key="1" style={{margin: '0px'}} onClick={backToMap}>
                         Tour Map
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
+                    <Menu.Item key="2" style={{left: '0px'}} onClick={logout}>
                         logout
                     </Menu.Item>
                     </Menu>
