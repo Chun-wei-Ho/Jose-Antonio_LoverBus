@@ -103,6 +103,8 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
             .setPopup(popup)
             .addTo(map)
 
+            marker._id = e._id
+
             marker.getElement().addEventListener('click', () => {
                     setCurrentMarker(marker)
                     setTitle(e.properties.title)
@@ -129,6 +131,8 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                         .setPopup(popup)
                         .addTo(map)
 
+                        marker._id = newData.data._id
+
                         marker.getElement().addEventListener('click', () => {
                             setCurrentMarker(marker)
                             setTitle(newData.data.properties.title)
@@ -144,10 +148,10 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
     }, [map])
 
     const buttonOnclick = () => {
-        if (currentMarker){
+        if (currentMarker && insertionMode){
             currentMarker.remove()
-            setCurrentMarker(null)    
         }
+        setCurrentMarker(null)
         setInsertionMode(!insertionMode)
     }
     const color = insertionMode? "green" : "white"

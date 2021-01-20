@@ -85,10 +85,7 @@ export const NEWSPOT_MUTATION = gql`
     newSpot(
       planID: $planID
       markerID: $markerID
-    ) {
-      planID
-      markerID
-    }
+    )
   }
 `
 export const DELETE_SPOT_MUTATION = gql`

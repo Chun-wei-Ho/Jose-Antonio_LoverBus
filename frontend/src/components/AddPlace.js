@@ -12,6 +12,7 @@ import {
 ADD_MARKER_MUTATION,
 // DELETE_MARKER_MUTATION,
 // UPDATE_MARKER_MUTATION,
+NEWSPOT_MUTATION,
 NEWPLAN_MUTATION,
 // for subscription
 } from '../graphql'
@@ -20,12 +21,12 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode, plan, title, setTitle, description, setDescription}) => {
   const setCurrentMarkerContent = e => { markerContentCallback(e);} 
-
+  const [planId, setPlanId] = useState("")
   const [list1Value, setList1Value] = useState("")
   const [showList1, setshowList1] = useState(false)
-
+  const [addSpot] = useMutation(NEWSPOT_MUTATION)
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
-  const onclick = () => {
+  const onclick = async () => {
     if(title === ""){
       alert("Please input a title")
     }
@@ -35,16 +36,23 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
     }
     const {lng, lat} = currentMarker._lngLat
 
-    addMarker({variables:{
-      username: username,
-      title: title,
-      coordinates: [lng, lat],
-      description: description
-    }})
-    // addMarkContent({})
-
-    setTitle("")
-    setDescription("")
+    var marker_id = currentMarker._id
+    if(insertionMode){
+      marker_id = await addMarker({variables:{
+        username: username,
+        title: title,
+        coordinates: [lng, lat],
+        description: description
+      }})
+      marker_id = marker_id.data.addMarker
+    }
+    if(marker_id !== "" && planId !== ""){
+      addSpot({variables:{
+        planID: planId,
+        markerID: marker_id
+      }})
+    }
+    
   }
   const { TextArea } = Input;
   return (
@@ -68,7 +76,8 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
         type="inner"
         title="My Plan List">
         <AddtoPlan plan={plan} list1Value={list1Value} setList1Value={setList1Value}
-                showList1={showList1} setshowList1={setshowList1} username={username}></AddtoPlan>
+                showList1={showList1} setshowList1={setshowList1} username={username}
+                planId={planId} setPlanId={setPlanId}></AddtoPlan>
       </Card>
       <br></br>
       <div>
@@ -81,25 +90,31 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
 const NEW_ITEM = "NEW_ITEM";
 const Option = Select.Option;
 
-const AddtoPlan = ({username, plan, list1Value, setList1Value, showList1, setshowList1}) => {
+const AddtoPlan = ({username, plan, list1Value, setList1Value, showList1, setshowList1, planId, setPlanId}) => {
   const list1Options = plan.map(e=>e.title)
   const [newPlan] = useMutation(NEWPLAN_MUTATION)
+  const setDisplayValue = (v) => {
+    setList1Value(v);
+    const _id = plan.filter(e=>e.title === v)[0]._id
+    setPlanId(_id)
+  }
   const onChangeList1 = (value) => {
     if (value !== NEW_ITEM) {
-      setList1Value(value)
+      setDisplayValue(value)
     } else {
       setshowList1(true)
     }
   };
 
-  const onConfirm = (inputValue) => {
+  const onConfirm = async (inputValue) => {
     inputValue = inputValue.trim();
     if (list1Options.includes(inputValue)) {
       setshowList1(false)
-      setList1Value(inputValue)
+      setDisplayValue(inputValue)
     } else {
       setshowList1(false)
-      newPlan({variables:{username:username,title:inputValue}})
+      const _id = await newPlan({variables:{username:username,title:inputValue}})
+      setPlanId(_id.data.newPlan)
       setList1Value(inputValue)
     }
   };
@@ -116,7 +131,7 @@ const AddtoPlan = ({username, plan, list1Value, setList1Value, showList1, setsho
           onChange={onChangeList1}
         >
           {list1SelectOptions}
-          <Option value={NEW_ITEM}>+ New Item</Option>
+          <Option value={NEW_ITEM}>+ New Plan</Option>
         </Select>
 
         <SweetAlert
