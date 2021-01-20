@@ -6,24 +6,19 @@ import { Tooltip, Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
-import SearchInfo from "../components/SearchInfo"
+import usePlan from '../components/usePlan'
 
 import {
 //     // for query
-//     MARKER_QUERY,
 //     PLAN_QUERY,
     USERNAME_QUERY,
     USERPLAN_QUERY,
-    // SIGNIN_QUERY,
 //     // for mutation
-//     ADD_MARKER_MUTATION,
-//     DELETE_MARKER_MUTATION,
-//     UPDATE_MARKER_MUTATION,
 //     NEW_PLAN_MUTATION,
 //     RENAME_PLAN_MUTATION,
-//     DELETE_PLAN_MUTATION,
+    DELETE_PLAN_MUTATION,
 //     NEW_SPOT_MUTATION,
-//     delete_Spot_MUTATION,
+    DELETE_SPOT_MUTATION,
 //     UPDATE_SPOTSTARTTIME_MUTATION,
 //     UPDATE_SPOTENDTIME_MUTATION,
     // SIGNUP_MUTATION
@@ -37,9 +32,11 @@ export default function TourPlan(props){
     // const [username, setUsername] = useState("")
     // const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
     const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
-    const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
+    const {plan:planState, error} = usePlan(props.match.params.userId)
+
+    const [deletePlan] = useMutation(DELETE_PLAN_MUTATION)
+    const [deleteSpot] = useMutation(DELETE_SPOT_MUTATION)
     const username = usernameData? usernameData.Username : null
-    const planState = planList? planList.UserPlan : []
     // console.log(planState)
     // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
@@ -101,7 +98,13 @@ export default function TourPlan(props){
                             type="dashed"
                             size="small"
                             style={{position: "absolute", right: "10px", fontSize: "5px"}}
-                            onClick={() => {}}
+                            onClick={() => {
+                                deletePlan({variables:{
+                                    _id: planState[i]._id
+                                  }})
+                                setre(!re)
+                                console.log(planState)
+                            }}
                             >x</Button>
                         </Menu.Item>
                       ))
@@ -217,6 +220,10 @@ export default function TourPlan(props){
                                                     // setPlan(temp)
                                                     console.log("TODO: set plan")
                                                     setre(!re)
+                                                    deleteSpot({variables:{
+                                                        _id: planState[i].spots._id
+                                                      }})
+                                                    console.log(planState[i].spots._id)                 
                                                 }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
                                             </td>
                                         </tr>

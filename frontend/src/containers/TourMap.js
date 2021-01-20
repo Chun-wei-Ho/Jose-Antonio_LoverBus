@@ -7,6 +7,7 @@ import SearchInfo from "../components/SearchInfo"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, 
     Drawer, Col, Row, Select, DatePicker } from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
+import usePlan from '../components/usePlan'
 
 import {
 //     // for query
@@ -42,9 +43,8 @@ const TourMap = (props) => {
     const [description, setDescription] = useState("");
 
     const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
-    const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
 
-    const plan = planList? planList.UserPlan : []
+    const {plan, error} = usePlan(props.match.params.userId)
 
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)

@@ -17,3 +17,33 @@ subscription subscribeMarker ($username: String!) {
     }
 }
 `
+
+export const PLAN_SUBSECTION = gql`
+subscription subscribePlan($username: String!)
+{
+  subscribePlan(username:$username){
+    mutation
+    data{
+      username
+      title
+      spots{
+        startTime
+        endTime
+        location{
+          username
+          properties{
+            title
+            description
+          }
+          geometry{
+            coordinates
+          }
+          _id
+        }
+        _id
+      }
+      _id
+    }
+  }
+}
+`

@@ -25,7 +25,6 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
   const [showList1, setshowList1] = useState(false)
 
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
-  const [newPlan] = useMutation(NEWPLAN_MUTATION)
   const onclick = () => {
     if(title === ""){
       alert("Please input a title")
@@ -42,12 +41,6 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
       coordinates: [lng, lat],
       description: description
     }})
-
-    newPlan({variables:{
-      username: username,
-      title: title,
-    }})
-
     // addMarkContent({})
 
     setTitle("")
@@ -75,7 +68,7 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
         type="inner"
         title="My Plan List">
         <AddtoPlan plan={plan} list1Value={list1Value} setList1Value={setList1Value}
-                showList1={showList1} setshowList1={setshowList1}></AddtoPlan>
+                showList1={showList1} setshowList1={setshowList1} username={username}></AddtoPlan>
       </Card>
       <br></br>
       <div>
@@ -88,10 +81,9 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
 const NEW_ITEM = "NEW_ITEM";
 const Option = Select.Option;
 
-const AddtoPlan = ({plan, list1Value, setList1Value, showList1, setshowList1}) => {
-  // const [list1Options, setlist1Options] = useState(plan)
+const AddtoPlan = ({username, plan, list1Value, setList1Value, showList1, setshowList1}) => {
   const list1Options = plan.map(e=>e.title)
-
+  const [newPlan] = useMutation(NEWPLAN_MUTATION)
   const onChangeList1 = (value) => {
     if (value !== NEW_ITEM) {
       setList1Value(value)
@@ -103,11 +95,13 @@ const AddtoPlan = ({plan, list1Value, setList1Value, showList1, setshowList1}) =
   const onConfirm = (inputValue) => {
     inputValue = inputValue.trim();
     if (list1Options.includes(inputValue)) {
+      console.log("fdsafsfsd")
       setshowList1(false)
       setList1Value(inputValue)
     } else {
       setshowList1(false)
-      // setlist1Options([inputValue, ...list1Options])
+      console.log(username,inputValue)
+      newPlan({variables:{username:username,title:inputValue}})
       setList1Value(inputValue)
     }
   };
@@ -136,17 +130,7 @@ const AddtoPlan = ({plan, list1Value, setList1Value, showList1, setshowList1}) =
           inputPlaceholder="Enter Plan Name"
           animation="slide-from-top"
           validationMsg="Please enter a name!"
-          onConfirm={inputValue => {
-            inputValue = inputValue.trim();
-            if (list1Options.includes(inputValue)) {
-              setshowList1(false)
-              setList1Value(inputValue)
-            } else {
-              setshowList1(false)
-              // setlist1Options([inputValue, ...list1Options])
-              setList1Value(inputValue)
-            }
-          }}
+          onConfirm={onConfirm}
           onCancel={() => {
             setshowList1(false);
           }}

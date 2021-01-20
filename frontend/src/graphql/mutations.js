@@ -73,12 +73,7 @@ export const DELETE_PLAN_MUTATION = gql`
   ) {
     deletePlan(
       _id: $_id
-    ) {
-        username
-        title
-        coordinates
-        description
-    }
+    )
   }
 `
 
