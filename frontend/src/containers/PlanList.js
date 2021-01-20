@@ -1,32 +1,55 @@
 import React, { useState } from "react"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
-import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
-import SearchInfo from "../components/SearchInfo"
+import './TourPlan.css'
 
-
+const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
-const PlanList = () => {  
-    var plans=[]
-    const [username, setUsername] = useState("")
-    const [showUsermMenu, setShowUsermMenu] = useState(false)  
+export default function PlanList(args){
+    // const [username, setUsername] = useState("")
+    const username = 'Jose Antonio'
+    const [showUsermMenu, setShowUsermMenu] = useState(false)
+
+    const planList = {
+        title: "Baby Shark do do do",
+        spots: [
+            {
+                _id: "",
+                startTime: "Wed Feb 19 2020 10:52:00 GMT+0800",
+                endTime: "Wed Feb 19 2020 22:52:00 GMT+0800",
+                location: {
+                        properties: {title: "National Taiwan University", description: "Largest Zoo in Taipei"},
+                        geometry: {coordinates: [2,3]},
+                        _id: ""
+                    }
+            },
+            {
+                _id: "",
+                startTime: "Thu Feb 21 2020 10:52:00 GMT+0800",
+                endTime: "Thu Feb 21 2020 22:52:00 GMT+0800",
+                location: {
+                        properties: {title: "National Kaohsiung University", description: "Moon lovers in Kaohsiung"},
+                        geometry: {coordinates: [2,3]},
+                        _id: ""
+                    }
+            }
+            ],
+        _id: ""
+        }
     return (
-    <React.Fragment>
-        {plans? ( // 決定是否已有任何的plan
         <React.Fragment>
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
                 <div className="logo" />
-                {/* <Input></Input> */}
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="1" style={{position: "relative", bottom: "100px"}}>
-                        <SearchInfo></SearchInfo>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+                    <Menu.Item key="1" style={{position: "absolute", left: '0px', margin: "0px"}}>
+                        <p>Jose Antonio LoverBus</p>
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
+                    <Menu.Item key="2" style={{position: "absolute", left: '198.4px'}}>
                         nav 1
                     </Menu.Item>
-                    <Menu.Item key="3" style={{left: '0px'}}>
+                    <Menu.Item key="3" style={{position: "absolute", left: '277.68px'}}>
                         nav 2
                     </Menu.Item>
                     <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
@@ -34,12 +57,23 @@ const PlanList = () => {
                     </Menu.Item>
                 </Menu>
             </Header>
-            <Layout>
+            <Layout className='middle'>
+            <Sider height={500} width={200} className="site-layout-background">
+                <h3>Plan List</h3>
+                <Menu theme="blue" mode="vertical">
+                    <Menu.Item key="1" style={{margin: '0px'}}>
+                        Plan 1
+                    </Menu.Item>
+                    <Menu.Item key="2" style={{left: '0px'}}>
+                        Plan 2
+                    </Menu.Item>
+                </Menu>
+            </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
-                <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
+                <Breadcrumb.Item>Plan List</Breadcrumb.Item>
+                <Breadcrumb.Item>{planList.title}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Content
                 className="site-layout-background"
@@ -49,12 +83,40 @@ const PlanList = () => {
                     minHeight: 280,
                 }}
                 >
-                {/*new add*/ }
+                    <div className="table-title"> <h3> {planList.title} </h3> </div>
+                    <table className="table-fill">
+                        <thead>
+                            <tr>
+                                <th className='spot-title'>Title</th>
+                                <th className='spot-description'>Description</th>
+                                <th>Time</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {planList.spots.map(e => (
+                                <tr>
+                                    <td className='spot-title' style={{}}> {e.location.properties.title} </td>
+                                    <td className='spot-description'> {e.location.properties.description} </td>
+                                    <td className='spot-time'>
+                                       {new Date(e.startTime).toLocaleString()}
+                                       <p className="timeto">to</p>
+                                        <p>{new Date(e.endTime).toLocaleString()}</p> 
+                                    </td>
+                                    <td className='spot-button'>
+                                        <button onClick={()=>{}}> Edit Time</button>
+                                        <button onClick={()=>{}}> Delete Spot</button> 
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
                     <Menu.Item key="1" style={{margin: '0px'}}>
-                        Plan List
+                        Tour Map
                     </Menu.Item>
                     <Menu.Item key="2" style={{left: '0px'}}>
                         logout
@@ -71,13 +133,27 @@ const PlanList = () => {
                 <Button className="FooterButton">All</Button>
             </Footer>
             </Layout>
+        {/* <h1> {plan.title} </h1>
+        <table>
+            <thead>
+                <tr>
+                    <td>title</td>
+                    <td>description</td>
+                    <td>time</td>
+                </tr>
+            </thead>
+            <tbody>
+                {plan.spots.map(e => (
+                    <tr>
+                        <td> {e.location.properties.title} </td>
+                        <td> {e.location.properties.description} </td>
+                        <td> {new Date(e.startTime).toLocaleString()}
+                                - {new Date(e.endTime).toLocaleString()} <button onClick={()=>{}}> Edit </button> 
+                                <button onClick={()=>{}}> Delete </button> </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table> */}
         </React.Fragment>
-            
-        ) : (
-            <h1>No Plan</h1>
-        )}
-    </React.Fragment>
     )
 }
-
-export default PlanList;

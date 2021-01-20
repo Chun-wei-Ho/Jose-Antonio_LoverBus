@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TourMap from './containers/TourMap';
 import TourPlan from './containers/TourPlan';
+import PlanList from './containers/PlanList';
 
 // import reportWebVitals from './reportWebVitals';
 
