@@ -42,6 +42,11 @@ const TourMap = () => {
     const [signUp]= useMutation(SIGNUP_MUTATION)
     const [currentMarker, setCurrentMarker] = useState(null)
 
+    const[regisUsername, setRegisUsername] = useState("")
+    const[regisPassword, setRegisPassword] = useState("")
+    const[regisRetype, setRegisRetype] = useState("")
+
+
     const markerCallback = (marker) => { setCurrentMarker(marker) }
 
     const onFinish = (values) => {
@@ -49,6 +54,33 @@ const TourMap = () => {
         setPassword(values.password)
       };
 
+    const registerAccount = async () => {
+        if(regisUsername === ""){
+            alert("Please enter username")
+            return
+        }
+        if(regisPassword === ""){
+            alert("Please enter password")
+            return
+        }
+        if(regisRetype === ""){
+            alert("Please retype password")
+            return
+        }
+        if(regisPassword !== regisRetype){
+            alert("Password mismatch")
+            return
+        }
+        try{
+            await signUp({variables: {username: regisUsername, password: regisPassword}})
+            alert(`Welcome to join us, ${regisUsername}!`)
+            setRegister(false)
+        }
+        catch(err){
+            alert(err)
+            return
+        }
+    }
     return (
     <React.Fragment>
         {signIndata && signIndata.signIn ? ( // 決定是否有輸入 username
@@ -195,11 +227,7 @@ const TourMap = () => {
                                     <Button onClick={() => setRegister(false)} style={{ marginRight: 8 }}>
                                         Cancel
                                     </Button>
-                                    <Button onClick={() => {
-                                        setRegister(false)
-                                        const newAccount = { username: "xx", password: "ddd"}
-                                        signUp({ variables: newAccount })
-                                        console.log(newAccount)}} 
+                                    <Button onClick={registerAccount}
                                         type="primary">
                                         Submit
                                     </Button>
@@ -214,7 +242,8 @@ const TourMap = () => {
                                                 label="Username"
                                                 rules={[{ required: true, message: 'Please enter username' }]}
                                                 >
-                                                <Input placeholder="Please enter username" />
+                                                <Input placeholder="Please enter username"
+                                                    onChange={e=>setRegisUsername(e.target.value)}/>
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -225,7 +254,20 @@ const TourMap = () => {
                                                 label="Password"
                                                 rules={[{ required: true, message: 'Please enter password' }]}
                                                 >
-                                                <Input placeholder="Please enter password" />
+                                                <Input placeholder="Please enter password" type="password"
+                                                    onChange={e=>setRegisPassword(e.target.value)}/>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col>
+                                            <Form.Item
+                                                name="Retype password"
+                                                label="Retype Password"
+                                                rules={[{ required: true, message: 'Please retype password' }]}
+                                                >
+                                                <Input placeholder="Please retype your password" type="password"
+                                                    onChange={e=>setRegisRetype(e.target.value)}/>
                                             </Form.Item>
                                         </Col>
                                     </Row>

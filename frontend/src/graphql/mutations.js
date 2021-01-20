@@ -140,10 +140,7 @@ export const SIGNUP_MUTATION = gql`
     signUp(
       username: $username
       password: $password
-    ) {
-        username
-        password
-    }
+    )
   }
 `
 
