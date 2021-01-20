@@ -73,7 +73,11 @@ export default function Login(){
         if(!signInError || !username) return
         alert(signInError.message)
     }, [signInError])
-
+    const enter_registerAccount = (event)=>{
+        if(event.keyCode===13){
+            registerAccount()
+        }
+    }
     const registerAccount = async () => {
         if(regisUsername === ""){
             alert("Please enter username")
@@ -186,7 +190,9 @@ export default function Login(){
                                             rules={[{ required: true, message: 'Please enter username' }]}
                                             >
                                             <Input placeholder="Please enter username"
-                                                onChange={e=>setRegisUsername(e.target.value)}/>
+                                                onChange={e=>setRegisUsername(e.target.value)}
+                                                onKeyUp={enter_registerAccount}
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -198,7 +204,9 @@ export default function Login(){
                                             rules={[{ required: true, message: 'Please enter password' }]}
                                             >
                                             <Input placeholder="Please enter password" type="password"
-                                                onChange={e=>setRegisPassword(e.target.value)}/>
+                                                onChange={e=>setRegisPassword(e.target.value)}
+                                                onKeyUp={enter_registerAccount}
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -210,7 +218,9 @@ export default function Login(){
                                             rules={[{ required: true, message: 'Please retype password' }]}
                                             >
                                             <Input placeholder="Please retype your password" type="password"
-                                                onChange={e=>setRegisRetype(e.target.value)}/>
+                                                onChange={e=>setRegisRetype(e.target.value)}
+                                                onKeyUp={enter_registerAccount}
+                                            />
                                         </Form.Item>
                                     </Col>
                                 </Row>
