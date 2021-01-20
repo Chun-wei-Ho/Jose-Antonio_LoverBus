@@ -35,16 +35,23 @@ export default function usePlan(_userId){
             variables: {username: username},
             updateQuery: (prev, { subscriptionData }) => {
                 const newData = subscriptionData.data.subscribePlan
+                var newArray
                 switch(newData.mutation){
                     case "NEW":
                         return {...prev, UserPlan:[...prev.UserPlan, newData.data]}
                     break
                     case "DELETE":
-                        const newArray = prev.UserPlan.filter(e=>e._id !== newData.data._id)
+                        newArray = prev.UserPlan.filter(e=>e._id !== newData.data._id)
                         return {...prev, UserPlan:newArray}
                     break
                     case "UPDATE":
-                        return {...prev, "UserPlan":newData.data.spots}
+                        console.log("hi")
+                        newArray = prev.UserPlan.map(e=>{
+                            if(e.title !== newData.data.title)
+                                return e
+                            return newData.data
+                        })
+                        return {...prev, "UserPlan":newArray}
                     break
                     default:
                         console.log(`Warning: unknown mutation ${newData.mutation}`)

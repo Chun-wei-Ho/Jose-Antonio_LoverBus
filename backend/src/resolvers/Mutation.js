@@ -88,7 +88,7 @@ const Mutation = {
             await spot.save()
             const parsedPlan = await parsePlan.bind({models})(plan)
             pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
-                mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
+                mutation: 'UPDATE', data: {username: parsedPlan.username, title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
             }})
         }
         return spot._id
@@ -96,7 +96,14 @@ const Mutation = {
     async deleteSpot(parent, {_id}, {models, pubsub}, info){
         const spot = await models.Spot.findById(_id)
         models.Spot.findByIdAndDelete(_id, () => {})
-        models.Plan.findByIdAndUpdate({_id: spot.planID}, {$pull: {"spotID": _id}}, () => {})
+        const plan = await models.Plan.findByIdAndUpdate({_id: spot.planID}, {$pull: {"spotID": _id}}, () => {})
+
+        const parsedPlan = await parsePlan.bind({models})(plan)
+        console.log(parsedPlan)
+        console.log(plan)
+        pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
+                mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
+        }})
     },
     async updateSpotStartTime(parent, {_id, time}, {models, pubsub}, info){
         const date = new Date(time)
