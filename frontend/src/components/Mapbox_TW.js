@@ -8,7 +8,7 @@ import {
     // for query
     MARKER_QUERY,
     // for mutation
-    // ADD_MARKER_MUTATION,
+    ADD_MARKER_MUTATION,
     // DELETE_MARKER_MUTATION,
     // UPDATE_MARKER_MUTATION,
     // for subscription
@@ -28,7 +28,7 @@ const MapBox = ({username}) => {
     { variables: { username: username } }
     // Marker data in result.data
   )
-  console.log(markers.data)
+  const addMarker= useMutation(ADD_MARKER_MUTATION)
 
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -52,8 +52,6 @@ const MapBox = ({username}) => {
 
       const clickPoint = (e) => {
         setClicklnglat([e.lngLat.lng, e.lngLat.lat])
-        //console.log([e.lngLat.lng, e.lngLat.lat])
-        //console.log(clicklnglat)
         var popup = new mapboxgl.Popup()
           .setHTML('<h3>A point</h3>');
 
@@ -61,21 +59,11 @@ const MapBox = ({username}) => {
           .setLngLat([e.lngLat.lng, e.lngLat.lat])
           .setPopup(popup)
           .addTo(map);
+
+        const newMarker = { username: username, title: "hi", coordinates: [120.1, 25.1], description: "fuck up"}
+        addMarker({ variables: newMarker })
       };
       map.on('click', clickPoint);
-
-      // console.log("dd", markers.data)
-      // if (markers !== "undefined"){
-      //   for (let index = 0; index < markers.data.length; index++) {
-      //     var popup = new mapboxgl.Popup()
-      //     .setHTML('<h3>title</h3>');
-      //     var marker = new mapboxgl.Marker()
-      //       .setLngLat([markers.data.geometry.coordinates.lng, markers.data.geometry.coordinates.lat])
-      //       .setPopup(popup)
-      //       .addTo(map);            
-      //   }
-      // }
-
       map.on("load", () => {
         setMap(map);
         map.resize();
@@ -84,10 +72,27 @@ const MapBox = ({username}) => {
     if (!map) initializeMap({ setMap, setClicklnglat, mapContainer });
   }, [map]);
 
+  useEffect(()=>{
+      console.log(222)
+      if(map){
+        const markerRecord = markers.data.Marker
+        console.log(11)
+        if (markers !== "undefined"){
+          for (let index = 0; index < markerRecord.length; index++) {
+            var popup = new mapboxgl.Popup()
+            .setHTML('<h3>title</h3>');
+            var marker = new mapboxgl.Marker()
+              .setLngLat([markerRecord[index].geometry.coordinates.lng, markerRecord[index].geometry.coordinates.lat])
+              .setPopup(popup)
+              .addTo(map);         
+          }
+        }
+      }
+  }, [username])
+
   return (
     <div>
       <div className='sidebarStyle'>
-        {/* <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom}</div> */}
         <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom} </div>
       </div>
       <Button style={{position: "relative", right: "0px"}}>+</Button>
