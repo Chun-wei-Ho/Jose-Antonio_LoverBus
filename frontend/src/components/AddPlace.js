@@ -12,6 +12,7 @@ import {
 ADD_MARKER_MUTATION,
 // DELETE_MARKER_MUTATION,
 // UPDATE_MARKER_MUTATION,
+NEWPLAN_MUTATION,
 // for subscription
 } from '../graphql'
 
@@ -23,6 +24,7 @@ const AddPlace = ({username, currentMarker, markerContentCallback}) => {
   const setCurrentMarkerContent = e => { markerContentCallback(e);} 
 
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
+  const [newPlan] = useMutation(NEWPLAN_MUTATION)
   const onclick = () => {
     if(title === ""){
       alert("Please input a title")
@@ -35,6 +37,11 @@ const AddPlace = ({username, currentMarker, markerContentCallback}) => {
       title: title,
       coordinates: [lng, lat],
       description: description
+    }})
+
+    newPlan({variables:{
+      username: username,
+      title: title,
     }})
 
     // addMarkContent({})

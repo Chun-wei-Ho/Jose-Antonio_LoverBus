@@ -62,23 +62,17 @@ export default function TourPlan(props){
         setnewEndTime(dt);
         console.log(dt)
       }
-    if(!planState || planState.length === 0)
-    return (<React.Fragment/>)
+    // if(!planState || planState.length === 0){
+    //     return (<React.Fragment/>)
+    //     console.log(planState)
+    //     console.log(11)
+    // }
     return (
         <React.Fragment>
             <Layout>
-            <Header className="header" style={{margin: "0px"}}>
+            <Header className="header" style={{color: "white", fontSize: "20px", margin: "0px"}}>Tour Plan
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="1" style={{position: "relative", bottom: "100px"}}>
-                        <SearchInfo></SearchInfo>
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
-                        nav 1
-                    </Menu.Item>
-                    <Menu.Item key="3" style={{left: '0px'}}>
-                        nav 2
-                    </Menu.Item>
                     <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
                         {username}
                     </Menu.Item>
@@ -108,7 +102,8 @@ export default function TourPlan(props){
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Plan List</Breadcrumb.Item>
-                <Breadcrumb.Item>{planState[currentPlan].title}</Breadcrumb.Item>
+                {(!planState || planState.length === 0)?(<Breadcrumb.Item>No Plan Right Now</Breadcrumb.Item>)
+                :(<Breadcrumb.Item>{planState[currentPlan].title}</Breadcrumb.Item>)}   
                 </Breadcrumb>
                 <Content
                 className="site-layout-background"
@@ -118,103 +113,108 @@ export default function TourPlan(props){
                     minHeight: 280,
                 }}
                 >
-                    <div className="table-title"> <h3> {planState[currentPlan].title} </h3> </div>
-                    {(planState[currentPlan].spots.length !== 0)?
-                    (<table className="table-fill">
-                        <thead>
-                            <tr>
-                                <th className='spot-title'>Title</th>
-                                <th className='spot-description'>Description</th>
-                                <th>Time</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {planState[currentPlan].spots.map((e, i) => (
-                                <tr key={i}>
-                                    <td className='spot-title' style={{}}> {e.location.properties.title} </td>
-                                    <td className='spot-description'> {e.location.properties.description} </td>
-                                    <td className='spot-time'>
-                                       <p>{new Date(e.startTime).toLocaleString()}</p>
-                                       <p className="timeto">to</p>
-                                        <p>{new Date(e.endTime).toLocaleString()}</p> 
-                                    </td>
-                                    <td className='spot-button'>
-                                        <Button onClick={() => {setTime(true)
-                                        setCurrentSpot(i)}} 
-                                        style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Edit Time</Button>
-                                        <React.Fragment>
-                                            <Drawer
-                                                title={planState[currentPlan].spots[currentSpot].location.properties.title}
-                                                width={360}
-                                                onClose={() => {setTime(false)}}
-                                                visible={newTime}
-                                                bodyStyle={{ paddingBottom: 80 }}
-                                                footer={
-                                                    <div
-                                                        style={{
-                                                            textAlign: 'right',
-                                                    }}
-                                                >
-                                                    <Button onClick={() => {setTime(false)}} style={{ marginRight: 8 }}>
-                                                        Cancel
-                                                    </Button>
-                                                    {/* <Button onClick={registerAccount} */}
-                                                    <Button onClick={() => {}}
-                                                        type="primary">
-                                                        Change Time
-                                                    </Button>
-                                                </div>
-                                            }
-                                            >
-                                                <Form layout="vertical" hideRequiredMark>
-                                                    <Row gutter={16}>
-                                                        <Col>
-                                                            <Form.Item
-                                                                name="Start time"
-                                                                label="Start time"
-                                                                rules={[{ required: true, message: 'Please enter new start time' }]}
-                                                                >
-                                                                <input 
-                                                                    type="datetime-local"
-                                                                    name="start time"
-                                                                    value={(newStartTime || '').toString().substring(0, 16)}
-                                                                    onChange={handleStartChange} />
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row gutter={16}>
-                                                        <Col>
-                                                            <Form.Item
-                                                                name="End time"
-                                                                label="End time"
-                                                                rules={[{ required: true, message: 'Please enter new end time' }]}
-                                                                >
-                                                                <input 
-                                                                    type="datetime-local"
-                                                                    name="end time"
-                                                                    value={(newEndTime || '').toString().substring(0, 16)}
-                                                                    onChange={handleEndChange} />
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
-                                                </Form>
-                                            </Drawer>
-                                        </React.Fragment>
-                                        <Button onClick={()=>{
-                                            // var temp = planState
-                                            // temp[currentPlan].spots.splice(i, 1)
-                                            // setPlan(temp)
-                                            console.log("TODO: set plan")
-                                            setre(!re)
-                                        }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>):(
-                        <div className="table-title"> <div> No Spot Right Now </div> </div>)
-                    }
+                    <div className="table-title">
+                        {(!planState || planState.length === 0)?(<h3></h3>):(<h3> {planState[currentPlan].title} </h3>)}
+                    </div>
+                    {((!planState || planState.length === 0)?(<div>No Plan Right Now</div>):
+                        (<React.Fragment>
+                            {(planState[currentPlan].spots.length !== 0)?(
+                                <table className="table-fill">
+                                <thead>
+                                    <tr>
+                                        <th className='spot-title' style={{textAlign: "center"}}>Title</th>
+                                        <th className='spot-description' style={{textAlign: "center"}}>Description</th>
+                                        <th style={{textAlign: "center"}}>Time</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {planState[currentPlan].spots.map((e, i) => (
+                                        <tr key={i}>
+                                            <td className='spot-title' style={{textAlign: "center"}}> {e.location.properties.title} </td>
+                                            <td className='spot-description' style={{textAlign: "center"}}> {e.location.properties.description} </td>
+                                            <td className='spot-time' style={{textAlign: "center"}}>
+                                            <p>{new Date(e.startTime).toLocaleString()}</p>
+                                            <p className="timeto">to</p>
+                                                <p>{new Date(e.endTime).toLocaleString()}</p> 
+                                            </td>
+                                            <td className='spot-button'style={{textAlign: "center"}}>
+                                                <Button onClick={() => {setTime(true)
+                                                setCurrentSpot(i)}} 
+                                                style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Edit Time</Button>
+                                                <React.Fragment>
+                                                    <Drawer
+                                                        title={planState[currentPlan].spots[currentSpot].location.properties.title}
+                                                        width={360}
+                                                        onClose={() => {setTime(false)}}
+                                                        visible={newTime}
+                                                        bodyStyle={{ paddingBottom: 80 }}
+                                                        footer={
+                                                            <div
+                                                                style={{
+                                                                    textAlign: 'right',
+                                                            }}
+                                                        >
+                                                            <Button onClick={() => {setTime(false)}} style={{ marginRight: 8 }}>
+                                                                Cancel
+                                                            </Button>
+                                                            {/* <Button onClick={registerAccount} */}
+                                                            <Button onClick={() => {}}
+                                                                type="primary">
+                                                                Change Time
+                                                            </Button>
+                                                        </div>
+                                                    }
+                                                    >
+                                                        <Form layout="vertical" hideRequiredMark>
+                                                            <Row gutter={16}>
+                                                                <Col>
+                                                                    <Form.Item
+                                                                        name="Start time"
+                                                                        label="Start time"
+                                                                        rules={[{ required: true, message: 'Please enter new start time' }]}
+                                                                        >
+                                                                        <input 
+                                                                            type="datetime-local"
+                                                                            name="start time"
+                                                                            value={(newStartTime || '').toString().substring(0, 16)}
+                                                                            onChange={handleStartChange} />
+                                                                    </Form.Item>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row gutter={16}>
+                                                                <Col>
+                                                                    <Form.Item
+                                                                        name="End time"
+                                                                        label="End time"
+                                                                        rules={[{ required: true, message: 'Please enter new end time' }]}
+                                                                        >
+                                                                        <input 
+                                                                            type="datetime-local"
+                                                                            name="end time"
+                                                                            value={(newEndTime || '').toString().substring(0, 16)}
+                                                                            onChange={handleEndChange} />
+                                                                    </Form.Item>
+                                                                </Col>
+                                                            </Row>
+                                                        </Form>
+                                                    </Drawer>
+                                                </React.Fragment>
+                                                <Button onClick={()=>{
+                                                    // var temp = planState
+                                                    // temp[currentPlan].spots.splice(i, 1)
+                                                    // setPlan(temp)
+                                                    console.log("TODO: set plan")
+                                                    setre(!re)
+                                                }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>):(
+                                <div className="table-title"> <div> No Spot Right Now </div> </div>
+                                )}
+                        </React.Fragment>))}
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
