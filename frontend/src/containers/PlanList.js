@@ -74,6 +74,7 @@ export default function PlanList(args){
         ]
     return (
         <React.Fragment>
+            {/* <Router> */}
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
                 <div className="logo" />
@@ -138,29 +139,15 @@ export default function PlanList(args){
 
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
-                    <Router>
-                        <Menu theme="blue" mode="vertical">
-                        <Menu.Item key="1" style={{margin: '0px'}}>
-                            <Link to="/">Tour Map</Link>
-                        </Menu.Item>
-                        <Menu.Item key="2" style={{left: '0px'}}>
-                            logout
-                        </Menu.Item>
-                        </Menu>
-                        <Switch>
-                            <Route path="/">
-                                <TourMap />
-                            </Route>
-                        </Switch>
-                    </Router>
-                    {/* <Menu theme="blue" mode="vertical">
+                    <Menu theme="blue" mode="vertical">
                     <Menu.Item key="1" style={{margin: '0px'}}>
+                        {/* <Link to="/">Tour Map</Link> */}
                         Tour Map
                     </Menu.Item>
                     <Menu.Item key="2" style={{left: '0px'}}>
                         logout
                     </Menu.Item>
-                    </Menu> */}
+                    </Menu>
                 </div>):null
                 }
                 </Content>
@@ -172,6 +159,12 @@ export default function PlanList(args){
                 <Button className="FooterButton">All</Button>
             </Footer>
             </Layout>
+            {/* <Switch>
+                <Route path="/">
+                    <TourMap />
+                </Route>
+            </Switch>
+            </Router> */}
         </React.Fragment>
     )
 }

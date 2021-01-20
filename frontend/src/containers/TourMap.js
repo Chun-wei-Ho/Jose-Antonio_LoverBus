@@ -7,6 +7,17 @@ import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button,
     Drawer, Col, Row, Select, DatePicker } from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+    useParams
+} from "react-router-dom"; 
+import TourPlan from "./TourPlan"
+import PlanList from "./PlanList" 
+
 import "./TourMap.css"
 import 'antd/dist/antd.css'
 
@@ -29,6 +40,7 @@ import {
     SIGNUP_MUTATION
 //     // for subscription
   } from '../graphql'
+// import { Switch } from "@material-ui/core"
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -46,6 +58,7 @@ const TourMap = () => {
     const[regisPassword, setRegisPassword] = useState("")
     const[regisRetype, setRegisRetype] = useState("")
 
+    const [showUsermMenu, setShowUsermMenu] = useState(false)
 
     const markerCallback = (marker) => { setCurrentMarker(marker) }
 
@@ -88,6 +101,7 @@ const TourMap = () => {
     }
     return (
     <React.Fragment>
+        {/* <Router> */}
         {signIndata && signIndata.signIn ? ( // 決定是否有輸入 username
         <React.Fragment>
             <Layout>
@@ -104,7 +118,7 @@ const TourMap = () => {
                     <Menu.Item key="3" style={{left: '0px'}}>
                         nav 2
                     </Menu.Item>
-                    <Menu.Item key="4" style={{position:'absolute', left: '93%'}}>
+                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
                         {username}
                     </Menu.Item>
                 </Menu>
@@ -153,6 +167,19 @@ const TourMap = () => {
                 }}
                 >
                 <MapBox username={username} markerCallback={markerCallback}></MapBox>
+                {showUsermMenu?( //show menu if click account button
+                <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
+                    <Menu theme="blue" mode="vertical">
+                    <Menu.Item key="1" style={{margin: '0px', textAlign: 'center'}}>
+                        {/* <Link to="/">Tour Map</Link> */}
+                        Tour Map
+                    </Menu.Item>
+                    <Menu.Item key="2" style={{left: '0px', textAlign: 'center'}}>
+                        logout
+                    </Menu.Item>
+                    </Menu>
+                </div>):null
+                }
                 </Content>
             </Layout>
             </Layout>
@@ -283,6 +310,18 @@ const TourMap = () => {
                     </Form>
                     </div>
                 </div>)}
+            {/* <Switch>
+                <Route path="/PlanList">
+                    <PlanList />
+                </Route>
+                <Route path="/TourPlan">
+                    <TourPlan />
+                </Route>
+                <Route path="/">
+                    <TourMap />
+                </Route>
+            </Switch>
+        </Router> */}
     </React.Fragment>
     )
 }
