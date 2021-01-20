@@ -18,7 +18,7 @@ MARKERS_SUBSCRIPTION
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
 
-const MapBox = ({username, markerCallback, insertionMode, title, setTitle, description, setDescription}) => {
+const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, title, setTitle, description, setDescription}) => {
     
     const [View, setView] = useState({
         lng: 121.55,
@@ -148,8 +148,7 @@ const MapBox = ({username, markerCallback, insertionMode, title, setTitle, descr
             currentMarker.remove()
             setCurrentMarker(null)    
         }
-        insertionMode(!insertionMode)
-        // setInsertionMode(!insertionMode)
+        setInsertionMode(!insertionMode)
     }
     const color = insertionMode? "green" : "white"
     return (

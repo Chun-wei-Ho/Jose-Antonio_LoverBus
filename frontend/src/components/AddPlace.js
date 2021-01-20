@@ -27,7 +27,6 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
   const [newPlan] = useMutation(NEWPLAN_MUTATION)
   const onclick = () => {
-    console.log(insertionMode)
     if(title === ""){
       alert("Please input a title")
     }

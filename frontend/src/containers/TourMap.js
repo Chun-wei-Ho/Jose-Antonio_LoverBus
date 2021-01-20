@@ -48,7 +48,8 @@ const TourMap = (props) => {
 
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
-    const [insertionMode, setInsertionMode] = useState(false)
+    const [insertionMode, _setInsertionMode] = useState(false)
+    const setInsertionMode = (mode) => {_setInsertionMode(mode)}
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const history = useHistory();
 
@@ -91,7 +92,7 @@ const TourMap = (props) => {
                 }}
                 >
                 <MapBox username={username} markerCallback={markerCallback} insertionMode={insertionMode}
-                    title={title} setTitle={setTitle} description={description}
+                    title={title} setTitle={setTitle} description={description} setInsertionMode={setInsertionMode}
                         setDescription={setDescription}></MapBox>
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
