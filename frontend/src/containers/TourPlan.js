@@ -4,6 +4,7 @@ import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconf
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
+import SearchInfo from "../components/SearchInfo"
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -93,6 +94,20 @@ export default function TourPlan(args){
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
                 <div className="logo" />
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                    <Menu.Item key="1" style={{position: "relative", bottom: "100px"}}>
+                        <SearchInfo></SearchInfo>
+                    </Menu.Item>
+                    <Menu.Item key="2" style={{left: '0px'}}>
+                        nav 1
+                    </Menu.Item>
+                    <Menu.Item key="3" style={{left: '0px'}}>
+                        nav 2
+                    </Menu.Item>
+                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
+                        {username}
+                    </Menu.Item>
+                </Menu>
             </Header>
             <Layout className='middle'>
             <Sider height={500} width={200} className="site-layout-background">
