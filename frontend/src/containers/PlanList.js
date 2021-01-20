@@ -2,6 +2,16 @@ import React, { useState } from "react"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
+import TourMap from './TourMap'
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+    useParams
+} from "react-router-dom";  
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -128,14 +138,29 @@ export default function PlanList(args){
 
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
-                    <Menu theme="blue" mode="vertical">
+                    <Router>
+                        <Menu theme="blue" mode="vertical">
+                        <Menu.Item key="1" style={{margin: '0px'}}>
+                            <Link to="/">Tour Map</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2" style={{left: '0px'}}>
+                            logout
+                        </Menu.Item>
+                        </Menu>
+                        <Switch>
+                            <Route path="/">
+                                <TourMap />
+                            </Route>
+                        </Switch>
+                    </Router>
+                    {/* <Menu theme="blue" mode="vertical">
                     <Menu.Item key="1" style={{margin: '0px'}}>
                         Tour Map
                     </Menu.Item>
                     <Menu.Item key="2" style={{left: '0px'}}>
                         logout
                     </Menu.Item>
-                    </Menu>
+                    </Menu> */}
                 </div>):null
                 }
                 </Content>
