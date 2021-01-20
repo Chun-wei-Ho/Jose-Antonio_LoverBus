@@ -6,7 +6,7 @@ import AddPlace from "../components/AddPlace"
 import SearchInfo from "../components/SearchInfo"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, 
     Drawer, Col, Row, Select, DatePicker } from 'antd';
-import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
+import { HeartOutlined, LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import usePlan from '../components/usePlan'
 
 import {
@@ -118,3 +118,48 @@ const TourMap = (props) => {
 }
 
 export default TourMap;
+
+
+
+
+// class App extends React.Component {
+//   state = { visible: false };
+
+//   showDrawer = () => {
+//     this.setState({
+//       visible: true,
+//     });
+//   };
+
+//   onClose = () => {
+//     this.setState({
+//       visible: false,
+//     });
+//   };
+
+//   render() {
+//     return (
+//       <div className="site-drawer-render-in-current-wrapper">
+//         Render in this
+//         <div style={{ marginTop: 16 }}>
+//           <Button type="primary" onClick={this.showDrawer}>
+//             Open
+//           </Button>
+//         </div>
+//         <Drawer
+//           title="Basic Drawer"
+//           placement="right"
+//           closable={false}
+//           onClose={this.onClose}
+//           visible={this.state.visible}
+//           getContainer={false}
+//           style={{ position: 'absolute' }}
+//         >
+//           <p>Some contents...</p>
+//         </Drawer>
+//       </div>
+//     );
+//   }
+// }
+
+// ReactDOM.render(<App />, mountNode);

@@ -43,10 +43,9 @@ export default function TourPlan(props){
     // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const [re, setre] = useState(true)
-    const [currentPlan, setCurrentPlan] =  useState(0)
-    // const [planState, setPlan] = useState(plan)
-    const [newTime, setTime] = useState(false)
+    const [currentPlan, setCurrentPlan] = useState(0)
     const [currentSpot, setCurrentSpot] = useState(0)
+    const [newTime, setTime] = useState(false)
     const [newStartTime, setnewStartTime] = useState("")
     const [newEndTime, setnewEndTime] = useState("")
 
@@ -178,13 +177,17 @@ export default function TourPlan(props){
                                                             {/* <Button onClick={registerAccount} */}
                                                             <Button onClick={() => {
                                                                 updateSpotStartTime({variables:{
-                                                                    _id: planState[i].spots._id,
-                                                                    time: new Date(newStartTime).toLString()
+                                                                    _id: planState[currentPlan].spots[currentSpot]._id,
+                                                                    time: new Date(newStartTime).toString()
                                                                   }})
                                                                 updateSpotEndTime({variables:{
-                                                                    _id: planState[i].spots._id,
-                                                                    time: new Date(newEndTime).toLString()
+                                                                    _id: planState[currentPlan].spots[currentSpot]._id,
+                                                                    time: new Date(newEndTime).toString()
                                                                   }})
+                                                                console.log(planState[currentPlan].spots[currentSpot]._id)
+                                                                console.log(new Date(newStartTime).toString())
+                                                                console.log(new Date(newEndTime).toString())
+                                                                setTime(false)
                                                             }}
                                                                 type="primary">
                                                                 Change Time
@@ -233,9 +236,9 @@ export default function TourPlan(props){
                                                     console.log("TODO: set plan")
                                                     setre(!re)
                                                     deleteSpot({variables:{
-                                                        _id: planState[i].spots._id
+                                                        _id: planState[currentPlan].spots[currentSpot]._id
                                                       }})
-                                                    console.log(planState[i].spots._id)                 
+                                                    console.log(planState[currentPlan].spots[currentSpot]._id)                 
                                                 }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
                                             </td>
                                         </tr>

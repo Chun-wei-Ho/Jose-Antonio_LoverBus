@@ -105,9 +105,7 @@ export const UPDATE_SPOT_STARTTIME_MUTATION = gql`
     updateSpotStartTime(
       _id: $_id
       time: $time   
-    ) {
-      time
-    }
+    )
   }
 `
 export const UPDATE_SPOT_ENDTIME_MUTATION = gql`
@@ -115,12 +113,10 @@ export const UPDATE_SPOT_ENDTIME_MUTATION = gql`
     $_id: ID!
     $time: String!
   ) {
-    addMarker(
+    updateSpotEndTime(
       _id: $_id
       time: $time
-    ) {
-      time
-    }
+    )
   }
 `
 
