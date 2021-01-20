@@ -57,7 +57,7 @@ const client = new ApolloClient({
 ReactDOM.render(
     <ApolloProvider client={client}>
         <HashRouter>
-            <Route exact path="/" component={Login} />
+            <Route exact path="/" component={Login}/>
             <Route exact path="/:userId" component={TourMap} />
             <Route exact path="/:userId/TourPlan" component={TourPlan} />
         </HashRouter>

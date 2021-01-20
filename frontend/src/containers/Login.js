@@ -102,9 +102,9 @@ export default function Login(){
     }
     return (
     <React.Fragment>
-        <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
-            <div style={{width: "100%", height: "100%"}}>
-                <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
+        <div>
+            <div>
+                <h3 style={{textAlign: "center", position: 'absolute', transform: "translate(-50%, -50%)", top: "20%", left: "50%"}}>Welcome to Jose-Antonio_LoverBus !</h3>
                 <Form
                 name="normal_login"
                 className="login-form"
@@ -112,7 +112,7 @@ export default function Login(){
                     remember: true,
                 }}
                 onFinish={onFinish} // summit user info
-                >
+                style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
                 <Form.Item
                     name="username"
                     rules={[
@@ -124,7 +124,7 @@ export default function Login(){
                 >
                     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                 </Form.Item>
-                <Form.Item
+                <Form.Item style={{position: "relative", height: "10px"}}
                     name="password"
                     rules={[
                     {
@@ -139,19 +139,19 @@ export default function Login(){
                     placeholder="Password"
                     />
                 </Form.Item>
-                <Form.Item>
+                <Form.Item style={{position: "relative", height: "20px"}}>
                     <Form.Item name="remember" valuePropName="checked" noStyle>
                     <Checkbox>Remember me</Checkbox>
                     </Form.Item>
                 </Form.Item>
 
-                <Form.Item>
+                <Form.Item style={{position: "relative", height: "40px"}}>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                     Log in
                     </Button>
                     Or  
                     <React.Fragment>
-                        <a style={{position: "relative", left: "5px"}} onClick={() => setRegister(true)}>
+                        <a style={{position: "relative", left: "5px", color: "DodgerBlue"}} onClick={() => setRegister(true)}>
                             Register Now
                         </a>
                         <Drawer
