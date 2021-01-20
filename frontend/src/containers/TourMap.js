@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import MapBox from "../components/Mapbox_TW"
 import AddPlace from "../components/addPlace"
-import { useQuery, useMutation } from '@apollo/react-hooks'
-// import PlanList from "./PlanList"
-import TourPlan from "./TourPlan"
 import SearchInfo from "../components/SearchInfo"
 import Background from '../img/background.jpg';
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
@@ -12,23 +10,23 @@ import "./TourMap.css"
 import 'antd/dist/antd.css'
 
 import {
-    // for query
-    MARKER_QUERY,
-    PLAN_QUERY,
+//     // for query
+//     MARKER_QUERY,
+//     PLAN_QUERY,
     SIGNIN_QUERY,
-    // for mutation
-    // ADD_MARKER_MUTATION,
-    // DELETE_MARKER_MUTATION,
-    // UPDATE_MARKER_MUTATION,
-    // NEW_PLAN_MUTATION,
-    // RENAME_PLAN_MUTATION,
-    // DELETE_PLAN_MUTATION,
-    // NEW_SPOT_MUTATION,
-    // delete_Spot_MUTATION,
-    // UPDATE_SPOTSTARTTIME_MUTATION,
-    // UPDATE_SPOTENDTIME_MUTATION,
-    // SIGNUP_MUTATION
-    // for subscription
+//     // for mutation
+//     ADD_MARKER_MUTATION,
+//     DELETE_MARKER_MUTATION,
+//     UPDATE_MARKER_MUTATION,
+//     NEW_PLAN_MUTATION,
+//     RENAME_PLAN_MUTATION,
+//     DELETE_PLAN_MUTATION,
+//     NEW_SPOT_MUTATION,
+//     delete_Spot_MUTATION,
+//     UPDATE_SPOTSTARTTIME_MUTATION,
+//     UPDATE_SPOTENDTIME_MUTATION,
+//     SIGNUP_MUTATION
+//     // for subscription
   } from '../graphql'
 
 const { SubMenu } = Menu;
@@ -37,29 +35,20 @@ const { Header, Content, Footer, Sider } = Layout;
 const TourMap = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [usernamedecided, setUsernamedecided] = useState(false)
+    // const [usernamedecided, setUsernamedecided] = useState(false)
+    const {data:signIndata} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
     const onFinish = (values) => {
-        // console.log('Received values of form: ', values);
         setUsername(values.username)
         setPassword(values.password)
-        setUsernamedecided(true)
       };
-    
-    //new add
-    //accout -> plan list
-    const [showUsermMenu, setShowUsermMenu] = useState(false)
-    
-    const { subscribeMarker, ...marker } = useQuery(
-        MARKER_QUERY,
-        { variables: { username: username } }
-        // Marker data in result.data
-      )
+
+
     return (
     <React.Fragment>
-        {usernamedecided? ( // 決定是否有輸入 username
+        {signIndata && signIndata.signIn ? ( // 決定是否有輸入 username
         <React.Fragment>
             <Layout>
-            <Header className="header" style={{margin: "0px"}}>
+            <Header className="header">
                 <div className="logo" />
                 {/* <Input></Input> */}
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
@@ -72,7 +61,7 @@ const TourMap = () => {
                     <Menu.Item key="3" style={{left: '0px'}}>
                         nav 2
                     </Menu.Item>
-                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
+                    <Menu.Item key="4" style={{position:'absolute', left: '93%'}}>
                         {username}
                     </Menu.Item>
                 </Menu>
@@ -120,20 +109,7 @@ const TourMap = () => {
                     minHeight: 280,
                 }}
                 >
-                {/*new add*/ }
-                {showUsermMenu?( //show menu if click account button
-                <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
-                    <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}}>
-                        Plan List
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
-                        logout
-                    </Menu.Item>
-                    </Menu>
-                </div>):null
-                }
-                <MapBox username={username}></MapBox>
+                <MapBox></MapBox>
                 </Content>
             </Layout>
             </Layout>
@@ -146,8 +122,6 @@ const TourMap = () => {
         </React.Fragment>
             
         ) : (
-            // <TourPlan></TourPlan>)}
-            <React.Fragment>
             <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
                 <div style={{width: "100%", height: "100%"}}>
                     <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
@@ -199,9 +173,8 @@ const TourMap = () => {
                     </Form.Item>
                     </Form>
                     </div>
-                </div>
-                </React.Fragment>)}
-        </React.Fragment>
+                </div>)}
+    </React.Fragment>
     )
 }
 
