@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
 import 'antd/dist/antd.css'
+import './TourPlan.css'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -75,13 +76,13 @@ export default function TourPlan(args){
                     minHeight: 280,
                 }}
                 >
-                    <h1> {plan.title} </h1>
-                    <table>
+                    <div className="table-title"> <h2> {plan.title} </h2> </div>
+                    <table className="table-fill">
                         <thead>
                             <tr>
-                                <td>title</td>
-                                <td>description</td>
-                                <td>time</td>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
