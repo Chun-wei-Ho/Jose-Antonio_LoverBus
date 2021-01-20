@@ -58,6 +58,14 @@ const MapBox = ({username, markerCallback, currentMarkerContent}) => {
                 setMap(map);
                 map.resize();
             });
+
+            map.addControl(
+                new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl
+                })
+            );  
+
         }
         if (!map) initializeMap({ setMap, mapContainer});
     }, [map]);
