@@ -5,8 +5,9 @@ const Query = {
         const markers = await models.Marker.find({...args})
         return markers
     },
-    async UserPlan(parent, args, {models, pubsub}, info){
-        const plans = await models.Plan.find({...args})
+    async UserPlan(parent, {_userId}, {models, pubsub}, info){
+        const user = await models.User.findById(_userId)
+        const plans = await models.Plan.find({username: user.username})
         return await Promise.all(plans.map(parsePlan, {models}))
     },
     async signIn(parent, args, {models, pubsub}, info){

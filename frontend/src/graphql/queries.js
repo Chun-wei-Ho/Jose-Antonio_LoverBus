@@ -31,17 +31,31 @@ export const MARKER_QUERY = gql`
 
 export const USERPLAN_QUERY = gql`
   query UserPlan (
-    $username: String!
+    $_userId: ID!
   ) {
     UserPlan(
-        username: $username
+        _userId: $_userId
     ){
-      username
-      title
-      spots
+    username
+    title
+    spots{
       _id
+      startTime
+      endTime
+      location{
+        properties{
+          title
+          description
+        }
+        geometry{
+          coordinates
+        }
+        _id
+      }
     }
+    _id
   }
+}
 `
 // return [Plan!]!
 

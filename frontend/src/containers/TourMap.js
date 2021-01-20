@@ -12,6 +12,7 @@ import {
 //     // for query
 //     MARKER_QUERY,
 //     PLAN_QUERY,
+    USERPLAN_QUERY,
     // SIGNIN_QUERY,
 //     // for mutation
 //     ADD_MARKER_MUTATION,
@@ -26,7 +27,7 @@ import {
 //     UPDATE_SPOTENDTIME_MUTATION,
     // SIGNUP_MUTATION
 //     // for subscription
-USERNAME_QUERY
+USERNAME_QUERY,
   } from '../graphql' 
 
 import "./TourMap.css"
@@ -38,11 +39,13 @@ const { Option } = Select;
 
 const TourMap = (props) => {
     const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
+    const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
+
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const history = useHistory();
-    
+
     const markerCallback = (marker) => { setCurrentMarker(marker) }
     const toTourPlan = () => {
         history.push(`${history.location.pathname}/TourPlan`)
