@@ -39,16 +39,24 @@ const Mutation = {
             mutation: 'UPDATE', data: marker
         }})
     },
-    newPlan(parent, args, {models, pubsub}, info){
-        const plans = new models.Plan({...args, spotID: []})
+    async newPlan(parent, args, {models, pubsub}, info){
+        const plans = await new models.Plan({...args, spotID: []})
         plans.save()
+
+        pubsub.publish(`plan.${args.username}`, {subscribePlan: {
+            mutation: 'NEW', data: plans
+        }})
         return plans._id
     },
     renamePlan(parent, {_id, newTitle}, {models, pubsub}, info){
         models.Plan.findByIdAndUpdate({_id}, {title: newTitle}, () => {})
     },
-    deletePlan(parent, {_id}, {models, pubsub}, info){
-        models.Plan.findByIdAndDelete({_id}, ()=>{})
+    async deletePlan(parent, {_id}, {models, pubsub}, info){
+        const plan = await models.Plan.findById(_id)
+        models.Plan.findByIdAndDelete(_id, ()=>{})
+        pubsub.publish(`plan.${plan.username}`, {subscribePlan: {
+            mutation: 'DELETE', data: {_id: plan._id} 
+        }})
     },
     async signUp(parent, args, {models, pubsub}, info){
         if(args.username === "")

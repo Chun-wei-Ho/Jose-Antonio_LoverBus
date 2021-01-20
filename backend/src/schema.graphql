@@ -35,6 +35,7 @@ type Mutation{
 
 type Subscription{
     subscribeMarker(username: String!): subscribeMarkerOutput!
+    subscribePlan(username: String!): subscribePlanOutput!
 }
 
 type User{
@@ -64,11 +65,28 @@ input addMarkerInput{
 }
 
 type subscribeMarkerOutput{
-    mutation: MutationType!
+    mutation: MarkerMutationType!
     data: Marker!
 }
 
-enum MutationType{
+type subscribePlanOutput{
+    mutation: PlanMutationType!
+    data: PlanSubscribeData!
+}
+
+type PlanSubscribeData{
+    username: String
+    title: String
+    spots: [Spot!]
+    _id: ID!
+}
+
+enum PlanMutationType{
+    NEW
+    DELETE
+}
+
+enum MarkerMutationType{
     NEW
     DELETE
     UPDATE
