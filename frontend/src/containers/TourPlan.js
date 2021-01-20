@@ -31,12 +31,12 @@ const { Header, Content, Footer, Sider } = Layout;
 export default function TourPlan(props){
     // const [username, setUsername] = useState("")
     // const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
-    const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
-    const {plan:planState, error} = usePlan(props.match.params.userId)
+    // const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
+    const {plan:planState, error, username} = usePlan(props.match.params.userId)
 
     const [deletePlan] = useMutation(DELETE_PLAN_MUTATION)
     const [deleteSpot] = useMutation(DELETE_SPOT_MUTATION)
-    const username = usernameData? usernameData.Username : null
+    // const username = usernameData? usernameData.Username : null
     // console.log(planState)
     // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
