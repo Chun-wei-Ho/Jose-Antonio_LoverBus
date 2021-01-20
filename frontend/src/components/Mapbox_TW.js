@@ -16,7 +16,8 @@ ADD_MARKER_MUTATION,
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
 
-const MapBox = ({username}) => {
+const MapBox = ({username, markerCallback}) => {
+    
     const [View, setView] = useState({
         lng: 121.55,
         lat: 25.05,
@@ -70,6 +71,7 @@ const MapBox = ({username}) => {
             .addTo(map)
             
             setCurrentMarker(marker)
+            markerCallback(marker)
         };
         map.once('click', clickPoint);
     }

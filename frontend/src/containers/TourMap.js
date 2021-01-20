@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import MapBox from "../components/Mapbox_TW"
-import AddPlace from "../components/addPlace"
+import AddPlace from "../components/AddPlace"
 import SearchInfo from "../components/SearchInfo"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, 
     Drawer, Col, Row, Select, DatePicker } from 'antd';
@@ -40,6 +40,9 @@ const TourMap = () => {
     const [register, setRegister] = useState(false)
     const {data:signIndata} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
     const [signUp]= useMutation(SIGNUP_MUTATION)
+    const [currentMarker, setCurrentMarker] = useState(null)
+
+    const markerCallback = (marker) => { setCurrentMarker(marker) }
 
     const onFinish = (values) => {
         setUsername(values.username)
@@ -71,7 +74,7 @@ const TourMap = () => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <AddPlace></AddPlace>
+                <AddPlace currentMarker={currentMarker}></AddPlace>
                 {/* <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}
@@ -112,7 +115,7 @@ const TourMap = () => {
                     minHeight: 280,
                 }}
                 >
-                <MapBox username={username}></MapBox>
+                <MapBox username={username} markerCallback={markerCallback}></MapBox>
                 </Content>
             </Layout>
             </Layout>
