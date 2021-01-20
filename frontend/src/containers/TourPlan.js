@@ -19,8 +19,8 @@ import {
     DELETE_PLAN_MUTATION,
 //     NEW_SPOT_MUTATION,
     DELETE_SPOT_MUTATION,
-    UPDATE_SPOTSTARTTIME_MUTATION,
-    UPDATE_SPOTENDTIME_MUTATION,
+    UPDATE_SPOT_STARTTIME_MUTATION,
+    UPDATE_SPOT_ENDTIME_MUTATION,
 //     // for subscription
   } from '../graphql'
 
@@ -35,8 +35,8 @@ export default function TourPlan(props){
 
     const [deletePlan] = useMutation(DELETE_PLAN_MUTATION)
     const [deleteSpot] = useMutation(DELETE_SPOT_MUTATION)
-    const [updateSpotStartTime] = useMutation(UPDATE_SPOTSTARTTIME_MUTATION)
-    const [updateSpotEndTime] = useMutation(UPDATE_SPOTENDTIME_MUTATION)
+    const [updateSpotStartTime] = useMutation(UPDATE_SPOT_STARTTIME_MUTATION)
+    const [updateSpotEndTime] = useMutation(UPDATE_SPOT_ENDTIME_MUTATION)
 
     // const username = usernameData? usernameData.Username : null
     // console.log(planState)
