@@ -65,7 +65,6 @@ const MapBox = ({username, markerCallback}) => {
     useEffect(()=>{
         if(map && insertionMode){
             const clickPoint = (e) => {
-                console.log("hi")
                 if(currentMarker) currentMarker.remove()
 
                 var popup = new mapboxgl.Popup()
@@ -79,6 +78,11 @@ const MapBox = ({username, markerCallback}) => {
                 setCurrentMarker(marker)
             };
             map.once('click', clickPoint);
+            return ()=>{map.off('click', clickPoint);}
+        }
+        else if(map && !insertionMode && currentMarker){
+            currentMarker.remove()
+            setCurrentMarker(null)
         }
     }, [map, insertionMode, currentMarker]);
 
