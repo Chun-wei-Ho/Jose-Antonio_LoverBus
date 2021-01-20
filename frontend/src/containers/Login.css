@@ -1,0 +1,33 @@
+.login-root {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 80%;
+    background-image: url("https://media.giphy.com/media/zNyBPu5hEFpu/giphy.gif");
+    background-color: #cccccc;   
+}
+
+/* some good bg-image */
+/* rabbit drop the carrot: https://media.giphy.com/media/zNyBPu5hEFpu/giphy.gif */
+
+
+.login-title {
+    text-align: center;
+    font-size: 30px;
+    color: blanchedalmond;
+}
+
+.login-form {
+    position:relative;
+    top: 150px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.register-link {
+    position:relative;
+    left: 5px;
+    color: DodgerBlue;
+}

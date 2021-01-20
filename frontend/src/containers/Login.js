@@ -21,6 +21,7 @@ import PlanList from "./PlanList"
 
 import "./TourMap.css"
 import 'antd/dist/antd.css'
+import './Login.css'
 
 import {
 //     // for query
@@ -102,9 +103,9 @@ export default function Login(){
     }
     return (
     <React.Fragment>
-        <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
+        <div className='login-root'>
             <div>
-                <h5 style={{textAlign: "center", fontSize: "30px"}}>Welcome to Jose Antonio LoverBus !</h5>
+                <h5 className='login-title'>Welcome to Jose Antonio LoverBus !</h5>
                 <Form 
                 name="normal_login"
                 className="login-form"
@@ -112,7 +113,6 @@ export default function Login(){
                     remember: true,
                 }}
                 onFinish={onFinish} // summit user info
-                style={{position: "relative", transform: "translate(-50%, -50%)", top: "150px", left: "50%"}}
                 >
                 <Form.Item
                     name="username"
@@ -152,7 +152,7 @@ export default function Login(){
                     </Button>
                     Or  
                     <React.Fragment>
-                        <a style={{position: "relative", left: "5px", color: "DodgerBlue"}} onClick={() => setRegister(true)}>
+                        <a className='register-link' onClick={() => setRegister(true)}>
                             Register Now
                         </a>
                         <Drawer
@@ -170,8 +170,7 @@ export default function Login(){
                                 <Button onClick={() => setRegister(false)} style={{ marginRight: 8 }}>
                                     Cancel
                                 </Button>
-                                <Button onClick={registerAccount}
-                                    type="primary">
+                                <Button onClick={registerAccount} type="primary">
                                     Submit
                                 </Button>
                             </div>
