@@ -107,7 +107,7 @@ const MapBox = ({username, markerCallback, currentMarkerContent}) => {
                     case "NEW":
                         const linLat = newData.data.geometry.coordinates
                         var popup = new mapboxgl.Popup()
-                        .setHTML('<h3>A point</h3>');
+                        .setHTML(`<h3>${newData.data.properties.title}<h3>`);
 
                         var marker = new mapboxgl.Marker()
                         .setLngLat(linLat)
