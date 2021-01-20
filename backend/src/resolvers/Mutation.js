@@ -40,6 +40,7 @@ const Mutation = {
         }})
     },
     async newPlan(parent, args, {models, pubsub}, info){
+        console.log(args)
         const plans = await new models.Plan({...args, spotID: []})
         plans.save()
 
