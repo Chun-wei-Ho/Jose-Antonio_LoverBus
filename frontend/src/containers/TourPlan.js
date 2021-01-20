@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
     Drawer, Col, Row, Select} from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
@@ -6,69 +7,44 @@ import 'antd/dist/antd.css'
 import './TourPlan.css'
 import SearchInfo from "../components/SearchInfo"
 
+import {
+//     // for query
+//     MARKER_QUERY,
+//     PLAN_QUERY,
+    USERNAME_QUERY,
+    USERPLAN_QUERY,
+    // SIGNIN_QUERY,
+//     // for mutation
+//     ADD_MARKER_MUTATION,
+//     DELETE_MARKER_MUTATION,
+//     UPDATE_MARKER_MUTATION,
+//     NEW_PLAN_MUTATION,
+//     RENAME_PLAN_MUTATION,
+//     DELETE_PLAN_MUTATION,
+//     NEW_SPOT_MUTATION,
+//     delete_Spot_MUTATION,
+//     UPDATE_SPOTSTARTTIME_MUTATION,
+//     UPDATE_SPOTENDTIME_MUTATION,
+    // SIGNUP_MUTATION
+//     // for subscription
+  } from '../graphql'
+
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
-const plan = [{
-    title: "Baby Shark do do do",
-    spots: [
-        {
-            _id: "",
-            startTime: "Wed Feb 19 2020 10:52:00 GMT+0800",
-            endTime: "Wed Feb 19 2020 22:52:00 GMT+0800",
-            location: {
-                    properties: {title: "National Taiwan University", description: "Largest Zoo in Taipei"},
-                    geometry: {coordinates: [2,3]},
-                    _id: ""
-                }
-        },
-        {
-            _id: "",
-            startTime: "Thu Feb 21 2020 10:52:00 GMT+0800",
-            endTime: "Thu Feb 21 2020 22:52:00 GMT+0800",
-            location: {
-                    properties: {title: "National Kaohsiung University", description: "Moon lovers in Kaohsiung"},
-                    geometry: {coordinates: [2,3]},
-                    _id: ""
-                }
-        }
-        ],
-    _id: ""
-    },
-    {
-        title: "lol",
-        spots: [
-            {
-                _id: "",
-                startTime: "Wed Feb 19 2020 10:52:00 GMT+0800",
-                endTime: "Wed Feb 19 2020 22:52:00 GMT+0800",
-                location: {
-                        properties: {title: "National Taiwan University", description: "Largest Zoo in Taipei"},
-                        geometry: {coordinates: [2,3]},
-                        _id: ""
-                    }
-            },
-            {
-                _id: "",
-                startTime: "Thu Feb 21 2020 10:52:00 GMT+0800",
-                endTime: "Thu Feb 21 2020 22:52:00 GMT+0800",
-                location: {
-                        properties: {title: "National Kaohsiung University", description: "Moon lovers in Kaohsiung"},
-                        geometry: {coordinates: [2,3]},
-                        _id: ""
-                    }
-            }
-            ],
-        _id: ""
-        }]
-
-export default function TourPlan(args){
+export default function TourPlan(props){
     // const [username, setUsername] = useState("")
-    const username = 'Jose Antonio'
+    // const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
+    const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
+    const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
+    const username = usernameData? usernameData.Username : null
+    const planState = planList? planList.UserPlan : []
+    console.log(planState)
+    // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const [re, setre] = useState(true)
     const [currentPlan, setCurrentPlan] =  useState(0)
-    const [planState, setPlan] = useState(plan)
+    // const [planState, setPlan] = useState(plan)
     const [newTime, setTime] = useState(false)
     const [currentSpot, setCurrentSpot] = useState(0)
     const [newStartTime, setnewStartTime] = useState("")
@@ -86,9 +62,8 @@ export default function TourPlan(args){
         setnewEndTime(dt);
         console.log(dt)
       }
-
-    const[regisUsername, setRegisUsername] = useState("")
-
+    if(!planState || planState.length === 0)
+    return (<React.Fragment/>)
     return (
         <React.Fragment>
             <Layout>
@@ -227,9 +202,10 @@ export default function TourPlan(args){
                                             </Drawer>
                                         </React.Fragment>
                                         <Button onClick={()=>{
-                                            var temp = planState
-                                            temp[currentPlan].spots.splice(i, 1)
-                                            setPlan(temp)
+                                            // var temp = planState
+                                            // temp[currentPlan].spots.splice(i, 1)
+                                            // setPlan(temp)
+                                            console.log("TODO: set plan")
                                             setre(!re)
                                         }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
                                     </td>
