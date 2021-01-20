@@ -46,7 +46,6 @@ const AddPlace = ({username, currentMarker, markerContentCallback, plan, title, 
     setTitle("")
     setDescription("")
   }
-  console.log(currentMarker)
   const { TextArea } = Input;
   return (
     <Card title="Add New Marker">
