@@ -40,16 +40,14 @@ export default function TourPlan(args){
         <React.Fragment>
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
-                <div className="logo" />
-                {/* <Input></Input> */}
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1" style={{position: "relative", bottom: "100px"}}>
                         <p>Jose Antonio_LoverBus</p>
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
+                    <Menu.Item key="2" style={{position: "relative", bottom: "0px", left: '0px'}}>
                         nav 1
                     </Menu.Item>
-                    <Menu.Item key="3" style={{left: '0px'}}>
+                    <Menu.Item key="3" style={{position: "relative", bottom: "0px", left: '0px'}}>
                         nav 2
                     </Menu.Item>
                     <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
@@ -64,6 +62,11 @@ export default function TourPlan(args){
                 <p>plan 2</p>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>Plan List</Breadcrumb.Item>
+                <Breadcrumb.Item>{plan.title}</Breadcrumb.Item>
+                </Breadcrumb>
                 <Content
                 className="site-layout-background"
                 style={{
