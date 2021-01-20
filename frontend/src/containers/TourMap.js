@@ -38,7 +38,7 @@ const TourMap = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [register, setRegister] = useState(false)
-    const {data:signIndata} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
+    const {data:signIndata, error:signInError} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
     const [signUp]= useMutation(SIGNUP_MUTATION)
     const [currentMarker, setCurrentMarker] = useState(null)
 
@@ -53,6 +53,11 @@ const TourMap = () => {
         setUsername(values.username)
         setPassword(values.password)
       };
+
+    useEffect(() =>{
+        if(!signInError || !username) return
+        alert(signInError.message)
+    }, [signInError])
 
     const registerAccount = async () => {
         if(regisUsername === ""){

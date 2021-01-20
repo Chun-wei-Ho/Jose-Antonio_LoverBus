@@ -11,6 +11,12 @@ const Query = {
     },
     async signIn(parent, args, {models, pubsub}, info){
         const users = await models.User.find({...args})
+        if(users.length === 0){
+            const findUser = await models.User.find({username: args.username})
+            const userexist = (findUser.length === 1)
+            if(userexist) {throw "wrong password"}
+            else {throw `user ${args.username} doesn't exist`}
+        }
         return (users.length === 1)
     },
     async Plan(parent, {_id}, {models, pubsub}, info){
