@@ -42,13 +42,13 @@ export default function TourPlan(args){
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" style={{position: "relative", bottom: "100px"}}>
+                    <Menu.Item key="1" style={{position: "relative", margin: "0px"}}>
                         <p>Jose Antonio_LoverBus</p>
                     </Menu.Item>
-                    <Menu.Item key="2" style={{position: "relative", bottom: "0px", left: '0px'}}>
+                    <Menu.Item key="2" style={{left: '0px'}}>
                         nav 1
                     </Menu.Item>
-                    <Menu.Item key="3" style={{position: "relative", bottom: "0px", left: '0px'}}>
+                    <Menu.Item key="3" style={{left: '0px'}}>
                         nav 2
                     </Menu.Item>
                     <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
@@ -80,19 +80,26 @@ export default function TourPlan(args){
                     <table className="table-fill">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Description</th>
+                                <th className='spot-title' style={{}}>Title</th>
+                                <th className='spot-description'>Description</th>
                                 <th>Time</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {plan.spots.map(e => (
                                 <tr>
-                                    <td> {e.location.properties.title} </td>
-                                    <td> {e.location.properties.description} </td>
-                                    <td> {new Date(e.startTime).toLocaleString()}
-                                            - {new Date(e.endTime).toLocaleString()} <button onClick={()=>{}}> Edit </button> 
-                                            <button onClick={()=>{}}> Delete </button> </td>
+                                    <td className='spot-title' style={{}}> {e.location.properties.title} </td>
+                                    <td className='spot-description'> {e.location.properties.description} </td>
+                                    <td className='spot-time'>
+                                       {new Date(e.startTime).toLocaleString()}
+                                       <p className="timeto">to</p>
+                                        <p>{new Date(e.endTime).toLocaleString()}</p> 
+                                    </td>
+                                    <td className='spot-button'>
+                                        <button onClick={()=>{}}> Edit Time</button>
+                                        <button onClick={()=>{}}> Delete Spot</button> 
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

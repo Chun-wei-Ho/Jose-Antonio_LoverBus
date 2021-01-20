@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
 div.table-title {
-   display: block;
+  display: block;
   margin: auto;
-  max-width: 600px;
+  max-width: 900px;
   padding:5px;
   width: 100%;
 }
@@ -16,6 +16,7 @@ div.table-title {
    font-family: "Roboto", helvetica, arial, sans-serif;
    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
    text-transform:uppercase;
+   text-align: left;
 }
 
 
@@ -27,7 +28,7 @@ div.table-title {
   border-collapse: collapse;
   height: 320px;
   margin: auto;
-  max-width: 600px;
+  max-width: 900px;
   padding:5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -58,11 +59,25 @@ th:last-child {
   
 tr {
   border-top: 1px solid #C1C3D1;
-  border-bottom-: 1px solid #C1C3D1;
+  border-bottom: 1px solid #C1C3D1;
   color:#666B85;
   font-size:16px;
   font-weight:normal;
   text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  max-height: 100px;
+}
+
+.timeto {
+    text-align: center;
+}
+
+.spot-time {
+    font-size:11px;
+    width: 164px;
+}
+
+.spot-button {
+    max-width: 150px;
 }
  
 /* tr:hover td {
