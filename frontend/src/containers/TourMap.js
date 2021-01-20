@@ -46,7 +46,6 @@ const TourMap = () => {
         setPassword(values.password)
       };
 
-
     return (
     <React.Fragment>
         {signIndata && signIndata.signIn ? ( // 決定是否有輸入 username
@@ -195,7 +194,7 @@ const TourMap = () => {
                                     </Button>
                                     <Button onClick={() => {
                                         setRegister(false)
-                                        const newAccount = { username: username, password: password}
+                                        const newAccount = { username: "xx", password: "ddd"}
                                         signUp({ variables: newAccount })
                                         console.log(newAccount)}} 
                                         type="primary">
@@ -210,7 +209,7 @@ const TourMap = () => {
                                             <Form.Item
                                                 name="username"
                                                 label="Username"
-                                                rules={[{ required: true, message: 'Please enter user`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````name' }]}
+                                                rules={[{ required: true, message: 'Please enter username' }]}
                                                 >
                                                 <Input placeholder="Please enter username" />
                                             </Form.Item>
