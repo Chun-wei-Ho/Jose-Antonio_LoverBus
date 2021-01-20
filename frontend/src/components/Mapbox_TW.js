@@ -1,21 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import mapboxgl from "mapbox-gl";
-import { Input, Layout, Menu, Breadcrumb, Button } from 'antd';
+import { Button } from 'antd';
 import "./site.css"
+
+import {
+    // for query
+    MARKER_QUERY,
+    // for mutation
+    // ADD_MARKER_MUTATION,
+    // DELETE_MARKER_MUTATION,
+    // UPDATE_MARKER_MUTATION,
+    // for subscription
+  } from '../graphql'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
 
-const MapBox = () => {
+const MapBox = ({username}) => {
 
   const [View, setView] = useState({
     lng: 121.55,
     lat: 25.05,
     zoom: 12
   })
-
-  const [lng, setLng] = useState(121.55);
-  const [lat, setLat] = useState(25.05);
-  const [zoom, setZoom] = useState(12);
+  const { subscribeMarker, ...markers } = useQuery(
+    MARKER_QUERY,
+    { variables: { username: username } }
+    // Marker data in result.data
+  )
+  console.log(markers.data)
 
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -33,12 +46,8 @@ const MapBox = () => {
       });
 
       map.on("move", () => {
-        setLng(map.getCenter().lng.toFixed(4));
-        setLat(map.getCenter().lat.toFixed(4));
-        setZoom(map.getZoom().toFixed(2));
+        setView(map.getCenter().lng.toFixed(4), map.getCenter().lat.toFixed(4), map.getCenter().lat.toFixed(4))
         setTest(4)
-        //console.log(test)
-        //console.log(lat)
       });
 
       const clickPoint = (e) => {
@@ -53,14 +62,24 @@ const MapBox = () => {
           .setPopup(popup)
           .addTo(map);
       };
-
       map.on('click', clickPoint);
+
+      // console.log("dd", markers.data)
+      // if (markers !== "undefined"){
+      //   for (let index = 0; index < markers.data.length; index++) {
+      //     var popup = new mapboxgl.Popup()
+      //     .setHTML('<h3>title</h3>');
+      //     var marker = new mapboxgl.Marker()
+      //       .setLngLat([markers.data.geometry.coordinates.lng, markers.data.geometry.coordinates.lat])
+      //       .setPopup(popup)
+      //       .addTo(map);            
+      //   }
+      // }
 
       map.on("load", () => {
         setMap(map);
         map.resize();
       });
-
     }
     if (!map) initializeMap({ setMap, setClicklnglat, mapContainer });
   }, [map]);
@@ -69,7 +88,7 @@ const MapBox = () => {
     <div>
       <div className='sidebarStyle'>
         {/* <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom}</div> */}
-        <div>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} </div>
+        <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom} </div>
       </div>
       <Button style={{position: "relative", right: "0px"}}>+</Button>
       <div ref={el => (mapContainer.current = el)} className='mapContainer' />

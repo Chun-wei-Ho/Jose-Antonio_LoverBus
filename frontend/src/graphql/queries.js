@@ -9,9 +9,12 @@ export const MARKER_QUERY = gql`
     ){
       username
       properties{
-        
+        title
+        description
       }
-      geometry
+      geometry{
+        coordinates
+      }
       _id        
     }
   }

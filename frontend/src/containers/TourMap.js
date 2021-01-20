@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import MapBox from "../components/Mapbox_TW"
 import AddPlace from "../components/addPlace"
+import { useQuery, useMutation } from '@apollo/react-hooks'
 // import PlanList from "./PlanList"
 import TourPlan from "./TourPlan"
 import SearchInfo from "../components/SearchInfo"
@@ -10,35 +11,37 @@ import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined} from 
 import "./TourMap.css"
 import 'antd/dist/antd.css'
 
-// import {
-//     // for query
-//     MARKER_QUERY,
-//     PLAN_QUERY,
-//     SIGNIN_QUERY,
-//     // for mutation
-//     ADD_MARKER_MUTATION,
-//     DELETE_MARKER_MUTATION,
-//     UPDATE_MARKER_MUTATION,
-//     NEW_PLAN_MUTATION,
-//     RENAME_PLAN_MUTATION,
-//     DELETE_PLAN_MUTATION,
-//     NEW_SPOT_MUTATION,
-//     delete_Spot_MUTATION,
-//     UPDATE_SPOTSTARTTIME_MUTATION,
-//     UPDATE_SPOTENDTIME_MUTATION,
-//     SIGNUP_MUTATION
-//     // for subscription
-//   } from '../graphql'
+import {
+    // for query
+    MARKER_QUERY,
+    PLAN_QUERY,
+    SIGNIN_QUERY,
+    // for mutation
+    // ADD_MARKER_MUTATION,
+    // DELETE_MARKER_MUTATION,
+    // UPDATE_MARKER_MUTATION,
+    // NEW_PLAN_MUTATION,
+    // RENAME_PLAN_MUTATION,
+    // DELETE_PLAN_MUTATION,
+    // NEW_SPOT_MUTATION,
+    // delete_Spot_MUTATION,
+    // UPDATE_SPOTSTARTTIME_MUTATION,
+    // UPDATE_SPOTENDTIME_MUTATION,
+    // SIGNUP_MUTATION
+    // for subscription
+  } from '../graphql'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
 const TourMap = () => {
     const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
     const [usernamedecided, setUsernamedecided] = useState(false)
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         setUsername(values.username)
+        setPassword(values.password)
         setUsernamedecided(true)
       };
     
@@ -46,11 +49,11 @@ const TourMap = () => {
     //accout -> plan list
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     
-    // const { subscribeToMore, ...result } = useQuery(
-    //     MARKER_QUERY,
-    //     { variables: { username: username } }
-    //   )
-
+    const { subscribeMarker, ...marker } = useQuery(
+        MARKER_QUERY,
+        { variables: { username: username } }
+        // Marker data in result.data
+      )
     return (
     <React.Fragment>
         {usernamedecided? ( // 決定是否有輸入 username
@@ -130,7 +133,7 @@ const TourMap = () => {
                     </Menu>
                 </div>):null
                 }
-                <MapBox></MapBox>
+                <MapBox username={username}></MapBox>
                 </Content>
             </Layout>
             </Layout>
@@ -143,61 +146,62 @@ const TourMap = () => {
         </React.Fragment>
             
         ) : (
-            <TourPlan></TourPlan>)}
-            </React.Fragment>
-            // <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
-            //     <div style={{width: "100%", height: "100%"}}>
-            //         <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
-            //         <Form
-            //         name="normal_login"
-            //         className="login-form"
-            //         initialValues={{
-            //             remember: true,
-            //         }}
-            //         onFinish={onFinish} // summit user info
-            //         >
-            //         <Form.Item
-            //             name="username"
-            //             rules={[
-            //             {
-            //                 required: true,
-            //                 message: 'Please input your Username!',
-            //             },
-            //             ]}
-            //         >
-            //             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            //         </Form.Item>
-            //         <Form.Item
-            //             name="password"
-            //             rules={[
-            //             {
-            //                 required: true,
-            //                 message: 'Please input your Password!',
-            //             },
-            //             ]}
-            //         >
-            //             <Input
-            //             prefix={<LockOutlined className="site-form-item-icon" />}
-            //             type="password"
-            //             placeholder="Password"
-            //             />
-            //         </Form.Item>
-            //         <Form.Item>
-            //             <Form.Item name="remember" valuePropName="checked" noStyle>
-            //             <Checkbox>Remember me</Checkbox>
-            //             </Form.Item>
-            //         </Form.Item>
+            // <TourPlan></TourPlan>)}
+            <React.Fragment>
+            <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
+                <div style={{width: "100%", height: "100%"}}>
+                    <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
+                    <Form
+                    name="normal_login"
+                    className="login-form"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish} // summit user info
+                    >
+                    <Form.Item
+                        name="username"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Username!',
+                        },
+                        ]}
+                    >
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Password!',
+                        },
+                        ]}
+                    >
+                        <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="Password"
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                        <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                    </Form.Item>
 
-            //         <Form.Item>
-            //             <Button type="primary" htmlType="submit" className="login-form-button">
-            //             Log in
-            //             </Button>
-            //             Or <a href="">register now!</a>
-            //         </Form.Item>
-            //         </Form>
-            //         </div>
-            //     </div>)}
-    // </React.Fragment>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                        </Button>
+                        Or <a href="">register now!</a>
+                    </Form.Item>
+                    </Form>
+                    </div>
+                </div>
+                </React.Fragment>)}
+        </React.Fragment>
     )
 }
 
