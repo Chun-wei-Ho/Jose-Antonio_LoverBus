@@ -10,7 +10,7 @@ async function parsePlan(plan){
             _id: e._id
         }
     }))
-    return {title: plan.title, _id: plan._id, spots:spots}
+    return {username:plan.username, title: plan.title, _id: plan._id, spots:spots}
 }
 
 module.exports = parsePlan
