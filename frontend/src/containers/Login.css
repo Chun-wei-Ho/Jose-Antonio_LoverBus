@@ -1,3 +1,8 @@
+.login-background {
+    height: 100%;
+    width:  100%;
+    background-color: black;
+}
 .login-root {
     position: absolute;
     top: 50%;
@@ -6,17 +11,28 @@
     height: 80%;
     width: 80%;
     background-image: url("https://media.giphy.com/media/zNyBPu5hEFpu/giphy.gif");
-    background-color: #cccccc;   
+    background-color: #cccccc;  
+    /* opacity: 0.7;  */
 }
 
 /* some good bg-image */
 /* rabbit drop the carrot: https://media.giphy.com/media/zNyBPu5hEFpu/giphy.gif */
 
+.login-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    height: 65%;
+    background-color:rgba(255, 255, 255, 0.7);
+}
 
 .login-title {
     text-align: center;
     font-size: 30px;
-    color: blanchedalmond;
+    /* color: blanchedalmond; */
 }
 
 .login-form {
