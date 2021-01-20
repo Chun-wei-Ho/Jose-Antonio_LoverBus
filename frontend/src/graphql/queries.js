@@ -1,5 +1,13 @@
 import { gql } from 'apollo-boost'
 
+export const USERNAME_QUERY = gql`
+  query Username(
+    $_id: ID!
+  ) {
+    Username(_id: $_id)
+  }
+`
+
 export const MARKER_QUERY = gql`
   query Marker (
     $username: String!

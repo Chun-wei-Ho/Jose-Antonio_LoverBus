@@ -17,11 +17,15 @@ const Query = {
             if(userexist) {throw "wrong password"}
             else {throw `user ${args.username} doesn't exist`}
         }
-        return (users.length === 1)
+        return users[0]._id
     },
     async Plan(parent, {_id}, {models, pubsub}, info){
         const plans = await models.Plan.findById(_id)
         return await parsePlan.bind({models})(plans)
+    },
+    async Username(parent, {_id}, {models, pubsub}, info){
+        const user = await models.User.findById(_id)
+        return user.username
     }
 }
 

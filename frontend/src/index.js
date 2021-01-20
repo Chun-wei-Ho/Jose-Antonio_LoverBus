@@ -2,15 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TourMap from './containers/TourMap';
 import TourPlan from './containers/TourPlan';
+import Login from './containers/Login'
 import PlanList from './containers/PlanList';
 import HomeRouter from './containers/HomeRouter';
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import {HashRouter,Route} from 'react-router-dom';
+
+// import {
+//     BrowserRouter as Router,
+//     Switch,
+//     Route,
+//     Link
+// } from "react-router-dom";
   
 
 // import reportWebVitals from './reportWebVitals';
@@ -53,7 +56,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <TourMap />
+        <HashRouter>
+            <Route path="/" component={Login} />
+            <Route path="/:userId" component={TourMap} />
+        </HashRouter>
     </ApolloProvider>,
     document.getElementById('root')
 );

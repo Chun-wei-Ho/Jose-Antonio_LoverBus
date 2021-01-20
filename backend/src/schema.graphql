@@ -1,8 +1,9 @@
 type Query{
     Marker(username: String!): [Marker!]!
     UserPlan(username: String!): [Plan!]!
+    Username(_id: ID!): String
     Plan(_id: ID!): Plan!
-    signIn(username: String!, password: String!): Boolean! # true if successful
+    signIn(username: String!, password: String!): ID 
 }
 
 type Mutation{
