@@ -1,4 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+@import url(https://www.w3schools.com/w3css/4/w3.css);
+
+.middle {
+    height: 90%;
+}
 
 div.table-title {
   display: block;
@@ -9,7 +14,7 @@ div.table-title {
 }
 
 .table-title h3 {
-   color: #fafafa;
+   color: #000000;
    font-size: 30px;
    font-weight: 400;
    font-style:normal;
@@ -28,7 +33,7 @@ div.table-title {
   border-collapse: collapse;
   height: 320px;
   margin: auto;
-  max-width: 900px;
+  max-width: 80%;
   padding:5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -73,7 +78,7 @@ tr {
 
 .spot-time {
     font-size:11px;
-    width: 164px;
+    width: 200px;
 }
 
 .spot-button {

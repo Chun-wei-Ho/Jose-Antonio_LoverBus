@@ -41,14 +41,15 @@ export default function TourPlan(args){
         <React.Fragment>
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
+                <div className="logo" />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" style={{position: "relative", margin: "0px"}}>
-                        <p>Jose Antonio_LoverBus</p>
+                    <Menu.Item key="1" style={{position: "absolute", left: '0px', margin: "0px"}}>
+                        <p>Jose Antonio LoverBus</p>
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
+                    <Menu.Item key="2" style={{position: "absolute", left: '198.4px'}}>
                         nav 1
                     </Menu.Item>
-                    <Menu.Item key="3" style={{left: '0px'}}>
+                    <Menu.Item key="3" style={{position: "absolute", left: '277.68px'}}>
                         nav 2
                     </Menu.Item>
                     <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
@@ -56,11 +57,17 @@ export default function TourPlan(args){
                     </Menu.Item>
                 </Menu>
             </Header>
-            <Layout>
+            <Layout className='middle'>
             <Sider height={500} width={200} className="site-layout-background">
-                <h1>Plan List</h1>
-                <p>plan 1</p>
-                <p>plan 2</p>
+                <h3>Plan List</h3>
+                <Menu theme="blue" mode="vertical">
+                    <Menu.Item key="1" style={{margin: '0px'}}>
+                        Plan 1
+                    </Menu.Item>
+                    <Menu.Item key="2" style={{left: '0px'}}>
+                        Plan 2
+                    </Menu.Item>
+                </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -76,11 +83,11 @@ export default function TourPlan(args){
                     minHeight: 280,
                 }}
                 >
-                    <div className="table-title"> <h2> {plan.title} </h2> </div>
+                    <div className="table-title"> <h3> {plan.title} </h3> </div>
                     <table className="table-fill">
                         <thead>
                             <tr>
-                                <th className='spot-title' style={{}}>Title</th>
+                                <th className='spot-title'>Title</th>
                                 <th className='spot-description'>Description</th>
                                 <th>Time</th>
                                 <th></th>
