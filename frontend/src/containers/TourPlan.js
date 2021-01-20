@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom';
-import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
+import { Tooltip, Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
     Drawer, Col, Row, Select} from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
@@ -71,11 +71,6 @@ export default function TourPlan(props){
         setnewEndTime(dt);
         console.log(dt)
       }
-    // if(!planState || planState.length === 0){
-    //     return (<React.Fragment/>)
-    //     console.log(planState)
-    //     console.log(11)
-    // }
     return (
         <React.Fragment>
             <Layout>
@@ -99,8 +94,15 @@ export default function TourPlan(props){
                     {
                       planState.map(({ title }, i) => (
                         <Menu.Item key={i} onClick={() => {setCurrentPlan(i)
-                        }}>
+                        }} style={{display: "flex", alignItems: "center"}}>
                             {title}
+                            <Button 
+                            className="deletePlan"
+                            type="dashed"
+                            size="small"
+                            style={{position: "absolute", right: "10px", fontSize: "5px"}}
+                            onClick={() => {}}
+                            >x</Button>
                         </Menu.Item>
                       ))
                     }
@@ -111,7 +113,7 @@ export default function TourPlan(props){
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Plan List</Breadcrumb.Item>
-                {(!planState || planState.length === 0)?(<Breadcrumb.Item>No Plan Right Now</Breadcrumb.Item>)
+                {(!planState || planState.length === 0)?(<Breadcrumb.Item></Breadcrumb.Item>)
                 :(<Breadcrumb.Item>{planState[currentPlan].title}</Breadcrumb.Item>)}   
                 </Breadcrumb>
                 <Content
@@ -125,7 +127,7 @@ export default function TourPlan(props){
                     <div className="table-title">
                         {(!planState || planState.length === 0)?(<h3></h3>):(<h3> {planState[currentPlan].title} </h3>)}
                     </div>
-                    {((!planState || planState.length === 0)?(<div>No Plan Right Now</div>):
+                    {((!planState || planState.length === 0)?(<h3> No Plan Right Now </h3>):
                         (<React.Fragment>
                             {(planState[currentPlan].spots.length !== 0)?(
                                 <table className="table-fill">
