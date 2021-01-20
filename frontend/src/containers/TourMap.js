@@ -4,8 +4,10 @@ import MapBox from "../components/Mapbox_TW"
 import AddPlace from "../components/addPlace"
 import SearchInfo from "../components/SearchInfo"
 import Background from '../img/background.jpg';
-import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
-import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined} from '@ant-design/icons';
+import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, 
+    Drawer, Col, Row, Select, DatePicker } from 'antd';
+import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
+
 import "./TourMap.css"
 import 'antd/dist/antd.css'
 
@@ -25,18 +27,20 @@ import {
 //     delete_Spot_MUTATION,
 //     UPDATE_SPOTSTARTTIME_MUTATION,
 //     UPDATE_SPOTENDTIME_MUTATION,
-//     SIGNUP_MUTATION
+    // SIGNUP_MUTATION
 //     // for subscription
   } from '../graphql'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
+const { Option } = Select;
 
 const TourMap = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    // const [usernamedecided, setUsernamedecided] = useState(false)
+    const [register, setRegister] = useState(false)
     const {data:signIndata} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
+
     const onFinish = (values) => {
         setUsername(values.username)
         setPassword(values.password)
@@ -109,7 +113,7 @@ const TourMap = () => {
                     minHeight: 280,
                 }}
                 >
-                <MapBox></MapBox>
+                <MapBox username={username}></MapBox>
                 </Content>
             </Layout>
             </Layout>
@@ -169,7 +173,69 @@ const TourMap = () => {
                         <Button type="primary" htmlType="submit" className="login-form-button">
                         Log in
                         </Button>
-                        Or <a href="">register now!</a>
+                        Or  
+                        <React.Fragment>
+                            <a style={{position: "relative", left: "5px"}} onClick={() => setRegister(true)}>
+                                Register Now
+                            </a>
+                            <Drawer
+                                title="Create a new account"
+                                width={360}
+                                onClose={() => setRegister(false)}
+                                visible={register}
+                                bodyStyle={{ paddingBottom: 80 }}
+                                footer={
+                                    <div
+                                        style={{
+                                            textAlign: 'right',
+                                    }}
+                                >
+                                    <Button onClick={() => setRegister(false)} style={{ marginRight: 8 }}>
+                                        Cancel
+                                    </Button>
+                                    <Button onClick={() => setRegister(false)} type="primary">
+                                        Submit
+                                    </Button>
+                                </div>
+                            }
+                            >
+                                <Form layout="vertical" hideRequiredMark>
+                                    <Row gutter={16}>
+                                        <Col>
+                                            <Form.Item
+                                                name="username"
+                                                label="Username"
+                                                rules={[{ required: true, message: 'Please enter user`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````name' }]}
+                                                >
+                                                <Input placeholder="Please enter username" />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col>
+                                            <Form.Item
+                                                name="password"
+                                                label="Password"
+                                                rules={[{ required: true, message: 'Please enter password' }]}
+                                                >
+                                                <Input placeholder="Please enter password" />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col>
+                                            <Form.Item
+                                                name="password"
+                                                label="Confirm Password"
+                                                rules={[{ required: true, message: 'Please confirm password' }]}
+                                                >
+                                                <Input placeholder="Please confirm password" />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Drawer>
+                        </React.Fragment>
                     </Form.Item>
                     </Form>
                     </div>
