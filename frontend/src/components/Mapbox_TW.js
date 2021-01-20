@@ -12,6 +12,7 @@ MARKER_QUERY,
 // DELETE_MARKER_MUTATION,
 // UPDATE_MARKER_MUTATION,
 // for subscription
+MARKERS_SUBSCRIPTION
 } from '../graphql'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
@@ -32,9 +33,11 @@ const MapBox = ({username, markerCallback}) => {
 
     const [map, setMap] = useState(null);
     const mapContainer = useRef(null);
+    const {data, subscribeToMore} = useQuery(MARKER_QUERY, {variables:{username: username}})
 
     const [currentMarker, setCurrentMarker] = useState(null);
     const [test, setTest] = useState(0);
+    const [markerLoaded, setMarkerLoaded] = useState(false);
 
     useEffect(() => {
         const initializeMap = ({ setMap, mapContainer}) => {
@@ -75,6 +78,44 @@ const MapBox = ({username, markerCallback}) => {
         };
         map.once('click', clickPoint);
     }
+    if(map && data && !markerLoaded){
+        setMarkerLoaded(true)
+        data.Marker.map(e=>{
+            const linLat = e.geometry.coordinates
+            var popup = new mapboxgl.Popup()
+            .setHTML('<h3>A point</h3>');
+
+            var marker = new mapboxgl.Marker()
+            .setLngLat(linLat)
+            .setPopup(popup)
+            .addTo(map)
+        })
+    }
+    useEffect(()=>{
+        if(!subscribeToMore || !map) return;
+        subscribeToMore({
+            document: MARKERS_SUBSCRIPTION,
+            variables: {username: username},
+            updateQuery: (prev, { subscriptionData }) => {
+                const newData = subscriptionData.data.subscribeMarker
+                switch(newData.mutation){
+                    case "NEW":
+                        const linLat = newData.data.geometry.coordinates
+                        var popup = new mapboxgl.Popup()
+                        .setHTML('<h3>A point</h3>');
+
+                        var marker = new mapboxgl.Marker()
+                        .setLngLat(linLat)
+                        .setPopup(popup)
+                        .addTo(map)
+                    break
+                    default:
+                        console.log(`Warning: unknown mutation ${newData.mutation}`)
+                    break
+                }
+            }
+        })
+    }, [map])
 
     // useEffect(()=>{
     //     if(map){

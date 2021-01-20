@@ -1,5 +1,5 @@
 const Mutation = {
-    async addMarker(parent, {marker}, {models, pubsub}, info){
+    addMarker(parent, {marker}, {models, pubsub}, info){
         const _marker = new models.Marker({
             username: marker.username,
             properties:{
@@ -11,7 +11,7 @@ const Mutation = {
             }
         })
         _marker.save()
-        pubsub.publish(`marker.${_marker.username}`, {subscribeUser: {
+        pubsub.publish(`marker.${_marker.username}`, {subscribeMarker: {
             mutation: 'NEW', data: _marker
         }})
         return _marker._id
@@ -24,7 +24,7 @@ const Mutation = {
     },
     async deleteMarker(parent, {_id}, {models, pubsub}, info){
         const marker = await models.Marker.findByIdAndDelete(_id, () => {})
-        pubsub.publish(`marker.${marker.username}`, {subscribeUser: {
+        pubsub.publish(`marker.${marker.username}`, {subscribeMarker: {
             mutation: 'DELETE', data: marker
         }})
     },
@@ -35,7 +35,7 @@ const Mutation = {
             .filter(([_, v]) => v != null));
         const marker = await models.Marker.findByIdAndUpdate({_id},
             option, () => {})
-        pubsub.publish(`marker.${marker.username}`, {subscribeUser: {
+        pubsub.publish(`marker.${marker.username}`, {subscribeMarker: {
             mutation: 'UPDATE', data: marker
         }})
     },
