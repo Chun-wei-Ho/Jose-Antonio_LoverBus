@@ -59,108 +59,91 @@ const AddPlace = ({username, currentMarker, markerContentCallback}) => {
                   value={description}
                   onChange={(e) => {setDescription(e.target.value)}}></TextArea> 
       </Card>
+      <Card  
+        style={{ marginTop: 16 }}
+        type="inner"
+        title="My Plan List">
+        <AddtoPlan></AddtoPlan>
+      </Card>
       <br></br>
-      <div style={{position: "absolute", right: "25px", bottom: "10px"}}>
-        <Button size={"small"} onClick={onclick}>OK</Button>
+      <div>
+        <Button size={"small"} onClick={onclick} style={{position: "absolute", right: "25px", bottom: "10px"}}>Save</Button>
       </div>
-      <Demo></Demo>
     </Card>
   )
 }
 
-
-
 const NEW_ITEM = "NEW_ITEM";
-
 const Option = Select.Option;
 
-const list1Options = ["option-1", "option-2", "option-3"];
+const AddtoPlan = () => {
+  const [list1Value, setList1Value] = useState("")
+  const [showList1, setshowList1] = useState(false)
+  const [list1Options, setlist1Options] = useState(["Plan 1", "Plan 2"])
 
-class Demo extends React.Component {
-  state = {
-    list1Value: "",
-
-    showList1: false,
-
-    list1Options: list1Options
-  };
-
-  onChangeList1 = value => {
+  const onChangeList1 = (value) => {
     if (value !== NEW_ITEM) {
-      this.setState({ list1Value: value });
+      setList1Value(value)
     } else {
-      this.setState({ showList1: true });
+      setshowList1(true)
     }
   };
 
-  onConfirm = inputValue => {
+  const onConfirm = (inputValue) => {
     inputValue = inputValue.trim();
-    if (this.state.list1Options.includes(inputValue)) {
-      this.setState({
-        showList1: false,
-        list1Value: inputValue
-      });
+    if (list1Options.includes(inputValue)) {
+      setshowList1(false)
+      setList1Value(inputValue)
     } else {
-      this.setState({
-        showList1: false,
-        list1Options: [inputValue, ...this.state.list1Options],
-        list1Value: inputValue
-      });
+      setshowList1(false)
+      setlist1Options([inputValue, ...list1Options])
+      setList1Value(inputValue)
     }
   };
 
-  render() {
-    const { list1Value } = this.state;
-
-    const list1SelectOptions = this.state.list1Options.map(o => (
-      <Option key={o}>{o}</Option>
-    ));
+  const list1SelectOptions = list1Options.map(o => (
+    <Option key={o}>{o}</Option>
+  ));
 
     return (
       <div>
-        <h3>List-1</h3>
         <Select
           value={list1Value}
-          style={{ width: 420 }}
-          onChange={this.onChangeList1}
+          style={{ width: 100 }}
+          onChange={onChangeList1}
         >
           {list1SelectOptions}
           <Option value={NEW_ITEM}>+ New Item</Option>
         </Select>
 
         <SweetAlert
-          show={this.state.showList1}
-          title="Add New System Name"
-          text="Enter new System Name"
+          show={showList1}
+          title="Add New Plan"
+          text="Enter new Plan Name"
           showCancelButton
           type="input"
-          inputPlaceholder="Enter System Name"
+          inputPlaceholder="Enter Plan Name"
           animation="slide-from-top"
-          validationMsg="Please enter a response!"
+          validationMsg="Please enter a name!"
           onConfirm={inputValue => {
             inputValue = inputValue.trim();
-            if (this.state.list1Options.includes(inputValue)) {
-              this.setState({
-                showList1: false,
-                list1Value: inputValue
-              });
+            if (list1Options.includes(inputValue)) {
+              setshowList1(false)
+              setList1Value(inputValue)
             } else {
-              this.setState({
-                showList1: false,
-                list1Options: [inputValue, ...this.state.list1Options],
-                list1Value: inputValue
-              });
+              setshowList1(false)
+              setlist1Options([inputValue, ...list1Options])
+              setList1Value(inputValue)
             }
           }}
           onCancel={() => {
-            this.setState({ showList1: false });
+            setshowList1(false);
           }}
-          onEscapeKey={() => this.setState({ showList1: false })}
-          onOutsideClick={() => this.setState({ showList1: false })}
+          onEscapeKey={() => {setshowList1(false)}}
+          onOutsideClick={() => {setshowList1(false)}}
         />
       </div>
     );
   }
-}
 
 export default AddPlace
