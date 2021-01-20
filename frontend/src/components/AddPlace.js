@@ -29,7 +29,7 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
   const onclick = async () => {
     if(!currentMarker) {
-      alert("sellect a marker to add")
+      alert("select a marker to add")
       return
     }
     if(title === ""){

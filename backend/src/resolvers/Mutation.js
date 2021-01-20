@@ -104,11 +104,23 @@ const Mutation = {
     },
     async updateSpotStartTime(parent, {_id, time}, {models, pubsub}, info){
         const date = new Date(time)
-        models.Spot.findByIdAndUpdate({_id}, {startTime: date}, () => {})
+        const spot = await models.Spot.findByIdAndUpdate({_id}, {startTime: date}, () => {})
+        const plan = await models.Plan.findById({_id: spot.planID})
+
+        const parsedPlan = await parsePlan.bind({models})(plan)
+        pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
+                mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
+        }})
     },
     async updateSpotEndTime(parent, {_id, time}, {models, pubsub}, info){
         const date = new Date(time)
-        models.Spot.findByIdAndUpdate({_id}, {endTime: date}, () => {})
+        const spot = await models.Spot.findByIdAndUpdate({_id}, {endTime: date}, () => {})
+        const plan = await models.Plan.findById({_id: spot.planID})
+
+        const parsedPlan = await parsePlan.bind({models})(plan)
+        pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
+                mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
+        }})
     }
 }
 
