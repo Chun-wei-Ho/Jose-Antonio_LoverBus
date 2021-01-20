@@ -18,7 +18,7 @@ MARKERS_SUBSCRIPTION
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
 
-const MapBox = ({username, markerCallback, currentMarkerContent}) => {
+const MapBox = ({username, markerCallback, currentMarkerContent, title, setTitle, description, setDescription}) => {
     
     const [View, setView] = useState({
         lng: 121.55,
@@ -102,6 +102,11 @@ const MapBox = ({username, markerCallback, currentMarkerContent}) => {
             .setLngLat(linLat)
             .setPopup(popup)
             .addTo(map)
+
+            marker.getElement().addEventListener('click', () => {
+                  setTitle(e.properties.title)
+                  setDescription(e.properties.description)
+                });
         })
     }
 
@@ -122,6 +127,11 @@ const MapBox = ({username, markerCallback, currentMarkerContent}) => {
                         .setLngLat(linLat)
                         .setPopup(popup)
                         .addTo(map)
+
+                        marker.getElement().addEventListener('click', () => {
+                          setTitle(newData.data.properties.title)
+                          setDescription(newData.data.properties.description)
+                        });
                     break
                     default:
                         console.log(`Warning: unknown mutation ${newData.mutation}`)

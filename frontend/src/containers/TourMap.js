@@ -38,8 +38,13 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Option } = Select;
 
 const TourMap = (props) => {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
     const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
     const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
+
+    const plan = planList? planList.UserPlan : []
 
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
@@ -66,7 +71,9 @@ const TourMap = (props) => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <AddPlace username={username} currentMarker={currentMarker}></AddPlace>
+                <AddPlace username={username} currentMarker={currentMarker} plan={plan}
+                        title={title} setTitle={setTitle} description={description}
+                        setDescription={setDescription}></AddPlace>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
                 <Breadcrumb style={{ margin: '16px 0' }}>
@@ -82,7 +89,9 @@ const TourMap = (props) => {
                     minHeight: 280,
                 }}
                 >
-                <MapBox username={username} markerCallback={markerCallback}></MapBox>
+                <MapBox username={username} markerCallback={markerCallback}
+                    title={title} setTitle={setTitle} description={description}
+                        setDescription={setDescription}></MapBox>
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
