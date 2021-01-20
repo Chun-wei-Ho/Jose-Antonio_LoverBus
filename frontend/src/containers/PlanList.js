@@ -11,8 +11,8 @@ export default function PlanList(args){
     const username = 'Jose Antonio'
     const [showUsermMenu, setShowUsermMenu] = useState(false)
 
-    const planList = {
-        title: "Baby Shark do do do",
+    const userPlan = [
+        {title: "Baby Shark do do do",
         spots: [
             {
                 _id: "",
@@ -35,15 +35,40 @@ export default function PlanList(args){
                     }
             }
             ],
-        _id: ""
-        }
+        _id: ""},
+
+        {title: "Do you want to build a snowman",
+        spots: [
+            {
+                _id: "",
+                startTime: "Wed Feb 13 2020 10:52:00 GMT+0800",
+                endTime: "Wed Feb 13 2020 22:52:00 GMT+0800",
+                location: {
+                        properties: {title: "My Home", description: "A good place to lie lie."},
+                        geometry: {coordinates: [2,3]},
+                        _id: ""
+                    }
+            },
+            {
+                _id: "",
+                startTime: "Thu Feb 14 2020 10:52:00 GMT+0800",
+                endTime: "Thu Feb 14 2020 22:52:00 GMT+0800",
+                location: {
+                        properties: {title: "Pillow Mountain", description: "Everyday we climb."},
+                        geometry: {coordinates: [2,3]},
+                        _id: ""
+                    }
+            }
+            ],
+        _id: ""}
+        ]
     return (
         <React.Fragment>
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" style={{position: "absolute", left: '0px', margin: "0px"}}>
+                    <Menu.Item key="1" style={{position: "absolute", left: '0px', height: '64px'}}>
                         <p>Jose Antonio LoverBus</p>
                     </Menu.Item>
                     <Menu.Item key="2" style={{position: "absolute", left: '198.4px'}}>
@@ -58,22 +83,10 @@ export default function PlanList(args){
                 </Menu>
             </Header>
             <Layout className='middle'>
-            <Sider height={500} width={200} className="site-layout-background">
-                <h3>Plan List</h3>
-                <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}}>
-                        Plan 1
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
-                        Plan 2
-                    </Menu.Item>
-                </Menu>
-            </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Plan List</Breadcrumb.Item>
-                <Breadcrumb.Item>{planList.title}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Content
                 className="site-layout-background"
@@ -83,29 +96,30 @@ export default function PlanList(args){
                     minHeight: 280,
                 }}
                 >
-                    <div className="table-title"> <h3> {planList.title} </h3> </div>
+                    <div className="table-title"> <h3> {username}'s Plan List </h3> </div>
                     <table className="table-fill">
                         <thead>
                             <tr>
-                                <th className='spot-title'>Title</th>
-                                <th className='spot-description'>Description</th>
-                                <th>Time</th>
+                                <th className='spot-title'>Plan Name</th>
+                                <th className='spot-description'>Spots in the Plan</th>
+                                <th>Total Time</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {planList.spots.map(e => (
+                        {userPlan.map(e => (
                                 <tr>
-                                    <td className='spot-title' style={{}}> {e.location.properties.title} </td>
-                                    <td className='spot-description'> {e.location.properties.description} </td>
+                                    <td className='plan-title' style={{}}> {e.title} </td>
+                                    <td className='plan-spots'>
+                                        {e.spots.map(spot=>(<p>{spot.location.properties.title}</p>))}
+                                    </td>
                                     <td className='spot-time'>
-                                       {new Date(e.startTime).toLocaleString()}
+                                       {new Date(e.spots[0].startTime).toLocaleString()}
                                        <p className="timeto">to</p>
-                                        <p>{new Date(e.endTime).toLocaleString()}</p> 
+                                        <p>{new Date(e.spots[0].endTime).toLocaleString()}</p> 
                                     </td>
                                     <td className='spot-button'>
-                                        <button onClick={()=>{}}> Edit Time</button>
-                                        <button onClick={()=>{}}> Delete Spot</button> 
+                                        <button onClick={()=>{}}> Delete Plan</button> 
                                     </td>
                                 </tr>
                             ))}
@@ -133,27 +147,6 @@ export default function PlanList(args){
                 <Button className="FooterButton">All</Button>
             </Footer>
             </Layout>
-        {/* <h1> {plan.title} </h1>
-        <table>
-            <thead>
-                <tr>
-                    <td>title</td>
-                    <td>description</td>
-                    <td>time</td>
-                </tr>
-            </thead>
-            <tbody>
-                {plan.spots.map(e => (
-                    <tr>
-                        <td> {e.location.properties.title} </td>
-                        <td> {e.location.properties.description} </td>
-                        <td> {new Date(e.startTime).toLocaleString()}
-                                - {new Date(e.endTime).toLocaleString()} <button onClick={()=>{}}> Edit </button> 
-                                <button onClick={()=>{}}> Delete </button> </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table> */}
         </React.Fragment>
     )
 }

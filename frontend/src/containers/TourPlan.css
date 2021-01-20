@@ -8,9 +8,9 @@
 div.table-title {
   display: block;
   margin: auto;
-  max-width: 900px;
   padding:5px;
   width: 100%;
+  max-width: 80%;
 }
 
 .table-title h3 {
