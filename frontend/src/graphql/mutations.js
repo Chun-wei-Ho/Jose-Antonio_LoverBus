@@ -14,9 +14,7 @@ export const ADD_MARKER_MUTATION = gql`
         coordinates: $coordinates
         description: $description
       }
-    ) {
-      _id
-    }
+    )
   }
 `
 
@@ -26,9 +24,7 @@ export const DELETE_MARKER_MUTATION = gql`
   ) {
     deleteMarker(
       _id: $_id
-    ) {
-      _id
-    }
+    )
   }
 `
 
@@ -42,9 +38,7 @@ export const UPDATE_MARKER_MUTATION = gql`
       _id: $_id 
       newTitle: $newTitle
       newDescription: $newDescription
-    ) {
-      _id
-    }
+    )
   }
 `
 
@@ -56,9 +50,7 @@ export const NEWPLAN_MUTATION = gql`
     newPlan(
       username: $username
       title: $title
-    ) {
-      _id
-    }
+    )
   }
 `
 export const RENAME_PLAN_MUTATION = gql`
@@ -110,9 +102,7 @@ export const DELETE_SPOT_MUTATION = gql`
   ) {
     deleteSpot(
       _id: $_id
-    ) {
-      _id
-    }
+    )
   }
 `
 export const UPDATE_SPOT_STARTTIME_MUTATION = gql`

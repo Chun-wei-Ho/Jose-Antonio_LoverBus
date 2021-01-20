@@ -3,7 +3,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import MapBox from "../components/Mapbox_TW"
 import AddPlace from "../components/addPlace"
 import SearchInfo from "../components/SearchInfo"
-import Background from '../img/background.jpg';
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, 
     Drawer, Col, Row, Select, DatePicker } from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
@@ -27,7 +26,7 @@ import {
 //     delete_Spot_MUTATION,
 //     UPDATE_SPOTSTARTTIME_MUTATION,
 //     UPDATE_SPOTENDTIME_MUTATION,
-    // SIGNUP_MUTATION
+    SIGNUP_MUTATION
 //     // for subscription
   } from '../graphql'
 
@@ -40,6 +39,7 @@ const TourMap = () => {
     const [password, setPassword] = useState("")
     const [register, setRegister] = useState(false)
     const {data:signIndata} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
+    const [signUp]= useMutation(SIGNUP_MUTATION)
 
     const onFinish = (values) => {
         setUsername(values.username)
@@ -193,7 +193,12 @@ const TourMap = () => {
                                     <Button onClick={() => setRegister(false)} style={{ marginRight: 8 }}>
                                         Cancel
                                     </Button>
-                                    <Button onClick={() => setRegister(false)} type="primary">
+                                    <Button onClick={() => {
+                                        setRegister(false)
+                                        const newAccount = { username: username, password: password}
+                                        signUp({ variables: newAccount })
+                                        console.log(newAccount)}} 
+                                        type="primary">
                                         Submit
                                     </Button>
                                 </div>
@@ -219,17 +224,6 @@ const TourMap = () => {
                                                 rules={[{ required: true, message: 'Please enter password' }]}
                                                 >
                                                 <Input placeholder="Please enter password" />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={16}>
-                                        <Col>
-                                            <Form.Item
-                                                name="password"
-                                                label="Confirm Password"
-                                                rules={[{ required: true, message: 'Please confirm password' }]}
-                                                >
-                                                <Input placeholder="Please confirm password" />
                                             </Form.Item>
                                         </Col>
                                     </Row>
