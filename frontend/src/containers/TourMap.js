@@ -74,7 +74,7 @@ const TourMap = () => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <AddPlace currentMarker={currentMarker}></AddPlace>
+                <AddPlace username={username} currentMarker={currentMarker}></AddPlace>
                 {/* <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}

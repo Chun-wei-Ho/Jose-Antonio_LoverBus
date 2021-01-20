@@ -8,7 +8,7 @@ import {
 // for query
 MARKER_QUERY,
 // for mutation
-ADD_MARKER_MUTATION,
+// ADD_MARKER_MUTATION,
 // DELETE_MARKER_MUTATION,
 // UPDATE_MARKER_MUTATION,
 // for subscription
@@ -27,7 +27,7 @@ const MapBox = ({username, markerCallback}) => {
         MARKER_QUERY,
         { variables: { username: username } }
         )
-    const [addMarker] = useMutation(ADD_MARKER_MUTATION)
+    // const [addMarker] = useMutation(ADD_MARKER_MUTATION)
 
 
     const [map, setMap] = useState(null);
