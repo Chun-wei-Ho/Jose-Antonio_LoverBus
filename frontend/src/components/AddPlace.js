@@ -18,10 +18,11 @@ NEWPLAN_MUTATION,
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const AddPlace = ({username, currentMarker, markerContentCallback}) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+const AddPlace = ({username, currentMarker, markerContentCallback, plan, title, setTitle, description, setDescription}) => {
   const setCurrentMarkerContent = e => { markerContentCallback(e);} 
+
+  const [list1Value, setList1Value] = useState("")
+  const [showList1, setshowList1] = useState(false)
 
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
   const [newPlan] = useMutation(NEWPLAN_MUTATION)
@@ -29,7 +30,10 @@ const AddPlace = ({username, currentMarker, markerContentCallback}) => {
     if(title === ""){
       alert("Please input a title")
     }
-
+    if(!currentMarker) {
+      alert("sellect a marker to add")
+      return
+    }
     const {lng, lat} = currentMarker._lngLat
 
     addMarker({variables:{
@@ -70,7 +74,8 @@ const AddPlace = ({username, currentMarker, markerContentCallback}) => {
         style={{ marginTop: 16 }}
         type="inner"
         title="My Plan List">
-        <AddtoPlan></AddtoPlan>
+        <AddtoPlan plan={plan} list1Value={list1Value} setList1Value={setList1Value}
+                showList1={showList1} setshowList1={setshowList1}></AddtoPlan>
       </Card>
       <br></br>
       <div>
@@ -83,10 +88,9 @@ const AddPlace = ({username, currentMarker, markerContentCallback}) => {
 const NEW_ITEM = "NEW_ITEM";
 const Option = Select.Option;
 
-const AddtoPlan = () => {
-  const [list1Value, setList1Value] = useState("")
-  const [showList1, setshowList1] = useState(false)
-  const [list1Options, setlist1Options] = useState(["Plan 1", "Plan 2"])
+const AddtoPlan = ({plan, list1Value, setList1Value, showList1, setshowList1}) => {
+  // const [list1Options, setlist1Options] = useState(plan)
+  const list1Options = plan.map(e=>e.title)
 
   const onChangeList1 = (value) => {
     if (value !== NEW_ITEM) {
@@ -103,7 +107,7 @@ const AddtoPlan = () => {
       setList1Value(inputValue)
     } else {
       setshowList1(false)
-      setlist1Options([inputValue, ...list1Options])
+      // setlist1Options([inputValue, ...list1Options])
       setList1Value(inputValue)
     }
   };
@@ -139,7 +143,7 @@ const AddtoPlan = () => {
               setList1Value(inputValue)
             } else {
               setshowList1(false)
-              setlist1Options([inputValue, ...list1Options])
+              // setlist1Options([inputValue, ...list1Options])
               setList1Value(inputValue)
             }
           }}
