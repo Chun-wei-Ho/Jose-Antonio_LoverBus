@@ -104,7 +104,7 @@ export default function Login(){
     <React.Fragment>
         <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
             <div>
-                <h5 style={{textAlign: "center", fontSize: "30px"}}>Welcome to Jose-Antonio_LoverBus !</h5>
+                <h5 style={{textAlign: "center", fontSize: "30px"}}>Welcome to Jose Antonio LoverBus !</h5>
                 <Form 
                 name="normal_login"
                 className="login-form"
