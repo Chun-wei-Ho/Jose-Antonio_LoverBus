@@ -51,7 +51,7 @@ const MapBox = ({username, markerCallback, currentMarkerContent}) => {
                 });
 
             map.on("move", () => {
-                setView(map.getCenter().lng.toFixed(4), map.getCenter().lat.toFixed(4), map.getCenter().lat.toFixed(4))
+                setView({lng: map.getCenter().lng.toFixed(4), lat: map.getCenter().lat.toFixed(4), zoom:map.getZoom().toFixed(2)})
                 setTest(4)
             });
 
