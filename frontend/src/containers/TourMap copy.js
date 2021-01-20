@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import MapBox from "../components/Mapbox_TW"
 import AddPlace from "../components/addPlace"
-// import PlanList from "./PlanList"
-import TourPlan from "./TourPlan"
 import SearchInfo from "../components/SearchInfo"
 import Background from '../img/background.jpg';
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
@@ -41,11 +39,7 @@ const TourMap = () => {
         setUsername(values.username)
         setUsernamedecided(true)
       };
-    
-    //new add
-    //accout -> plan list
-    const [showUsermMenu, setShowUsermMenu] = useState(false)
-    
+
     // const { subscribeToMore, ...result } = useQuery(
     //     MARKER_QUERY,
     //     { variables: { username: username } }
@@ -56,7 +50,7 @@ const TourMap = () => {
         {usernamedecided? ( // 決定是否有輸入 username
         <React.Fragment>
             <Layout>
-            <Header className="header" style={{margin: "0px"}}>
+            <Header className="header">
                 <div className="logo" />
                 {/* <Input></Input> */}
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
@@ -69,7 +63,7 @@ const TourMap = () => {
                     <Menu.Item key="3" style={{left: '0px'}}>
                         nav 2
                     </Menu.Item>
-                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
+                    <Menu.Item key="4" style={{position:'absolute', left: '93%'}}>
                         {username}
                     </Menu.Item>
                 </Menu>
@@ -117,19 +111,6 @@ const TourMap = () => {
                     minHeight: 280,
                 }}
                 >
-                {/*new add*/ }
-                {showUsermMenu?( //show menu if click account button
-                <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
-                    <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}}>
-                        Plan List
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
-                        logout
-                    </Menu.Item>
-                    </Menu>
-                </div>):null
-                }
                 <MapBox></MapBox>
                 </Content>
             </Layout>
@@ -143,61 +124,59 @@ const TourMap = () => {
         </React.Fragment>
             
         ) : (
-            <TourPlan></TourPlan>)}
-            </React.Fragment>
-            // <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
-            //     <div style={{width: "100%", height: "100%"}}>
-            //         <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
-            //         <Form
-            //         name="normal_login"
-            //         className="login-form"
-            //         initialValues={{
-            //             remember: true,
-            //         }}
-            //         onFinish={onFinish} // summit user info
-            //         >
-            //         <Form.Item
-            //             name="username"
-            //             rules={[
-            //             {
-            //                 required: true,
-            //                 message: 'Please input your Username!',
-            //             },
-            //             ]}
-            //         >
-            //             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            //         </Form.Item>
-            //         <Form.Item
-            //             name="password"
-            //             rules={[
-            //             {
-            //                 required: true,
-            //                 message: 'Please input your Password!',
-            //             },
-            //             ]}
-            //         >
-            //             <Input
-            //             prefix={<LockOutlined className="site-form-item-icon" />}
-            //             type="password"
-            //             placeholder="Password"
-            //             />
-            //         </Form.Item>
-            //         <Form.Item>
-            //             <Form.Item name="remember" valuePropName="checked" noStyle>
-            //             <Checkbox>Remember me</Checkbox>
-            //             </Form.Item>
-            //         </Form.Item>
+            <div style={{position: "absolute", transform: "translate(-50%, -50%)", top: "50%", left: "50%"}}>
+                <div style={{width: "100%", height: "100%"}}>
+                    <h3 style={{textAlign: "center"}}>Welcome to Jose-Antonio_LoverBus !</h3>
+                    <Form
+                    name="normal_login"
+                    className="login-form"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish} // summit user info
+                    >
+                    <Form.Item
+                        name="username"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Username!',
+                        },
+                        ]}
+                    >
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Password!',
+                        },
+                        ]}
+                    >
+                        <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="Password"
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                        <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                    </Form.Item>
 
-            //         <Form.Item>
-            //             <Button type="primary" htmlType="submit" className="login-form-button">
-            //             Log in
-            //             </Button>
-            //             Or <a href="">register now!</a>
-            //         </Form.Item>
-            //         </Form>
-            //         </div>
-            //     </div>)}
-    // </React.Fragment>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                        </Button>
+                        Or <a href="">register now!</a>
+                    </Form.Item>
+                    </Form>
+                    </div>
+                </div>)}
+    </React.Fragment>
     )
 }
 
