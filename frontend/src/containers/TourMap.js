@@ -53,6 +53,7 @@ const TourMap = () => {
     const {data:signIndata, error:signInError} = useQuery(SIGNIN_QUERY, {variables: {username, password}})
     const [signUp]= useMutation(SIGNUP_MUTATION)
     const [currentMarker, setCurrentMarker] = useState(null)
+    const [currentMarkerContent, setCurrentMarkerContent] = useState(null)
 
     const[regisUsername, setRegisUsername] = useState("")
     const[regisPassword, setRegisPassword] = useState("")
@@ -61,6 +62,7 @@ const TourMap = () => {
     const [showUsermMenu, setShowUsermMenu] = useState(false)
 
     const markerCallback = (marker) => { setCurrentMarker(marker) }
+    const markerContentCallback = (content) => { setCurrentMarkerContent(content) }
 
     const onFinish = (values) => {
         setUsername(values.username)
@@ -124,7 +126,9 @@ const TourMap = () => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <AddPlace username={username} currentMarker={currentMarker}></AddPlace>
+                <AddPlace
+                    username={username} currentMarker={currentMarker} markerContentCallback={markerContentCallback}>
+                </AddPlace>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
                 <Breadcrumb style={{ margin: '16px 0' }}>
@@ -138,7 +142,9 @@ const TourMap = () => {
                     minHeight: 280,
                 }}
                 >
-                <MapBox username={username} markerCallback={markerCallback}></MapBox>
+                <MapBox
+                    username={username} markerCallback={markerCallback} currentMarkerContent={currentMarkerContent}>
+                </MapBox>
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">

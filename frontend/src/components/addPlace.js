@@ -16,9 +16,11 @@ ADD_MARKER_MUTATION,
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const AddPlace = ({username, currentMarker}) => {
+const AddPlace = ({username, currentMarker, markerContentCallback}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const setCurrentMarkerContent = e => { markerContentCallback(e);} 
+
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
   const onclick = () => {
     if(title === ""){
@@ -33,6 +35,8 @@ const AddPlace = ({username, currentMarker}) => {
       coordinates: [lng, lat],
       description: description
     }})
+
+    // addMarkContent({})
 
     setTitle("")
     setDescription("")

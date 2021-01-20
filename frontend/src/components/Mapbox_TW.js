@@ -17,7 +17,7 @@ MARKERS_SUBSCRIPTION
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
 
-const MapBox = ({username, markerCallback}) => {
+const MapBox = ({username, markerCallback, currentMarkerContent}) => {
     
     const [View, setView] = useState({
         lng: 121.55,
