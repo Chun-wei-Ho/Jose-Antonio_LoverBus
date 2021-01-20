@@ -2,7 +2,9 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom';
 import { Tooltip, Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
-    Drawer, Col, Row, Select} from 'antd';
+    Drawer, Col, Row, Select, Space} from 'antd';
+// import Highlighter from 'react-highlight-words';
+// import { SearchOutlined } from '@ant-design/icons';    
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
