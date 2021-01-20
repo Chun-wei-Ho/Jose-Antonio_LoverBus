@@ -6,6 +6,7 @@ import { Tooltip, Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
+import usePlan from '../components/usePlan'
 
 import {
 //     // for query
@@ -31,11 +32,11 @@ export default function TourPlan(props){
     // const [username, setUsername] = useState("")
     // const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
     const {data:usernameData} = useQuery(USERNAME_QUERY, {variables:{_id:props.match.params.userId}})
-    const {data:planList, error} = useQuery(USERPLAN_QUERY, {variables:{_userId:props.match.params.userId}})
+    const {plan:planState, error} = usePlan(props.match.params.userId)
+
     const [deletePlan] = useMutation(DELETE_PLAN_MUTATION)
     const [deleteSpot] = useMutation(DELETE_SPOT_MUTATION)
     const username = usernameData? usernameData.Username : null
-    const planState = planList? planList.UserPlan : []
     // console.log(planState)
     // console.log(usrename)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
