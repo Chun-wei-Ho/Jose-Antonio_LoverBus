@@ -28,14 +28,15 @@ const MapBox = ({username, markerCallback}) => {
         MARKER_QUERY,
         { variables: { username: username } }
         )
-    // const [addMarker] = useMutation(ADD_MARKER_MUTATION)
+    const [insertionMode, setInsertionMode] = useState(false)
 
 
     const [map, setMap] = useState(null);
     const mapContainer = useRef(null);
     const {data, subscribeToMore} = useQuery(MARKER_QUERY, {variables:{username: username}})
 
-    const [currentMarker, setCurrentMarker] = useState(null);
+    const [currentMarker, _setCurrentMarker] = useState(null);
+    const setCurrentMarker = e => {_setCurrentMarker(e); markerCallback(e);} 
     const [test, setTest] = useState(0);
     const [markerLoaded, setMarkerLoaded] = useState(false);
 
@@ -61,23 +62,26 @@ const MapBox = ({username, markerCallback}) => {
         if (!map) initializeMap({ setMap, mapContainer});
     }, [map]);
 
-    if(map){
-        const clickPoint = async (e) => {
-            if(currentMarker) currentMarker.remove()
+    useEffect(()=>{
+        if(map && insertionMode){
+            const clickPoint = (e) => {
+                console.log("hi")
+                if(currentMarker) currentMarker.remove()
 
-            var popup = new mapboxgl.Popup()
-            .setHTML('<h3>A point</h3>');
+                var popup = new mapboxgl.Popup()
+                .setHTML('<h3>A point</h3>');
 
-            var marker = new mapboxgl.Marker()
-            .setLngLat([e.lngLat.lng, e.lngLat.lat])
-            .setPopup(popup)
-            .addTo(map)
-            
-            setCurrentMarker(marker)
-            markerCallback(marker)
-        };
-        map.once('click', clickPoint);
-    }
+                var marker = new mapboxgl.Marker()
+                .setLngLat([e.lngLat.lng, e.lngLat.lat])
+                .setPopup(popup)
+                .addTo(map)
+                
+                setCurrentMarker(marker)
+            };
+            map.once('click', clickPoint);
+        }
+    }, [map, insertionMode, currentMarker]);
+
     if(map && data && !markerLoaded){
         setMarkerLoaded(true)
         data.Marker.map(e=>{
@@ -91,6 +95,7 @@ const MapBox = ({username, markerCallback}) => {
             .addTo(map)
         })
     }
+
     useEffect(()=>{
         if(!subscribeToMore || !map) return;
         subscribeToMore({
@@ -132,13 +137,17 @@ const MapBox = ({username, markerCallback}) => {
     //         }
     //     }
     // }, [username])
-
+    const buttonOnclick = () => {
+        setInsertionMode(!insertionMode)
+    }
+    const color = insertionMode? "green" : "white"
     return (
         <div>
             <div className='sidebarStyle'>
                 <div>Longitude: {View.lng} | Latitude: {View.lat} | Zoom: {View.zoom} </div>
             </div>
-            <Button style={{position: "relative", right: "0px"}}>+</Button>
+            <Button style={{position: "relative", right: "0px","background-color":color}}
+             onClick={buttonOnclick}>+</Button>
             <div ref={el => (mapContainer.current = el)} className='mapContainer' />
         </div>)
 }
