@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'
 import { Input, Layout, Menu, Breadcrumb, Button, Card, Select } from 'antd';
 import { TagOutlined, CheckOutlined} from '@ant-design/icons';
 import SweetAlert from "react-bootstrap-sweetalert";
+import usePlan from '../components/usePlan'
 
 import {
 // for query
@@ -35,7 +36,6 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
       return
     }
     const {lng, lat} = currentMarker._lngLat
-
     var marker_id = currentMarker._id
     if(insertionMode){
       marker_id = await addMarker({variables:{
@@ -52,7 +52,6 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
         markerID: marker_id
       }})
     }
-    
   }
   const { TextArea } = Input;
   return (

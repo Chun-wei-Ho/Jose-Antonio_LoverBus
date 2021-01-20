@@ -103,8 +103,9 @@ export default function Login(){
     }
     return (
     <React.Fragment>
+        <div className='login-background'>
         <div className='login-root'>
-            <div>
+            <div className='login-section'>
                 <h5 className='login-title'>Welcome to Jose Antonio LoverBus !</h5>
                 <Form 
                 name="normal_login"
@@ -219,6 +220,7 @@ export default function Login(){
                 </Form.Item>
                 </Form>
                 </div>
+            </div>
             </div>
     </React.Fragment>
     )
