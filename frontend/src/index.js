@@ -44,7 +44,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <TourMap />
+        <PlanList />
     </ApolloProvider>,
     document.getElementById('root')
 );
