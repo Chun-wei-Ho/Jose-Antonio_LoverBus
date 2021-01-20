@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm} from 'antd';
+import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm,
+    Drawer, Col, Row, Select} from 'antd';
 import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
@@ -7,7 +8,7 @@ import './TourPlan.css'
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
-const plan = {
+const plan = [{
     title: "Baby Shark do do do",
     spots: [
         {
@@ -32,15 +33,61 @@ const plan = {
         }
         ],
     _id: ""
-    }
+    },
+    {
+        title: "lol",
+        spots: [
+            {
+                _id: "",
+                startTime: "Wed Feb 19 2020 10:52:00 GMT+0800",
+                endTime: "Wed Feb 19 2020 22:52:00 GMT+0800",
+                location: {
+                        properties: {title: "National Taiwan University", description: "Largest Zoo in Taipei"},
+                        geometry: {coordinates: [2,3]},
+                        _id: ""
+                    }
+            },
+            {
+                _id: "",
+                startTime: "Thu Feb 21 2020 10:52:00 GMT+0800",
+                endTime: "Thu Feb 21 2020 22:52:00 GMT+0800",
+                location: {
+                        properties: {title: "National Kaohsiung University", description: "Moon lovers in Kaohsiung"},
+                        geometry: {coordinates: [2,3]},
+                        _id: ""
+                    }
+            }
+            ],
+        _id: ""
+        }]
 
 export default function TourPlan(args){
     // const [username, setUsername] = useState("")
     const username = 'Jose Antonio'
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const [re, setre] = useState(true)
-
+    const [currentPlan, setCurrentPlan] =  useState(0)
     const [planState, setPlan] = useState(plan)
+    const [newTime, setTime] = useState(false)
+    const [currentSpot, setCurrentSpot] = useState(0)
+    const [newStartTime, setnewStartTime] = useState("")
+    const [newEndTime, setnewEndTime] = useState("")
+    
+    const handleStartChange = (ev) => {
+        if (!ev.target['validity'].valid) return;
+        const dt = ev.target['value'] + ':00Z';
+        setnewStartTime(dt);
+        console.log(dt)
+    }
+    const handleEndChange = (ev) => {
+        if (!ev.target['validity'].valid) return;
+        const dt = ev.target['value'] + ':00Z';
+        setnewEndTime(dt);
+        console.log(dt)
+      }
+
+    const[regisUsername, setRegisUsername] = useState("")
+
     return (
         <React.Fragment>
             <Layout>
@@ -57,9 +104,10 @@ export default function TourPlan(args){
                 >
                 <SubMenu key="sub1" icon={<EnvironmentOutlined />} title="My Plans">
                     {
-                      planState.spots.map(({ location }, i) => (
-                        <Menu.Item key={i}>
-                            {location.properties.title}
+                      planState.map(({ title }, i) => (
+                        <Menu.Item key={i} onClick={() => {setCurrentPlan(i)
+                        }}>
+                            {title}
                         </Menu.Item>
                       ))
                     }
@@ -70,7 +118,7 @@ export default function TourPlan(args){
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Plan List</Breadcrumb.Item>
-                <Breadcrumb.Item>{planState.title}</Breadcrumb.Item>
+                <Breadcrumb.Item>{planState[currentPlan].title}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Content
                 className="site-layout-background"
@@ -80,8 +128,9 @@ export default function TourPlan(args){
                     minHeight: 280,
                 }}
                 >
-                    <div className="table-title"> <h3> {plan.title} </h3> </div>
-                    <table className="table-fill">
+                    <div className="table-title"> <h3> {planState[currentPlan].title} </h3> </div>
+                    {(planState[currentPlan].spots.length !== 0)?
+                    (<table className="table-fill">
                         <thead>
                             <tr>
                                 <th className='spot-title'>Title</th>
@@ -91,29 +140,90 @@ export default function TourPlan(args){
                             </tr>
                         </thead>
                         <tbody>
-                            {planState.spots.map((e, i) => (
+                            {planState[currentPlan].spots.map((e, i) => (
                                 <tr key={i}>
                                     <td className='spot-title' style={{}}> {e.location.properties.title} </td>
                                     <td className='spot-description'> {e.location.properties.description} </td>
                                     <td className='spot-time'>
-                                       {new Date(e.startTime).toLocaleString()}
+                                       <p>{new Date(e.startTime).toLocaleString()}</p>
                                        <p className="timeto">to</p>
                                         <p>{new Date(e.endTime).toLocaleString()}</p> 
                                     </td>
                                     <td className='spot-button'>
-                                        <Button onClick={()=>{}} style={{width:"120px", textAlign: "center"}}> Edit Time</Button>
+                                        <Button onClick={() => {setTime(true)
+                                        setCurrentSpot(i)}} 
+                                        style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Edit Time</Button>
+                                        <React.Fragment>
+                                            <Drawer
+                                                title={planState[currentPlan].spots[currentSpot].location.properties.title}
+                                                width={360}
+                                                onClose={() => {setTime(false)}}
+                                                visible={newTime}
+                                                bodyStyle={{ paddingBottom: 80 }}
+                                                footer={
+                                                    <div
+                                                        style={{
+                                                            textAlign: 'right',
+                                                    }}
+                                                >
+                                                    <Button onClick={() => {setTime(false)}} style={{ marginRight: 8 }}>
+                                                        Cancel
+                                                    </Button>
+                                                    {/* <Button onClick={registerAccount} */}
+                                                    <Button onClick={() => {}}
+                                                        type="primary">
+                                                        Change Time
+                                                    </Button>
+                                                </div>
+                                            }
+                                            >
+                                                <Form layout="vertical" hideRequiredMark>
+                                                    <Row gutter={16}>
+                                                        <Col>
+                                                            <Form.Item
+                                                                name="Start time"
+                                                                label="Start time"
+                                                                rules={[{ required: true, message: 'Please enter new start time' }]}
+                                                                >
+                                                                <input 
+                                                                    type="datetime-local"
+                                                                    name="start time"
+                                                                    value={(newStartTime || '').toString().substring(0, 16)}
+                                                                    onChange={handleStartChange} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row gutter={16}>
+                                                        <Col>
+                                                            <Form.Item
+                                                                name="End time"
+                                                                label="End time"
+                                                                rules={[{ required: true, message: 'Please enter new end time' }]}
+                                                                >
+                                                                <input 
+                                                                    type="datetime-local"
+                                                                    name="end time"
+                                                                    value={(newEndTime || '').toString().substring(0, 16)}
+                                                                    onChange={handleEndChange} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    </Row>
+                                                </Form>
+                                            </Drawer>
+                                        </React.Fragment>
                                         <Button onClick={()=>{
-                                            console.log(i)
                                             var temp = planState
-                                            temp.spots.splice(i, 1)
+                                            temp[currentPlan].spots.splice(i, 1)
                                             setPlan(temp)
                                             setre(!re)
-                                        }} style={{width:"120px", textAlign: "center"}}> Delete Spot</Button> 
+                                        }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
-                    </table>
+                    </table>):(
+                        <div className="table-title"> <div> No Spot Right Now </div> </div>)
+                    }
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
@@ -129,11 +239,6 @@ export default function TourPlan(args){
                 </Content>
             </Layout>
             </Layout>
-            <Footer className="Footer">
-                <Button className="FooterButton">Finish</Button>
-                <Button className="FooterButton">Wish</Button>
-                <Button className="FooterButton">All</Button>
-            </Footer>
             </Layout>
         </React.Fragment>
     )
