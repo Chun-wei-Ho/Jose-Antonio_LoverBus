@@ -48,6 +48,8 @@ const TourMap = (props) => {
 
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
+    const [insertionMode, _setInsertionMode] = useState(false)
+    const setInsertionMode = (mode) => {_setInsertionMode(mode)}
     const [showUsermMenu, setShowUsermMenu] = useState(false)
     const history = useHistory();
 
@@ -71,7 +73,7 @@ const TourMap = (props) => {
             </Header>
             <Layout>
             <Sider height={500} width={200} className="site-layout-background">
-                <AddPlace username={username} currentMarker={currentMarker} plan={plan}
+                <AddPlace username={username} currentMarker={currentMarker} plan={plan} insertionMode={insertionMode}
                         title={title} setTitle={setTitle} description={description}
                         setDescription={setDescription}></AddPlace>
             </Sider>
@@ -89,8 +91,8 @@ const TourMap = (props) => {
                     minHeight: 280,
                 }}
                 >
-                <MapBox username={username} markerCallback={markerCallback}
-                    title={title} setTitle={setTitle} description={description}
+                <MapBox username={username} markerCallback={markerCallback} insertionMode={insertionMode}
+                    title={title} setTitle={setTitle} description={description} setInsertionMode={setInsertionMode}
                         setDescription={setDescription}></MapBox>
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>

@@ -18,7 +18,7 @@ NEWPLAN_MUTATION,
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const AddPlace = ({username, currentMarker, markerContentCallback, plan, title, setTitle, description, setDescription}) => {
+const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode, plan, title, setTitle, description, setDescription}) => {
   const setCurrentMarkerContent = e => { markerContentCallback(e);} 
 
   const [list1Value, setList1Value] = useState("")
