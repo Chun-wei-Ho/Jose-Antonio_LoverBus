@@ -1,79 +1,76 @@
-import React, { useState } from "react"
-import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button } from 'antd';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table, Popconfirm} from 'antd';
+import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
+const plan = {
+    title: "Baby Shark do do do",
+    spots: [
+        {
+            _id: "",
+            startTime: "Wed Feb 19 2020 10:52:00 GMT+0800",
+            endTime: "Wed Feb 19 2020 22:52:00 GMT+0800",
+            location: {
+                    properties: {title: "National Taiwan University", description: "Largest Zoo in Taipei"},
+                    geometry: {coordinates: [2,3]},
+                    _id: ""
+                }
+        },
+        {
+            _id: "",
+            startTime: "Thu Feb 21 2020 10:52:00 GMT+0800",
+            endTime: "Thu Feb 21 2020 22:52:00 GMT+0800",
+            location: {
+                    properties: {title: "National Kaohsiung University", description: "Moon lovers in Kaohsiung"},
+                    geometry: {coordinates: [2,3]},
+                    _id: ""
+                }
+        }
+        ],
+    _id: ""
+    }
+
 export default function TourPlan(args){
     // const [username, setUsername] = useState("")
     const username = 'Jose Antonio'
     const [showUsermMenu, setShowUsermMenu] = useState(false)
+    const [re, setre] = useState(true)
 
-    const plan = {
-        title: "Baby Shark do do do",
-        spots: [
-            {
-                _id: "",
-                startTime: "Wed Feb 19 2020 10:52:00 GMT+0800",
-                endTime: "Wed Feb 19 2020 22:52:00 GMT+0800",
-                location: {
-                        properties: {title: "National Taiwan University", description: "Largest Zoo in Taipei"},
-                        geometry: {coordinates: [2,3]},
-                        _id: ""
-                    }
-            },
-            {
-                _id: "",
-                startTime: "Thu Feb 21 2020 10:52:00 GMT+0800",
-                endTime: "Thu Feb 21 2020 22:52:00 GMT+0800",
-                location: {
-                        properties: {title: "National Kaohsiung University", description: "Moon lovers in Kaohsiung"},
-                        geometry: {coordinates: [2,3]},
-                        _id: ""
-                    }
-            }
-            ],
-        _id: ""
-        }
+    const [planState, setPlan] = useState(plan)
     return (
         <React.Fragment>
             <Layout>
             <Header className="header" style={{margin: "0px"}}>
                 <div className="logo" />
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" style={{position: "absolute", left: '0px', margin: "0px"}}>
-                        <p>Jose Antonio LoverBus</p>
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{position: "absolute", left: '198.4px'}}>
-                        nav 1
-                    </Menu.Item>
-                    <Menu.Item key="3" style={{position: "absolute", left: '277.68px'}}>
-                        nav 2
-                    </Menu.Item>
-                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%', }} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>  {/*new add*/}
-                        {username}
-                    </Menu.Item>
-                </Menu>
             </Header>
             <Layout className='middle'>
             <Sider height={500} width={200} className="site-layout-background">
-                <h3>Plan List</h3>
-                <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}}>
-                        Plan 1
-                    </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}}>
-                        Plan 2
-                    </Menu.Item>
+                <Menu
+                mode="inline"
+                defaultSelectedKeys={['1']}
+                defaultOpenKeys={['sub1']}
+                style={{ height: '100%', borderRight: 0}}
+                >
+                <SubMenu key="sub1" icon={<EnvironmentOutlined />} title="My Plans">
+                    {
+                      planState.spots.map(({ location }, i) => (
+                        <Menu.Item key={i}>
+                            {location.properties.title}
+                        </Menu.Item>
+                      ))
+                    }
+                </SubMenu>
                 </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Plan List</Breadcrumb.Item>
-                <Breadcrumb.Item>{plan.title}</Breadcrumb.Item>
+                <Breadcrumb.Item>{planState.title}</Breadcrumb.Item>
                 </Breadcrumb>
                 <Content
                 className="site-layout-background"
@@ -94,8 +91,8 @@ export default function TourPlan(args){
                             </tr>
                         </thead>
                         <tbody>
-                            {plan.spots.map(e => (
-                                <tr>
+                            {planState.spots.map((e, i) => (
+                                <tr key={i}>
                                     <td className='spot-title' style={{}}> {e.location.properties.title} </td>
                                     <td className='spot-description'> {e.location.properties.description} </td>
                                     <td className='spot-time'>
@@ -104,14 +101,19 @@ export default function TourPlan(args){
                                         <p>{new Date(e.endTime).toLocaleString()}</p> 
                                     </td>
                                     <td className='spot-button'>
-                                        <button onClick={()=>{}}> Edit Time</button>
-                                        <button onClick={()=>{}}> Delete Spot</button> 
+                                        <Button onClick={()=>{}} style={{width:"120px", textAlign: "center"}}> Edit Time</Button>
+                                        <Button onClick={()=>{
+                                            console.log(i)
+                                            var temp = planState
+                                            temp.spots.splice(i, 1)
+                                            setPlan(temp)
+                                            setre(!re)
+                                        }} style={{width:"120px", textAlign: "center"}}> Delete Spot</Button> 
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
@@ -133,27 +135,6 @@ export default function TourPlan(args){
                 <Button className="FooterButton">All</Button>
             </Footer>
             </Layout>
-        {/* <h1> {plan.title} </h1>
-        <table>
-            <thead>
-                <tr>
-                    <td>title</td>
-                    <td>description</td>
-                    <td>time</td>
-                </tr>
-            </thead>
-            <tbody>
-                {plan.spots.map(e => (
-                    <tr>
-                        <td> {e.location.properties.title} </td>
-                        <td> {e.location.properties.description} </td>
-                        <td> {new Date(e.startTime).toLocaleString()}
-                                - {new Date(e.endTime).toLocaleString()} <button onClick={()=>{}}> Edit </button> 
-                                <button onClick={()=>{}}> Delete </button> </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table> */}
         </React.Fragment>
     )
 }
