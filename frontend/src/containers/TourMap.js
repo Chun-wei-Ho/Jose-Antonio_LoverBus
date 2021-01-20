@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import {useHistory} from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import MapBox from "../components/Mapbox_TW"
 import AddPlace from "../components/AddPlace"
@@ -40,8 +41,15 @@ const TourMap = (props) => {
     const username = usernameData? usernameData.Username : ""
     const [currentMarker, setCurrentMarker] = useState(null)
     const [showUsermMenu, setShowUsermMenu] = useState(false)
-
+    const history = useHistory();
+    
     const markerCallback = (marker) => { setCurrentMarker(marker) }
+    const toTourPlan = () => {
+        history.push(`${history.location.pathname}/TourPlan`)
+    }
+    const Logout = () => {
+        history.push("/")
+    }
     return (
         <React.Fragment>
             <Layout>
@@ -110,12 +118,12 @@ const TourMap = (props) => {
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px', textAlign: 'center'}}>
+                    <Menu.Item key="1" style={{margin: '0px', textAlign: 'center'}} onClick={toTourPlan}>
                         {/* <Link to="/">Tour Map</Link> */}
-                        Tour Map
+                        Tour Plan
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px', textAlign: 'center'}}>
-                        logout
+                    <Menu.Item key="2" style={{left: '0px', textAlign: 'center'}} onClick={Logout}>
+                        Logout
                     </Menu.Item>
                     </Menu>
                 </div>):null
