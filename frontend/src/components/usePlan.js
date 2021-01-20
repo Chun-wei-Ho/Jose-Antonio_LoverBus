@@ -44,8 +44,7 @@ export default function usePlan(_userId){
                         return {...prev, UserPlan:newArray}
                     break
                     case "UPDATE":
-                        console.log(prev)
-                        console.log(newData.data)
+                        return {...prev, "UserPlan":newData.data.spots}
                     break
                     default:
                         console.log(`Warning: unknown mutation ${newData.mutation}`)
