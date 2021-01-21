@@ -5,6 +5,7 @@ import { Input, Layout, Menu, Breadcrumb, Button, Card, Select } from 'antd';
 import { TagOutlined, CheckOutlined} from '@ant-design/icons';
 import SweetAlert from "react-bootstrap-sweetalert";
 import usePlan from '../components/usePlan'
+import mapboxgl from "mapbox-gl";
 
 import {
 // for query
@@ -48,24 +49,42 @@ const AddPlace = ({username, currentMarker, setCurrentMarker, markerContentCallb
     if(description === ""){
       setDescription("No description")
     }
+    const CustomTitle = title === "" ? "Untitled" : title
+    const CustomDescription = description === "" ? "No description" : description
     const {lng, lat} = currentMarker._lngLat
     var marker_id = currentMarker._id
-    if(insertionMode){
+    if(currentMarker.geocoderResult){
       marker_id = await addMarker({variables:{
         username: username,
-        title: title,
+        title: CustomTitle,
+        coordinates: [currentMarker._lngLat.lng, currentMarker._lngLat.lat],
+        description: CustomDescription
+      }})
+      currentMarker.geocoderResult = null
+      marker_id = marker_id.data.addMarker
+    }
+    else if(insertionMode){
+      marker_id = await addMarker({variables:{
+        username: username,
+        title: CustomTitle,
         coordinates: [lng, lat],
-        description: description
+        description: CustomDescription
       }})
       marker_id = marker_id.data.addMarker
     }
     else{
       updateMarker({variables:{
         _id:marker_id,
-        newTitle: title,
-        newDescription: description
+        newTitle: CustomTitle,
+        newDescription: CustomDescription
       }})
-      currentMarker.getPopup().setHTML(`<h3>${title}<h3><p>${description}</p>`);
+      if(currentMarker.getPopup())
+        currentMarker.getPopup().setHTML(`<h3>${CustomTitle}<h3><p>${CustomDescription}</p>`);
+      else{
+        var popup = new mapboxgl.Popup()
+            .setHTML(`<h3>${CustomTitle}<h3><p>${CustomDescription}</p>`);
+        currentMarker.setPopup(popup)
+      }
     }
     if(marker_id !== "" && planId !== ""){
       addSpot({variables:{

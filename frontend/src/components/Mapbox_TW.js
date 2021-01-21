@@ -66,9 +66,16 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
             })
             map.addControl(geocoder)
             geocoder.on("result", ()=>{
-                setCurrentMarker(geocoder.mapMarker)
-                console.log(geocoder.mapMarker._lngLat)
-                console.log(currentMarker)
+                const linLat = geocoder.mapMarker._lngLat
+                geocoder.mapMarker.remove()
+
+                var marker = new mapboxgl.Marker()
+                .setLngLat(linLat)
+                .addTo(map)
+
+                marker.geocoderResult = true
+
+                setCurrentMarker(marker)
             })
             // map.addControl(
             //     new MapboxGeocoder({
@@ -151,6 +158,7 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                             setTitle(newData.data.properties.title)
                             setDescription(newData.data.properties.description)
                         });
+                        console.log(newData.data)
                         return {Marker:[...prev.Marker, newData.data]}
                     break
                     case "DELETE":
