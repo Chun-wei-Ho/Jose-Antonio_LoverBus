@@ -40,8 +40,12 @@ B06901041 許誠：前端設計、影片剪輯
 
 4. Create a plan and save locations into plans
    ![](/img/04.png)
+   
+5. Choose a plan in your plan list
+   ![](/img/05.png)
 
-5. Modify your staying time in a place
+6. Modify your staying time in a place
+   ![](/img/06.png)
 
 
 ## Demo 影片
