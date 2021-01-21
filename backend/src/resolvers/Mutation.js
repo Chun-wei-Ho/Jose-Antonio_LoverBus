@@ -35,7 +35,6 @@ const Mutation = {
             const plan = await models.Plan.findByIdAndUpdate({_id: planID}, {$pull: {"spotID": _id}}, () => {})
 
             const parsedPlan = await parsePlan.bind({models})(plan)
-            console.log(parsedPlan)
             pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
                     mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
             }})

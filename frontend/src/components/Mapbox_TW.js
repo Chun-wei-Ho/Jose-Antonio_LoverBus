@@ -4,6 +4,7 @@ import mapboxgl from "mapbox-gl";
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { Button } from 'antd';
 import "./site.css"
+import env from "react-dotenv";
 
 import {
 // for query
@@ -16,8 +17,8 @@ MARKER_QUERY,
 MARKERS_SUBSCRIPTION
 } from '../graphql'
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA';
-
+mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEM
+console.log(mapboxgl.accessToken)
 const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, title, setTitle, description, setDescription}) => {
     
     const [View, setView] = useState({
