@@ -62,7 +62,7 @@ const TourMap = (props) => {
     }
     return (
         <React.Fragment>
-            <Layout>
+            <Layout style={{minWidth: "1000px"}}>
             <Header className="header" style={{color: "white", fontSize: "20px"}}>Tour Map
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>

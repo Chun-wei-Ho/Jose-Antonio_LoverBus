@@ -84,7 +84,7 @@ export default function TourPlan(props){
                 </Menu>
             </Header>
             <Layout className='middle'>
-            <Sider height={500} width={200} className="site-layout-background" >
+            <Sider height={500} width={200} className="site-layout-background">
                 <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}
@@ -132,7 +132,7 @@ export default function TourPlan(props){
                 }}
                 >
                     <div className="table-title">
-                        {(!planState || planState.length === 0)?(<h3></h3>):(<h3> {planState[currentPlan].title} </h3>)}
+                        {(!planState || planState.length === 0)?(<h3></h3>):(<h3 style={{margin: "0px", position: "relative", left: "0px"}}> {planState[currentPlan].title} </h3>)}
                     </div>
                     {((!planState || planState.length === 0)?(
                         <div className="table-title" style={{textAlign: "center"}}> 
@@ -159,7 +159,7 @@ export default function TourPlan(props){
                                             <td className='spot-time' style={{textAlign: "center"}}>
                                             <p>{new Date(e.startTime).toLocaleString()}</p>
                                             <p className="timeto">to</p>
-                                                <p>{new Date(e.endTime).toLocaleString()}</p> 
+                                            <p>{new Date(e.endTime).toLocaleString()}</p> 
                                             </td>
                                             <td className='spot-button'style={{textAlign: "center"}}>
                                                 <Button onClick={() => {setTime(true)
@@ -192,6 +192,8 @@ export default function TourPlan(props){
                                                                     time: new Date(newEndTime).toString()
                                                                   }})
                                                                 setTime(false)
+                                                                // setre(!re)
+                                                                console.log(new Date(newStartTime).toString(), new Date(newEndTime).toString())
                                                             }}
                                                                 type="primary">
                                                                 Change Time
