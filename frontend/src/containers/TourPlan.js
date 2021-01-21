@@ -151,23 +151,23 @@ export default function TourPlan(props){
                                 <table className="table-fill">
                                 <thead>
                                     <tr>
-                                        <th className='spot-title' style={{textAlign: "center"}}>Title</th>
-                                        <th className='spot-description' style={{textAlign: "center"}}>Description</th>
-                                        <th style={{textAlign: "center"}}>Time</th>
-                                        <th></th>
+                                        <th className='spot-title' >Title</th>
+                                        <th className='spot-description' >Description</th>
+                                        <th >Time</th>
+                                        <th className='spot-button'></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {planState[currentPlan].spots.map((e, i) => (
                                         <tr key={i}>
-                                            <td className='spot-title' style={{textAlign: "center"}}> {e.location.properties.title} </td>
-                                            <td className='spot-description' style={{textAlign: "center"}}> {e.location.properties.description} </td>
-                                            <td className='spot-time' style={{textAlign: "center"}}>
+                                            <td className='spot-title' > {e.location.properties.title} </td>
+                                            <td className='spot-description' > {e.location.properties.description} </td>
+                                            <td className='spot-time' >
                                             <p>{new Date(e.startTime).toLocaleString()}</p>
                                             <p className="timeto">to</p>
                                             <p>{new Date(e.endTime).toLocaleString()}</p> 
                                             </td>
-                                            <td className='spot-button'style={{textAlign: "center"}}>
+                                            <td className='spot-button'>
                                                 <Button onClick={() => {setTime(true)
                                                 setCurrentSpot(i)}} 
                                                 style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Edit Time</Button>
