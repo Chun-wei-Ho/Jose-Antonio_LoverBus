@@ -2,6 +2,9 @@ const { GraphQLServer, PubSub } = require('graphql-yoga')
 const resolvers = require('./resolvers')
 const models = require('./db.js')
 
+const wakeUpDyno = require('./route/wakeUpDyno.js')
+const DYNO_URL = "https://jose-antonio-lover-bus-server.herokuapp.com/"
+
 require('dotenv-defaults').config()
 
 // init middleware
@@ -19,5 +22,6 @@ const server = new GraphQLServer({
 const PORT = process.env.PORT || 4000
 
 server.start({ port: PORT }, () => {
+    wakeUpDyno(DYNO_URL)
     console.log(`The server is up on port ${PORT}!`)
 })
