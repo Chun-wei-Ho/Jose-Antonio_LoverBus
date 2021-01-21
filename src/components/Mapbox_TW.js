@@ -18,6 +18,7 @@ MARKERS_SUBSCRIPTION
 } from '../graphql'
 
 mapboxgl.accessToken = process.env.REACT_APP_ACCESS_TOKEM
+console.log(mapboxgl.accessToken)
 const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, title, setTitle, description, setDescription}) => {
     
     const [View, setView] = useState({
