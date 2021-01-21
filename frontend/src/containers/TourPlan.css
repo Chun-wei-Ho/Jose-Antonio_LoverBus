@@ -156,13 +156,13 @@ td.text-right {
   text-align: right;
 }
 
-table tbody {
-  /* display: block; */
-  display: table-header-group;
+/* table tbody {
+  display: block;
   width: 100%;
   max-height: 400px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  table-layout: fixed;
 }
 
 table thead {
@@ -179,4 +179,4 @@ table thead tr, table tbody tr {
   table-layout: fixed;
   display: table;
   width: 100%;
-}
+} */
