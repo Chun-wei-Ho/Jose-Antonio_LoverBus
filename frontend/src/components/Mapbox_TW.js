@@ -64,19 +64,8 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                 accessToken: mapboxgl.accessToken,
                 mapboxgl: mapboxgl
             })
+            map.geocoder = geocoder
             map.addControl(geocoder)
-            geocoder.on("result", ()=>{
-                const linLat = geocoder.mapMarker._lngLat
-                geocoder.mapMarker.remove()
-
-                var marker = new mapboxgl.Marker()
-                .setLngLat(linLat)
-                .addTo(map)
-
-                marker.geocoderResult = true
-
-                setCurrentMarker(marker)
-            })
             // map.addControl(
             //     new MapboxGeocoder({
             //     accessToken: mapboxgl.accessToken,
@@ -87,6 +76,28 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
         }
         if (!map) initializeMap({ setMap, mapContainer});
     }, [map]);
+
+    useEffect(()=>{
+        if(!map) return
+        map.geocoder.on("result", ()=>{
+            if(currentMarker){
+                if(currentMarker.geocoderResult || insertionMode){
+                    currentMarker.remove()
+                }
+            }
+            setInsertionMode(false)
+            setTitle(JSON.parse(map.geocoder.lastSelected).place_name)
+            const linLat = map.geocoder.mapMarker._lngLat
+            map.geocoder.mapMarker.remove()
+
+            var marker = new mapboxgl.Marker()
+            .setLngLat(linLat)
+            .addTo(map)
+
+            marker.geocoderResult = true
+            setCurrentMarker(marker)
+        })
+    },[map, currentMarker])
 
     useEffect(()=>{
         if(map && insertionMode){
@@ -158,7 +169,6 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                             setTitle(newData.data.properties.title)
                             setDescription(newData.data.properties.description)
                         });
-                        console.log(newData.data)
                         return {Marker:[...prev.Marker, newData.data]}
                     break
                     case "DELETE":
@@ -179,7 +189,7 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
     }, [map])
 
     const buttonOnclick = () => {
-        if (currentMarker && insertionMode){
+        if (currentMarker && (insertionMode || currentMarker.geocoderResult)){
             currentMarker.remove()
         }
         setCurrentMarker(null)
