@@ -5,11 +5,10 @@ import { Tooltip, Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, Table
     Drawer, Col, Row, Select, Space} from 'antd';
 // import Highlighter from 'react-highlight-words';
 // import { SearchOutlined } from '@ant-design/icons';    
-import { LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
+import { ExportOutlined, LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css'
 import './TourPlan.css'
 import usePlan from '../components/usePlan'
-
 import {
 //     // for query
 //     PLAN_QUERY,
@@ -25,6 +24,8 @@ import {
     UPDATE_SPOT_ENDTIME_MUTATION,
 //     // for subscription
   } from '../graphql'
+import background from '../img/place-of-destination.png';
+import bucketList from '../img/bucket_list.jpg';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -83,7 +84,7 @@ export default function TourPlan(props){
                 </Menu>
             </Header>
             <Layout className='middle'>
-            <Sider height={500} width={200} className="site-layout-background">
+            <Sider height={500} width={200} className="site-layout-background" >
                 <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}
@@ -133,7 +134,12 @@ export default function TourPlan(props){
                     <div className="table-title">
                         {(!planState || planState.length === 0)?(<h3></h3>):(<h3> {planState[currentPlan].title} </h3>)}
                     </div>
-                    {((!planState || planState.length === 0)?(<h3> No Plan Right Now </h3>):
+                    {((!planState || planState.length === 0)?(
+                        <div className="table-title" style={{textAlign: "center"}}> 
+                            <h2 style={{fontFamily: "fantasy"}}> No Plan Right Now </h2> 
+                            <br></br>
+                            <img src={bucketList} alt="Bucket List" style={{width: "500px"}}/>
+                        </div>):
                         (<React.Fragment>
                             {(planState[currentPlan].spots.length !== 0)?(
                                 <table className="table-fill">
@@ -241,16 +247,23 @@ export default function TourPlan(props){
                                     ))}
                                 </tbody>
                             </table>):(
-                                <div className="table-title"> <div> No Spot Right Now </div> </div>
+                                <div className="table-title" style={{textAlign: "center"}}> 
+                                    <h2 style={{fontFamily: "fantasy"}}> No Spot Right Now </h2> 
+                                    <img src={background} alt="Background"/>
+                                </div>
                                 )}
                         </React.Fragment>))}
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px'}} onClick={backToMap}>
+                    <Menu.Item 
+                        icon ={<EnvironmentOutlined/>}
+                        key="1" style={{margin: '0px', textAlign: 'left', position: "relative", left: "23px"}} onClick={backToMap}>
                         Tour Map
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px'}} onClick={logout}>
+                    <Menu.Item 
+                        icon ={<ExportOutlined/>}
+                        key="2" style={{margin: '0px', textAlign: 'left', position: "relative", left: "23px"}} onClick={logout}>
                         logout
                     </Menu.Item>
                     </Menu>

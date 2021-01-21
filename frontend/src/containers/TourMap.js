@@ -6,7 +6,7 @@ import AddPlace from "../components/AddPlace"
 import SearchInfo from "../components/SearchInfo"
 import { Form, Checkbox, Input, Layout, Menu, Breadcrumb, Button, 
     Drawer, Col, Row, Select, DatePicker } from 'antd';
-import { HeartOutlined, LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
+import { ExportOutlined, HeartOutlined, LockOutlined, UserOutlined, PictureOutlined, EnvironmentOutlined, PlusOutlined} from '@ant-design/icons';
 import usePlan from '../components/usePlan'
 
 import {
@@ -66,7 +66,9 @@ const TourMap = (props) => {
             <Header className="header" style={{color: "white", fontSize: "20px"}}>Tour Map
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
+                    <Menu.Item 
+                        // className="mh7"
+                        icon={<UserOutlined />} key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
                         {username}
                     </Menu.Item>
                 </Menu>
@@ -97,11 +99,15 @@ const TourMap = (props) => {
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
-                    <Menu.Item key="1" style={{margin: '0px', textAlign: 'center'}} onClick={toTourPlan}>
+                    <Menu.Item 
+                        icon ={<EnvironmentOutlined/>}
+                        key="1" style={{margin: '0px', textAlign: 'left', position: "relative", left: "23px"}} onClick={toTourPlan}>
                         {/* <Link to="/">Tour Map</Link> */}
                         Tour Plan
                     </Menu.Item>
-                    <Menu.Item key="2" style={{left: '0px', textAlign: 'center'}} onClick={
+                    <Menu.Item 
+                        icon ={<ExportOutlined/>}
+                        key="2" style={{left: '0px', textAlign: 'left', position: "relative", left: "23px"}} onClick={
                         Logout
                         }>
                         Logout

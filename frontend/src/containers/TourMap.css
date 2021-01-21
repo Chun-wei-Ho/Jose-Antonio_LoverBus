@@ -40,3 +40,36 @@
     background: #fff;
     text-align: right;
 }
+
+.mh7{
+    color: rgba(255,255,255,1);
+    
+    transition: all 0.5s;
+    border: 1px solid rgba(0,0,0,0.5);
+    position: relative; 
+    }
+    
+.mh7 span{
+    z-index: 2; 
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;   
+    }
+.mh7:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    background-color: rgba(0,0,0,0.5);
+    transition: all 0.3s;
+    
+    }
+.mh7:hover::before{
+    opacity: 1;
+    width: 100%;
+    }
