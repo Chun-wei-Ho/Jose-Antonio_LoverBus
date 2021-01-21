@@ -26,6 +26,7 @@ import {
   } from '../graphql'
 import background from '../img/place-of-destination.png';
 import bucketList from '../img/bucket_list.jpg';
+import pointLeft from '../img/point_left.png';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -134,7 +135,14 @@ export default function TourPlan(props){
                     minHeight: 280,
                 }}
                 >
-                    {(initialPlan && !(!planState || planState.length === 0))?(<h3 style={{margin: "0px", position: "relative", left: "0px"}}>Please Choose a Plan in the Left</h3>):
+                    {(initialPlan && !(!planState || planState.length === 0))?(
+                        <React.Fragment>
+                            <h3 style={{margin: "0px", position: "relative", left: "0px"}}>Choose a PLan in the Left</h3> 
+                            <br></br>
+                            <br></br>
+                            <img style={{width: "100px"}} src={pointLeft} alt="pointLeft"/>
+                        </React.Fragment>
+                        ):
                         (
                     <React.Fragment>
                     <div className="table-title">
