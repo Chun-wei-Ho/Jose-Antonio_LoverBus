@@ -49,7 +49,6 @@ export default function usePlan(_userId){
                         newArray = prev.UserPlan.map(e=>{
                             if(e.title !== newData.data.title)
                                 return e
-                            console.log(newData)
                             return newData.data
                         })
                         return {"UserPlan":newArray}

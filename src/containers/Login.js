@@ -64,7 +64,6 @@ export default function Login(){
     };
 
     useEffect(() => {
-        console.log(signIndata)
         if(signIndata) history.push(`/${signIndata.signIn}`)
     }, [signIndata])
 
