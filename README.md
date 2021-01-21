@@ -39,3 +39,21 @@ B06901045 曹林熹、B06901141 何俊偉、B06901041 許誠
 4. Create a plan and save locations into plans
 
 5. Modify your staying time in a place
+
+
+## Demo 影片
+
+## Deploy Link
+
+## .env file 
+### JoseAntonioLoverBus/frontend
+```
+REACT_APP_ACCESS_TOKEM=pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA
+
+```
+
+### JoseAntonioLoverBus/backend
+```
+MONGO_URL=mongodb+srv://JoseAntonioLover:20fmTFbs8GqY3rtq@joseantonioloverbus.avdda.mongodb.net/JoseAntonioLover?retryWrites=true&w=majority
+
+```
