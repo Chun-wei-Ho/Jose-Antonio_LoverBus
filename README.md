@@ -22,4 +22,10 @@ B06901045 曹林熹、B06901141 何俊偉、B06901041 許誠
 
 
 
+### Usage
 
+1. Create an account
+2. Create a marker by clicking the map or using the search box on top of the map
+3. Input title and description to record your experience or your expectation about a place
+4. Create a plan and save locations into plans
+5. Modify your staying time in a place
