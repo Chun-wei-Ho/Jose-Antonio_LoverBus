@@ -89,6 +89,9 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                 var marker = new mapboxgl.Marker()
                 .setLngLat([e.lngLat.lng, e.lngLat.lat])
                 .addTo(map)
+
+                setTitle("")
+                setDescription("")
                 
                 setCurrentMarker(marker)
             };
