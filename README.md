@@ -4,7 +4,9 @@ The website will show a map that where the lover bus is.
 Catch up and hold up on it!
 
 ### Authors
-B06901045 曹林熹、B06901141 何俊偉、B06901041 許誠
+B06901045 曹林熹：前端設計、前後端架構連結    
+B06901141 何俊偉：前後端架構連結、後端伺服器架設     
+B06901041 許誠：前端設計、影片剪輯     
 
 ![](https://i.imgur.com/DM4C6P3.png)
 
@@ -39,3 +41,21 @@ B06901045 曹林熹、B06901141 何俊偉、B06901041 許誠
 4. Create a plan and save locations into plans
 
 5. Modify your staying time in a place
+
+
+## Demo 影片
+
+## Deploy Link
+
+## .env file 
+### JoseAntonioLoverBus/frontend
+```
+REACT_APP_ACCESS_TOKEM=pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA
+
+```
+
+### JoseAntonioLoverBus/backend
+```
+MONGO_URL=mongodb+srv://JoseAntonioLover:20fmTFbs8GqY3rtq@joseantonioloverbus.avdda.mongodb.net/JoseAntonioLover?retryWrites=true&w=majority
+
+```
