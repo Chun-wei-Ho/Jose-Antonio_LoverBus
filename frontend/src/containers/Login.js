@@ -17,7 +17,6 @@ import {
     useParams
 } from "react-router-dom"; 
 import TourPlan from "./TourPlan"
-import PlanList from "./PlanList" 
 
 import "./TourMap.css"
 import 'antd/dist/antd.css'

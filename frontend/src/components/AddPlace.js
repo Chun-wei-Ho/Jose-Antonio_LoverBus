@@ -11,7 +11,7 @@ import {
 // MARKER_QUERY,
 // for mutation
 ADD_MARKER_MUTATION,
-// DELETE_MARKER_MUTATION,
+DELETE_MARKER_MUTATION,
 // UPDATE_MARKER_MUTATION,
 NEWSPOT_MUTATION,
 NEWPLAN_MUTATION,
@@ -20,13 +20,20 @@ NEWPLAN_MUTATION,
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode, plan, title, setTitle, description, setDescription}) => {
+const AddPlace = ({username, currentMarker, setCurrentMarker, markerContentCallback, insertionMode, plan, title, setTitle, description, setDescription}) => {
   const setCurrentMarkerContent = e => { markerContentCallback(e);} 
   const [planId, setPlanId] = useState("")
   const [list1Value, setList1Value] = useState("")
   const [showList1, setshowList1] = useState(false)
   const [addSpot] = useMutation(NEWSPOT_MUTATION)
+  const [deleteMarker] = useMutation(DELETE_MARKER_MUTATION)
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
+  const deleteOnclick = () => {
+    const marker_id = currentMarker._id
+    deleteMarker({variables:{_id:marker_id}})
+    currentMarker.remove()
+    setCurrentMarker(null)
+  }
   const onclick = async () => {
     if(!currentMarker) {
       alert("select a marker to add")
@@ -81,6 +88,10 @@ const AddPlace = ({username, currentMarker, markerContentCallback, insertionMode
                 planId={planId} setPlanId={setPlanId}></AddtoPlan>
       </Card>
       <br></br>
+      {insertionMode || !currentMarker ? null : (
+      <div>
+        <Button size={"small"} onClick={deleteOnclick} style={{position: "absolute", right: "90px", bottom: "10px"}}>Delete</Button>
+      </div>)}
       <div>
         <Button size={"small"} onClick={onclick} style={{position: "absolute", right: "25px", bottom: "10px"}}>Save</Button>
       </div>

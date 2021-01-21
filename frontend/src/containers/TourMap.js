@@ -77,7 +77,7 @@ const TourMap = (props) => {
             <Sider height={500} width={200} className="site-layout-background">
                 <AddPlace username={username} currentMarker={currentMarker} plan={plan} insertionMode={insertionMode}
                         title={title} setTitle={setTitle} description={description}
-                        setDescription={setDescription}></AddPlace>
+                        setDescription={setDescription} setCurrentMarker={setCurrentMarker}></AddPlace>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
                 <Breadcrumb style={{ margin: '16px 0' }}>

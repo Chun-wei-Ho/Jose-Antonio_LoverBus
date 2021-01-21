@@ -13,6 +13,7 @@ subscription subscribeMarker ($username: String!) {
             geometry{
                 coordinates
             }
+            _id
         }
     }
 }

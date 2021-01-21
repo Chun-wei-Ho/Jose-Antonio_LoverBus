@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import TourMap from './containers/TourMap';
 import TourPlan from './containers/TourPlan';
 import Login from './containers/Login'
-import PlanList from './containers/PlanList';
-import HomeRouter from './containers/HomeRouter';
 
 import {HashRouter,Route} from 'react-router-dom';
 

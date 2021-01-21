@@ -25,9 +25,18 @@ const Mutation = {
     },
     async deleteMarker(parent, {_id}, {models, pubsub}, info){
         const marker = await models.Marker.findByIdAndDelete(_id, () => {})
-        pubsub.publish(`marker.${marker.username}`, {subscribeMarker: {
-            mutation: 'DELETE', data: marker
-        }})
+        const spots = await models.Spot.find({markerID:_id})
+
+        spots.map(async ({planID,_id})=>{
+            const plan = await models.Plan.findByIdAndUpdate({_id: planID}, {$pull: {"spotID": _id}}, () => {})
+
+            const parsedPlan = await parsePlan.bind({models})(plan)
+            console.log(parsedPlan)
+            pubsub.publish(`plan.${parsedPlan.username}`, {subscribePlan: {
+                    mutation: 'UPDATE', data: {title:parsedPlan.title, spots:parsedPlan.spots, _id: plan._id} 
+            }})
+            models.Spot.findByIdAndDelete(_id, () => {})
+        })
     },
     async updateMarker(parent, {_id, newTitle, newDescription}, {models, pubsub}, info){ 
         const option = Object.fromEntries(
@@ -41,13 +50,11 @@ const Mutation = {
         }})
     },
     async newPlan(parent, args, {models, pubsub}, info){
-        const plans = await new models.Plan({...args, spotID: []})
-        plans.save()
-
+        const plan = await new models.Plan({...args, spotID: []}).save()
         pubsub.publish(`plan.${args.username}`, {subscribePlan: {
-            mutation: 'NEW', data: plans
+            mutation: 'NEW', data: {...args, _id: plan._id, spots:[], }
         }})
-        return plans._id
+        return plan._id
     },
     renamePlan(parent, {_id, newTitle}, {models, pubsub}, info){
         models.Plan.findByIdAndUpdate({_id}, {title: newTitle}, () => {})
