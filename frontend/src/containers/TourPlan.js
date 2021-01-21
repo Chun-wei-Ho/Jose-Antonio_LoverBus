@@ -137,7 +137,7 @@ export default function TourPlan(props){
                 >
                     {(initialPlan && !(!planState || planState.length === 0))?(
                         <React.Fragment>
-                            <h3 style={{margin: "0px", position: "relative", left: "0px"}}>Choose a PLan in the Left</h3> 
+                            <h3 style={{margin: "0px", position: "relative", left: "0px"}}>Choose a Plan in the Left</h3> 
                             <br></br>
                             <br></br>
                             <img style={{width: "100px"}} src={pointLeft} alt="pointLeft"/>
