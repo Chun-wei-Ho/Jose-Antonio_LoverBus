@@ -134,7 +134,7 @@ export default function TourPlan(props){
                     minHeight: 280,
                 }}
                 >
-                    {(initialPlan)?(<h3 style={{margin: "0px", position: "relative", left: "0px"}}>Please Choose a Plan in the Left</h3>):
+                    {(initialPlan && !(!planState || planState.length === 0))?(<h3 style={{margin: "0px", position: "relative", left: "0px"}}>Please Choose a Plan in the Left</h3>):
                         (
                     <React.Fragment>
                     <div className="table-title">
