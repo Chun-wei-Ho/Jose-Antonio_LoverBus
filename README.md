@@ -39,6 +39,7 @@ B06901041 許誠：前端設計、影片剪輯
    ![](/img/03.png)
 
 4. Create a plan and save locations into plans
+   ![](/img/04.png)
 
 5. Modify your staying time in a place
 
@@ -50,12 +51,12 @@ B06901041 許誠：前端設計、影片剪輯
 ## .env file 
 ### JoseAntonioLoverBus/frontend
 ```
-REACT_APP_ACCESS_TOKEM=pk.eyJ1Ijoic21hcnRoZXJjdWxlcyIsImEiOiJja2p6Z3NmaTEwN2RkMnNtZmVwdDdvb3N1In0.-qqamKKJShiY2mZm8EoOxA
+REACT_APP_ACCESS_TOKEM=
 
 ```
 
 ### JoseAntonioLoverBus/backend
 ```
-MONGO_URL=mongodb+srv://JoseAntonioLover:20fmTFbs8GqY3rtq@joseantonioloverbus.avdda.mongodb.net/JoseAntonioLover?retryWrites=true&w=majority
+MONGO_URL=
 
 ```
