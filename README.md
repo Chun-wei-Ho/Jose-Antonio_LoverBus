@@ -53,6 +53,8 @@ B06901041 許誠：前端設計、影片剪輯
 
 ## Demo 影片
 
+https://www.youtube.com/watch?v=nlLpOqNpUfY
+
 ## Deploy Link
 
 ## .env file 
