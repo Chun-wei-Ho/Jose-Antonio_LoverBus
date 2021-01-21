@@ -4,9 +4,9 @@ The website will show a map that where the lover bus is.
 Catch up and hold up on it!
 
 ### Authors
-B06901045 曹林熹：前端設計、前後端架構連結
-B06901141 何俊偉：前後端架構連結、後端伺服器架設
-B06901041 許誠：前端設計、影片剪輯
+B06901045 曹林熹：前端設計、前後端架構連結    
+B06901141 何俊偉：前後端架構連結、後端伺服器架設     
+B06901041 許誠：前端設計、影片剪輯     
 
 ![](https://i.imgur.com/DM4C6P3.png)
 
