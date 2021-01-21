@@ -8,7 +8,6 @@ const Query = {
     async UserPlan(parent, {_userId}, {models, pubsub}, info){
         const user = await models.User.findById(_userId)
         const plans = await models.Plan.find({username: user.username})
-        console.log(plans)
         return await Promise.all(plans.map(parsePlan, {models}))
     },
     async signIn(parent, args, {models, pubsub}, info){
