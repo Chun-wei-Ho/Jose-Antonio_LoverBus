@@ -48,6 +48,7 @@ export default function TourPlan(props){
     const [re, setre] = useState(true)
     const [currentPlan, setCurrentPlan] = useState(0)
     const [currentSpot, setCurrentSpot] = useState(0)
+    const [initialPlan, setInitialPlan] = useState(true)
     const [newTime, setTime] = useState(false)
     const [newStartTime, setnewStartTime] = useState("")
     const [newEndTime, setnewEndTime] = useState("")
@@ -94,7 +95,9 @@ export default function TourPlan(props){
                 <SubMenu key="sub1" icon={<EnvironmentOutlined />} title="My Plans">
                     {
                       planState.map(({ title }, i) => (
-                        <Menu.Item key={i} onClick={() => {setCurrentPlan(i)
+                        <Menu.Item onClick={() => {
+                            setCurrentPlan(i)
+                            setInitialPlan(false)
                         }} style={{display: "flex", alignItems: "center"}}>
                             {title}
                             <Button 
@@ -131,6 +134,9 @@ export default function TourPlan(props){
                     minHeight: 280,
                 }}
                 >
+                    {(initialPlan)?(<h3 style={{margin: "0px", position: "relative", left: "0px"}}>Please Choose a Plan in the Left</h3>):
+                        (
+                    <React.Fragment>
                     <div className="table-title">
                         {(!planState || planState.length === 0)?(<h3></h3>):(<h3 style={{margin: "0px", position: "relative", left: "0px"}}> {planState[currentPlan].title} </h3>)}
                     </div>
@@ -186,11 +192,11 @@ export default function TourPlan(props){
                                                                 updateSpotStartTime({variables:{
                                                                     _id: planState[currentPlan].spots[currentSpot]._id,
                                                                     time: new Date(newStartTime).toString()
-                                                                  }})
+                                                                }})
                                                                 updateSpotEndTime({variables:{
                                                                     _id: planState[currentPlan].spots[currentSpot]._id,
                                                                     time: new Date(newEndTime).toString()
-                                                                  }})
+                                                                }})
                                                                 setTime(false)
                                                                 // setre(!re)
                                                                 console.log(new Date(newStartTime).toString(), new Date(newEndTime).toString())
@@ -242,7 +248,7 @@ export default function TourPlan(props){
                                                     setre(!re)
                                                     deleteSpot({variables:{
                                                         _id: planState[currentPlan].spots[currentSpot]._id
-                                                      }})                
+                                                    }})                
                                                 }} style={{width:"100px", textAlign: "center", fontSize: "10px"}}> Delete Spot</Button> 
                                             </td>
                                         </tr>
@@ -254,7 +260,11 @@ export default function TourPlan(props){
                                     <img src={background} alt="Background"/>
                                 </div>
                                 )}
-                        </React.Fragment>))}
+                        </React.Fragment>))} 
+                        </React.Fragment>              
+                    )
+                    }
+                
                 {showUsermMenu?( //show menu if click account button
                 <div style={{position: "absolute", width: '150px', textAlign: 'center',top: "65px", right: '0%', hidden: 'true'}} zindex={-1}>
                     <Menu theme="blue" mode="vertical">
