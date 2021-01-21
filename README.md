@@ -39,7 +39,7 @@ B06901041 許誠：前端設計、影片剪輯
    ![](/img/03.png)
 
 4. Create a plan and save locations into plans
-   ![](/img/0.png)
+   ![](/img/04.png)
 
 5. Modify your staying time in a place
 
