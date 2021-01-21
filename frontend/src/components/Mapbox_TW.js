@@ -142,6 +142,12 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                     break
                     case "DELETE":
                         return {Marker: prev.Marker.filter(e=>e._id !== newData.data._id)}
+                    case "UPDATE":
+                        return {Marker: prev.Marker.map(e=>{
+                            if(e._id !== newData.data._id)
+                                return e
+                            return newData.data
+                        })}
                     break
                     default:
                         console.log(`Warning: unknown mutation ${newData.mutation}`)

@@ -12,7 +12,7 @@ import {
 // for mutation
 ADD_MARKER_MUTATION,
 DELETE_MARKER_MUTATION,
-// UPDATE_MARKER_MUTATION,
+UPDATE_MARKER_MUTATION,
 NEWSPOT_MUTATION,
 NEWPLAN_MUTATION,
 // for subscription
@@ -27,6 +27,7 @@ const AddPlace = ({username, currentMarker, setCurrentMarker, markerContentCallb
   const [showList1, setshowList1] = useState(false)
   const [addSpot] = useMutation(NEWSPOT_MUTATION)
   const [deleteMarker] = useMutation(DELETE_MARKER_MUTATION)
+  const [updateMarker] = useMutation(UPDATE_MARKER_MUTATION)
   const [addMarker] = useMutation(ADD_MARKER_MUTATION)
   const deleteOnclick = () => {
     const marker_id = currentMarker._id
@@ -57,6 +58,14 @@ const AddPlace = ({username, currentMarker, setCurrentMarker, markerContentCallb
         description: description
       }})
       marker_id = marker_id.data.addMarker
+    }
+    else{
+      updateMarker({variables:{
+        _id:marker_id,
+        newTitle: title,
+        newDescription: description
+      }})
+      currentMarker.getPopup().setHTML(`<h3>${title}<h3><p>${description}</p>`);
     }
     if(marker_id !== "" && planId !== ""){
       addSpot({variables:{
