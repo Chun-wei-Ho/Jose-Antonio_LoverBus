@@ -30,7 +30,7 @@ const httpLink = new HttpLink({
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-    uri: `ws://jose-antonio-lover-bus-server.herokuapp.com/`,
+    uri: `wss://jose-antonio-lover-bus-server.herokuapp.com/`,
     options: { reconnect: true }
 })
 
