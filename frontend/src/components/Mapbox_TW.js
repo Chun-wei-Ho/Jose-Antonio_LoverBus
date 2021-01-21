@@ -60,12 +60,22 @@ const MapBox = ({username, markerCallback, insertionMode, setInsertionMode, titl
                 map.resize();
             });
 
-            map.addControl(
-                new MapboxGeocoder({
+            var geocoder = new MapboxGeocoder({
                 accessToken: mapboxgl.accessToken,
                 mapboxgl: mapboxgl
-                })
-            );  
+            })
+            map.addControl(geocoder)
+            geocoder.on("result", ()=>{
+                setCurrentMarker(geocoder.mapMarker)
+                console.log(geocoder.mapMarker._lngLat)
+                console.log(currentMarker)
+            })
+            // map.addControl(
+            //     new MapboxGeocoder({
+            //     accessToken: mapboxgl.accessToken,
+            //     mapboxgl: mapboxgl
+            //     })
+            // );  
 
         }
         if (!map) initializeMap({ setMap, mapContainer});
