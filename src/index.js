@@ -25,12 +25,12 @@ import { getMainDefinition } from 'apollo-utilities'
 
 // Create an http link:
 const httpLink = new HttpLink({
-    uri: 'http://localhost:4000/'
+    uri: 'http://jose-antonio-lover-bus-server.herokuapp.com/'
 })
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-    uri: `ws://localhost:4000/`,
+    uri: `ws://jose-antonio-lover-bus-server.herokuapp.com/`,
     options: { reconnect: true }
 })
 
