@@ -157,7 +157,8 @@ td.text-right {
 }
 
 table tbody {
-  display: block;
+  /* display: block; */
+  display: table-header-group;
   width: 100%;
   max-height: 400px;
   overflow-y: auto;
