@@ -11,6 +11,10 @@ const apiRoute = require('./src/route/api');
 app.use('/api', apiRoute);
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, 'build')))
+    .use(cors())
+    .use(cookieParser());
+
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
