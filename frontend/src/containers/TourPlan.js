@@ -77,7 +77,7 @@ export default function TourPlan(props){
             <Header className="header" style={{color: "white", fontSize: "20px", margin: "0px"}}>Tour Plan
                 <div className="logo" />
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
+                    <Menu.Item icon={<UserOutlined />} key="4" style={{position:'absolute', width: '150px',textAlign: 'center', right: '0%'}} onClick={() => {setShowUsermMenu(!showUsermMenu)}}>
                         {username}
                     </Menu.Item>
                 </Menu>
