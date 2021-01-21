@@ -40,8 +40,12 @@ const AddPlace = ({username, currentMarker, setCurrentMarker, markerContentCallb
       return
     }
     if(title === ""){
-      alert("Please input a title")
-      return
+      // alert("Please input a title")
+      // return
+      setTitle("Untitled")
+    }
+    if(description === ""){
+      setDescription("No description")
     }
     const {lng, lat} = currentMarker._lngLat
     var marker_id = currentMarker._id
@@ -60,7 +64,6 @@ const AddPlace = ({username, currentMarker, setCurrentMarker, markerContentCallb
         markerID: marker_id
       }})
     }
-    alert("spot saved")
   }
   const { TextArea } = Input;
   return (

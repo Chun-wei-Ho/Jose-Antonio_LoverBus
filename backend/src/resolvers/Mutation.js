@@ -24,8 +24,12 @@ const Mutation = {
         })
     },
     async deleteMarker(parent, {_id}, {models, pubsub}, info){
-        const marker = await models.Marker.findByIdAndDelete(_id, () => {})
+        const marker = await models.Marker.findById(_id, () => {})
+        models.Marker.findByIdAndDelete(_id, () => {})
         const spots = await models.Spot.find({markerID:_id})
+        pubsub.publish(`marker.${marker.username}`, {subscribeMarker: {
+            mutation: 'DELETE', data: marker
+        }})
 
         spots.map(async ({planID,_id})=>{
             const plan = await models.Plan.findByIdAndUpdate({_id: planID}, {$pull: {"spotID": _id}}, () => {})

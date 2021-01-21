@@ -39,8 +39,6 @@ export default function usePlan(_userId){
                 const prev_item = prev ? prev.UserPlan : []
                 switch(newData.mutation){
                     case "NEW":
-                        console.log(prev)
-                        console.log(newData.data)
                         return {UserPlan:[...prev_item, newData.data]}
                     break
                     case "DELETE":
@@ -51,6 +49,7 @@ export default function usePlan(_userId){
                         newArray = prev.UserPlan.map(e=>{
                             if(e.title !== newData.data.title)
                                 return e
+                            console.log(newData)
                             return newData.data
                         })
                         return {"UserPlan":newArray}
