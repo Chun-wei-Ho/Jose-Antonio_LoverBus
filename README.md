@@ -28,12 +28,11 @@ https://jose-antonio-lover-bus.herokuapp.com
 <img src=https://miro.medium.com/max/648/1*3F5eonRQqcP35KglajAa8Q.png height=100>
 <img src=https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.png height=100>
 </p>
-## 專題製作心得：
 
+## 專題製作心得：
 這次與組員們花了很多心力做出了這個成品，起初分工的部分明確分出前端與後端，讓兩邊在更新程式碼時效率比較高。到後期由於我們開的功能蠻多的，因此在做 query, mutation, subscribe 時相較困難了一點，因為同一個 js 檔中有很多的東西會改，改前端的同時也要搭配後端，因此在不使用 branch 時常常 merge conflict。最後，這份專題我們都很滿意，因為我們三個都喜愛旅遊，想要自己建立一個 bucket list 出來，能夠克服 graphql 與 apollo 打造自己的網頁實在是很開心！
 
 ### Usage
-
 1. Create an account
    ![](img/01.png)
 2. Create a marker by clicking the map or using the search box on top of the map
