@@ -1,7 +1,9 @@
 # Jose-Antonio_LoverBus
-Jose Antonio LoverBus is a project of a lover bus.
-The website will show a map that where the lover bus is.
-Catch up and hold up on it!
+> Jose Antonio LoverBus is a project of a lover bus.
+> The website will show a map that where the lover bus is.
+> Catch up and hold up on it!
+
+The website allows users to record their certain feelings and expectation about a place. They can also plan a new trip with this website.  Join us and have fun in your journey!
 
 ### Authors
 | 組員             | 貢獻                           |
